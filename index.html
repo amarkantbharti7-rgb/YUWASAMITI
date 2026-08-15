@@ -856,14 +856,29 @@
             });
         }
 
-        function goHome() {
-            currentOpenMember = null;
-            document.getElementById('viewHome').classList.remove('hidden');
-            document.getElementById('viewMetricSummary').classList.add('hidden');
-            document.getElementById('viewMonthDetail').classList.add('hidden');
-            document.getElementById('viewMemberDetail').classList.add('hidden');
-        }
+     function openAdminPage() {
+  ['viewHome', 'viewMemberDetail', 'viewMetricSummary', 'viewMonthDetail'].forEach(id => {
+    let el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+  });
+  document.getElementById('viewAdmin').classList.remove('hidden');
+  let nb = document.getElementById('noticeBoardStrip');
+  if (nb) nb.classList.add('hidden');
+  switchAdminTab('utr');
+  autoFillAdminDate();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
+function goHome() {
+  currentOpenMember = null;
+  document.getElementById('viewHome').classList.remove('hidden');
+  let nb = document.getElementById('noticeBoardStrip');
+  if (nb) nb.classList.remove('hidden');
+  ['viewAdmin', 'viewMetricSummary', 'viewMonthDetail', 'viewMemberDetail'].forEach(id => {
+    let el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+  });
+}
         function toggleTheme() {
             let isDark = document.documentElement.classList.contains('dark');
             if (isDark) {
