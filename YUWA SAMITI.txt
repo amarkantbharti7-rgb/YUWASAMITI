@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="hi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Yuwa Samiti - Official Portal</title>
+    
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: {} } }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; transition: background-color 0.2s, color 0.2s; }
+        .font-hindi { font-family: 'Noto Sans Devanagari', sans-serif; }
+        .dark body { background-color: #0b0f19; color: #f1f5f9; }
+        .dark .glass-card { background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .dark .text-theme-main { color: #ffffff; }
+        .dark .text-theme-sub { color: #94a3b8; }
+        .dark .bg-box { background-color: #030712; border-color: #1e293b; }
+
+        .light body { background-color: #f8fafc; color: #020617; }
+        .light .glass-card { background: #ffffff; border: 1px solid #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .light .text-theme-main { color: #020617 !important; font-weight: 700; }
+        .light .text-theme-sub { color: #334155 !important; font-weight: 600; }
+        .light .bg-box { background-color: #f1f5f9; border-color: #cbd5e1; }
+
+        .modal-backdrop { background: rgba(5, 8, 15, 0.95); backdrop-filter: blur(12px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+        @media print {
+            @page { size: A4 portrait; margin: 4mm 6mm; }
+            body { background: #ffffff !important; color: #0f172a !important; margin: 0 !important; padding: 0 !important; }
+            body * { visibility: hidden !important; }
+            #passbookSinglePage, #passbookSinglePage *, #auditReportArea, #auditReportArea * { visibility: visible !important; }
+            #passbookSinglePage, #auditReportArea {
+                position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important;
+                max-height: 285mm !important; margin: 0 !important; padding: 6px !important; border: 2px solid #1e3a8a !important;
+                border-radius: 6px !important; background: #ffffff !important; box-shadow: none !important;
+                page-break-inside: avoid !important; break-inside: avoid !important; overflow: hidden !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between custom-scrollbar">
+
+    <!-- 🔒 EMAIL ACCESS MODAL -->
+    <div id="emailGateModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-md rounded-3xl p-6 space-y-5 shadow-2xl border border-indigo-500/40">
+            <div class="flex items-center space-x-3 border-b border-slate-700/50 pb-3">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white text-xl font-black shadow-lg">यु</div>
+                <div>
+                    <h3 class="text-lg font-black text-theme-main">Member Email Access</h3>
+                    <p class="text-xs text-theme-sub">Yuwa Samiti Restricted Portal</p>
+                </div>
+            </div>
+
+            <div id="emailStep1" class="space-y-4 text-xs">
+                <p class="text-slate-300 font-semibold">Kripya apna registered Email ID darj karke access lein:</p>
+                <div>
+                    <label class="block font-bold text-theme-main mb-1">Gmail ID:</label>
+                    <input type="email" id="userEmailInput" placeholder="example@gmail.com" class="w-full bg-box border border-slate-700 rounded-xl p-3 text-xs text-theme-main focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block font-bold text-theme-main mb-1">Apna Naam:</label>
+                    <input type="text" id="userNameInput" placeholder="Your Full Name" class="w-full bg-box border border-slate-700 rounded-xl p-3 text-xs text-theme-main focus:outline-none focus:border-indigo-500">
+                </div>
+                <button onclick="verifyUserEmail()" id="btnVerifyEmail" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg">
+                    Check Access Status
+                </button>
+            </div>
+
+            <div id="emailStepPending" class="space-y-3 text-xs hidden">
+                <div class="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-center space-y-2">
+                    <i class="fa-solid fa-clock text-amber-400 text-3xl"></i>
+                    <h4 class="font-black text-amber-400 text-sm">Request Pending Approval</h4>
+                    <p class="text-slate-300">Aapka Email Request Admin ko bhej diya gaya hai. Kripya Admin se approval lene ko kahein.</p>
+                </div>
+                <button onclick="resetEmailCheck()" class="w-full py-2.5 rounded-xl bg-slate-800 text-slate-300 font-bold">Try Different Email</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🚩 HEADER -->
+    <header class="border-b border-slate-800 bg-slate-900/95 sticky top-0 z-40 backdrop-blur-xl shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div onclick="goHome()" class="flex items-center space-x-3.5 cursor-pointer group">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center font-black text-2xl text-white shadow-xl group-hover:scale-105 transition-transform">यु</div>
+                <div>
+                    <h1 class="text-2xl font-black text-white tracking-tight group-hover:text-indigo-400 transition-colors">युवा समिति</h1>
+                    <p class="text-[11px] text-slate-400 font-bold flex items-center gap-1.5">
+                        <i class="fa-solid fa-clock text-amber-400"></i>
+                        <span id="istClock">Loading IST...</span>
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <button onclick="openCalcModal()" title="2% Byaj Calculator" class="w-10 h-10 rounded-xl bg-purple-600/20 border border-purple-500/40 text-purple-400 flex items-center justify-center text-sm hover:bg-purple-600 hover:text-white transition-all shadow">
+                    <i class="fa-solid fa-calculator"></i>
+                </button>
+                <button onclick="openUtrModal()" title="Online Payment Submit (UTR)" class="px-3 py-2 rounded-xl text-xs font-black bg-indigo-600/30 border border-indigo-500/50 text-indigo-300 hover:bg-indigo-600 hover:text-white transition-all shadow">
+                    <i class="fa-solid fa-receipt mr-1"></i> Pay UTR
+                </button>
+                <button onclick="manualSync()" title="Live Sync Data" class="w-10 h-10 rounded-xl bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-sm hover:bg-emerald-600 hover:text-white transition-all shadow">
+                    <i id="syncIcon" class="fa-solid fa-rotate"></i>
+                </button>
+                <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 text-amber-400 flex items-center justify-center text-base shadow">
+                    <i id="themeIcon" class="fa-solid fa-sun"></i>
+                </button>
+                <button onclick="openAdminModal()" id="adminAddBtn" class="hidden px-3.5 py-2 rounded-xl text-xs font-black bg-emerald-600 text-white hover:bg-emerald-500 shadow-lg">
+                    <i class="fa-solid fa-sliders mr-1"></i> Admin Panel
+                </button>
+                <button onclick="toggleAdminMode()" id="adminToggleBtn" class="px-3.5 py-2 rounded-xl text-xs font-bold border bg-slate-800 border-slate-700 text-slate-300 hover:text-white shadow">
+                    <i class="fa-solid fa-user-gear text-indigo-400 mr-1"></i> Admin Login
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 📢 NOTICE STRIP[cite: 1] -->
+    <div id="noticeBoardStrip" class="bg-gradient-to-r from-indigo-950 via-purple-950 to-slate-900 border-b border-indigo-500/30 py-2.5 px-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-2.5 overflow-hidden">
+                <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-black text-[10px] uppercase shrink-0 border border-amber-500/30 animate-pulse">📢 सूचना</span>
+                <p id="noticeText" class="text-slate-200 font-semibold truncate">मासिक बैठक: हर माह की १० तारीख को अनिवार्य। समय पर मासिक अंशदान जमा करें।</p>
+            </div>
+            <span id="cacheIndicator" class="text-[10px] text-emerald-400 font-bold hidden shrink-0 ml-2">● Live Sync</span>
+        </div>
+    </div>
+
+    <!-- Spinner -->
+    <div id="loading" class="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center space-y-3">
+        <div class="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-xs font-bold text-slate-400">Loading Yuwa Samiti Portal...</p>
+    </div>
+
+    <!-- 🧮 2% CALCULATOR -->
+    <div id="calcModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-card w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl border border-purple-500/40">
+            <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
+                <h3 class="text-base font-black text-theme-main"><i class="fa-solid fa-calculator text-purple-400 mr-2"></i>2% ब्याज कैलकुलेटर (Interest Tool)</h3>
+                <button onclick="closeCalcModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-theme-sub mb-1">मूलधन राशि (Loan Amount ₹):</label>
+                    <input type="number" id="calcPrincipal" oninput="runInterestCalc()" placeholder="e.g. 5000" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                </div>
+                <div>
+                    <label class="block font-bold text-theme-sub mb-1">कुल माह (Months Duration):</label>
+                    <input type="number" id="calcMonths" oninput="runInterestCalc()" value="1" min="1" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                </div>
+                <div class="p-4 rounded-2xl bg-purple-950/40 border border-purple-500/30 space-y-2 text-xs">
+                    <div class="flex justify-between font-bold"><span class="text-theme-sub">प्रतिमाह ब्याज (2% Monthly):</span><span id="resMonthlyInt" class="text-purple-400 font-black">₹0</span></div>
+                    <div class="flex justify-between font-bold"><span class="text-theme-sub">कुल ब्याज (Total Interest):</span><span id="resTotalInt" class="text-purple-400 font-black">₹0</span></div>
+                    <div class="flex justify-between font-bold border-t border-purple-500/30 pt-2 text-sm"><span class="text-theme-main">कुल वापसी राशि (Settlement):</span><span id="resTotalPayable" class="text-emerald-400 font-black">₹0</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📲 UTR MODAL -->
+    <div id="utrModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-card w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl border border-indigo-500/40">
+            <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
+                <h3 class="text-base font-black text-theme-main"><i class="fa-solid fa-receipt text-indigo-400 mr-2"></i>Online Payment (UTR) Darj Karein</h3>
+                <button onclick="closeUtrModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleUtrSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-theme-sub mb-1">Select Member:</label>
+                    <select id="uMemberSelect" required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                        <option value="">-- Apna Naam Chunein --</option>
+                    </select>
+                </div>
+                <div class="flex items-center space-x-2 py-1">
+                    <input type="checkbox" id="uAdvanceCheck" onchange="toggleUtrAdvance()" class="w-4 h-4 rounded text-indigo-600">
+                    <label for="uAdvanceCheck" class="font-bold text-amber-400 cursor-pointer">Advance / Multi-Month Payment?</label>
+                </div>
+                <div id="uSingleMonthBox">
+                    <label class="block font-bold text-theme-sub mb-1">Month:</label>
+                    <select id="uSingleMonth" onchange="calculateUtrAmount()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
+                </div>
+                <div id="uMultiMonthBox" class="grid grid-cols-2 gap-2 hidden">
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">From Month:</label>
+                        <select id="uFromMonth" onchange="calculateUtrAmount()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">To Month:</label>
+                        <select id="uToMonth" onchange="calculateUtrAmount()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-theme-sub mb-1">Total Amount (₹200/Month):</label>
+                    <input type="number" id="uTotalAmt" readonly value="200" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-emerald-400 font-black text-sm">
+                </div>
+                <div>
+                    <label class="block font-bold text-theme-sub mb-1">Bank Ref / 12-Digit UTR Number:</label>
+                    <input type="text" id="uUtrNumber" required placeholder="e.g. 623489123456" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                </div>
+                <button type="submit" id="btnSubmitUtr" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-lg">Submit Payment for Verification</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🔑 ADMIN MODAL -->
+    <div id="adminModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-card w-full max-w-2xl rounded-3xl p-6 space-y-4 shadow-2xl border border-emerald-500/40">
+            <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
+                <h3 class="text-base font-black text-theme-main"><i class="fa-solid fa-sliders text-emerald-400 mr-2"></i>Admin Master Control Panel</h3>
+                <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <!-- TABS -->
+            <div class="flex space-x-2 border-b border-slate-700/40 pb-3 overflow-x-auto custom-scrollbar">
+                <button onclick="switchAdminTab('jama')" id="adminTabJama" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0"><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Jama Entry</button>
+                <button onclick="switchAdminTab('loan')" id="adminTabLoan" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-file-invoice-dollar mr-1"></i> Loan Entry</button>
+                <button onclick="switchAdminTab('utr')" id="adminTabUtr" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-receipt mr-1"></i> Verify UTR</button>
+                <button onclick="switchAdminTab('audit')" id="adminTabAudit" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-file-lines mr-1"></i> Monthly Audit</button>
+                <button onclick="switchAdminTab('requests')" id="adminTabReq" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-user-lock mr-1"></i> Email Access</button>
+                <button onclick="switchAdminTab('pin')" id="adminTabPin" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-gear mr-1"></i> Settings & Notice</button>
+            </div>
+
+            <!-- 1. SMART JAMA FORM -->
+            <form id="formJama" onsubmit="handleAdminJamaSubmit(event)" class="space-y-3 text-xs">
+                <div class="flex items-center space-x-2 bg-indigo-950/30 p-2.5 rounded-xl border border-indigo-500/30">
+                    <input type="checkbox" id="jAdvanceCheck" onchange="toggleAdminJamaAdvance()" class="w-4 h-4 rounded text-indigo-600">
+                    <label for="jAdvanceCheck" class="font-bold text-amber-400 cursor-pointer">Advance / Multi-Month Jama (Auto Sheet Distribution)?</label>
+                </div>
+                <div id="jSingleMonthBox">
+                    <label class="block font-bold text-theme-sub mb-1">Select Month:</label>
+                    <select id="jMonth" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
+                </div>
+                <div id="jMultiMonthBox" class="grid grid-cols-2 gap-2 hidden">
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">From Month:</label>
+                        <select id="jFromMonth" onchange="calcAdminJamaTotal()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">To Month:</label>
+                        <select id="jToMonth" onchange="calcAdminJamaTotal()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-theme-sub mb-1">Select Member:</label>
+                    <select id="jMemberSelect" onchange="onAdminMemberSelect()" required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                        <option value="">-- Member Choose Karein --</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Member Name:</label>
+                        <input type="text" id="jName" readonly required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold bg-slate-800/40">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Father's Name (Auto):</label>
+                        <input type="text" id="jFather" readonly required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold bg-slate-800/40">
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Date:</label>
+                        <input type="text" id="jDate" placeholder="15/08/2026" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Total Amount (₹):</label>
+                        <input type="number" id="jAmt" value="200" required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Fine (₹):</label>
+                        <input type="number" id="jFine" value="0" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
+                    </div>
+                </div>
+                <button type="submit" id="btnSaveJama" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow-lg">Save Jama Entry to Sheet</button>
+            </form>
+
+            <!-- 2. LOAN FORM -->
+            <form id="formLoan" onsubmit="handleAdminLoanSubmit(event)" class="space-y-3 text-xs hidden">
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Month:</label>
+                        <input type="text" id="lMonth" placeholder="August" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Date:</label>
+                        <input type="text" id="lDate" placeholder="15/08/2026" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-theme-sub mb-1">Borrower Full Name:</label>
+                    <input type="text" id="lBorrower" required placeholder="e.g. Ashish Rana" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Loan Taken (₹):</label>
+                        <input type="number" id="lTaken" required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Interest Paid (₹):</label>
+                        <input type="number" id="lInterest" value="0" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Repay Date:</label>
+                        <input type="text" id="lPayDate" value="-" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Settlement (₹):</label>
+                        <input type="text" id="lSettlement" value="-" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
+                    </div>
+                </div>
+                <button type="submit" id="btnSaveLoan" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold shadow-lg">Save Loan Entry to Sheet</button>
+            </form>
+
+            <!-- 3. VERIFY UTR[cite: 1] -->
+            <div id="formUtrVerify" class="space-y-3 text-xs hidden max-h-[380px] overflow-y-auto custom-scrollbar">
+                <h4 class="font-black text-indigo-400 uppercase text-[11px]"><i class="fa-solid fa-receipt mr-1"></i> Pending Online UTR Submissions</h4>
+                <div id="pendingUtrContainer" class="space-y-2">
+                    <p class="text-slate-500 italic">Checking pending UTR logs...</p>
+                </div>
+            </div>
+
+            <!-- 4. MONTHLY AUDIT -->
+            <div id="formAudit" class="space-y-4 text-xs hidden">
+                <div class="flex items-center space-x-3">
+                    <div class="w-full">
+                        <label class="block font-bold text-theme-sub mb-1">Select Audit Month:</label>
+                        <select id="auditMonthSelect" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
+                    </div>
+                    <button onclick="generateAuditReport()" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold shrink-0 mt-5 shadow">Generate 1-Page Report</button>
+                </div>
+                <div id="auditReportArea" class="hidden glass-card p-5 rounded-2xl border border-slate-700/50 space-y-4 bg-white text-slate-900"></div>
+            </div>
+
+            <!-- 5. EMAIL ACCESS -->
+            <div id="formRequests" class="space-y-4 text-xs hidden max-h-[380px] overflow-y-auto custom-scrollbar pr-1">
+                <div class="space-y-2">
+                    <h4 class="font-black text-amber-400 uppercase text-[11px]"><i class="fa-solid fa-clock-rotate-left mr-1"></i> Pending Requests</h4>
+                    <div id="pendingRequestsContainer" class="space-y-2"><p class="text-slate-500 italic">Checking pending requests...</p></div>
+                </div>
+                <div class="space-y-2 pt-3 border-t border-slate-700/50">
+                    <h4 class="font-black text-emerald-400 uppercase text-[11px]"><i class="fa-solid fa-circle-check mr-1"></i> Approved Members</h4>
+                    <div id="approvedMembersContainer" class="space-y-2"><p class="text-slate-500 italic">Loading approved list...</p></div>
+                </div>
+            </div>
+
+            <!-- 6. SETTINGS & NOTICE[cite: 1] -->
+            <div id="formPin" class="space-y-4 text-xs hidden">
+                <div class="p-3.5 bg-indigo-950/30 rounded-2xl border border-indigo-500/30 space-y-2">
+                    <h4 class="font-black text-indigo-400 uppercase text-[11px]"><i class="fa-solid fa-bullhorn mr-1"></i> Update Notice Board Text</h4>
+                    <textarea id="noticeInput" rows="2" placeholder="Naya notice ailan yahan likhein..." class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold text-xs"></textarea>
+                    <button onclick="saveNoticeBoard()" id="btnSaveNotice" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold">Save Notice to Sheet</button>
+                </div>
+
+                <form onsubmit="handlePinChange(event)" class="space-y-3 pt-2 border-t border-slate-700/40">
+                    <h4 class="font-black text-purple-400 uppercase text-[11px]"><i class="fa-solid fa-key mr-1"></i> Change Admin Security PIN</h4>
+                    <div>
+                        <label class="block font-bold text-theme-sub mb-1">Purana PIN:</label>
+                        <input type="password" id="pOldPin" required placeholder="Enter current PIN" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block font-bold text-theme-sub mb-1">Naya PIN:</label>
+                            <input type="password" id="pNewPin" required placeholder="New PIN" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-theme-sub mb-1">Confirm Naya PIN:</label>
+                            <input type="password" id="pConfirmPin" required placeholder="Confirm PIN" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                        </div>
+                    </div>
+                    <button type="submit" id="btnSavePin" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold shadow-lg">Update Admin PIN</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="max-w-7xl w-full mx-auto px-4 py-6 space-y-6 flex-grow">
+
+        <!-- HOME VIEW -->
+        <div id="viewHome" class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div onclick="openMetricSummary('deposit')" class="glass-card p-5 rounded-3xl cursor-pointer hover:border-indigo-500/50 transition-all">
+                    <p class="text-xs font-extrabold text-theme-sub uppercase">Total Deposit</p>
+                    <h2 id="cardTotalDeposit" class="text-2xl font-black text-theme-main mt-1">₹45,920</h2>
+                    <p class="text-[11px] text-emerald-500 mt-2 font-bold">✓ Touch to view Month Summary →</p>
+                </div>
+
+                <div onclick="openMetricSummary('loan')" class="glass-card p-5 rounded-3xl cursor-pointer hover:border-amber-500/50 transition-all">
+                    <p class="text-xs font-extrabold text-theme-sub uppercase">Market Loan</p>
+                    <h2 id="cardMarketLoan" class="text-2xl font-black text-amber-500 mt-1">₹46,000</h2>
+                    <p class="text-[11px] text-amber-500 mt-2 font-bold">⚡ Touch for Active/Closed Loans →</p>
+                </div>
+
+                <!-- 🟢 DYNAMIC CASH CARD -->
+                <div class="glass-card p-5 rounded-3xl">
+                    <p class="text-xs font-extrabold text-theme-sub uppercase">Available Cash</p>
+                    <h2 id="cardCashBalance" class="text-2xl font-black mt-1">₹0</h2>
+                    <p id="cardCashSubtitle" class="text-[11px] mt-2 font-bold">-</p>
+                </div>
+
+                <div onclick="openMetricSummary('fine_interest')" class="glass-card p-5 rounded-3xl cursor-pointer hover:border-purple-500/50 transition-all">
+                    <p class="text-xs font-extrabold text-theme-sub uppercase">Total Fine & Interest</p>
+                    <h2 id="cardFineAndInterest" class="text-2xl font-black text-purple-500 mt-1">₹2,880</h2>
+                    <p class="text-[11px] text-purple-400 mt-2 font-bold">📈 Touch for Breakdown →</p>
+                </div>
+            </div>
+
+            <!-- DOUGHNUT CHART -->
+            <div class="glass-card p-5 rounded-3xl space-y-3">
+                <h3 class="text-xs font-black uppercase text-indigo-400 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-pie"></i> Financial Overview Chart (Deposit vs Market Loan)
+                </h3>
+                <div class="h-48 flex justify-center">
+                    <canvas id="samitiDoughnutChart"></canvas>
+                </div>
+            </div>
+
+            <!-- MEMBERS LIST -->
+            <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <h3 class="text-base font-black text-theme-main font-hindi">सदस्य सूची (Touch Name for Passbook Statement)</h3>
+                        <p class="text-xs text-theme-sub">Kisi bhi member par touch karein - unka official passbook khul jayega.</p>
+                    </div>
+                    <div class="relative w-full sm:w-72">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                        <input type="text" id="searchInput" onkeyup="filterMembers()" placeholder="Search member name..." class="w-full bg-box border border-slate-700 rounded-xl pl-9 pr-3 py-2 text-xs text-theme-main focus:outline-none focus:border-indigo-500">
+                    </div>
+                </div>
+
+                <div id="membersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+        </div>
+
+        <!-- METRIC SUMMARY VIEW -->
+        <div id="viewMetricSummary" class="space-y-6 hidden">
+            <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
+                <h3 id="summaryPageTitle" class="text-lg font-black text-theme-main">Metric Summary</h3>
+                <button onclick="goHome()" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow">← Back to Home</button>
+            </div>
+            <div id="summaryPageContent" class="space-y-4"></div>
+        </div>
+
+        <!-- MONTH DEPOSITORS VIEW -->
+        <div id="viewMonthDetail" class="space-y-6 hidden">
+            <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
+                <h3 id="monthDetailTitle" class="text-lg font-black text-theme-main">Month Depositors List</h3>
+                <button onclick="openMetricSummary('deposit')" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow">← Back to Deposit Summary</button>
+            </div>
+            <div class="glass-card rounded-2xl overflow-hidden text-xs">
+                <table class="w-full text-left text-theme-main">
+                    <thead class="bg-box text-theme-sub text-[10px] font-bold uppercase border-b border-slate-700/50">
+                        <tr><th class="py-3 px-4">Member Name</th><th class="py-3 px-4">Father Name</th><th class="py-3 px-4">Date</th><th class="py-3 px-4">Amount</th><th class="py-3 px-4">Fine</th></tr>
+                    </thead>
+                    <tbody id="monthDepositorsTable" class="divide-y divide-slate-700/40"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 🔥 1-PAGE OFFICIAL PASSBOOK VIEW[cite: 1] 🔥 -->
+        <div id="viewMemberDetail" class="space-y-6 hidden">
+            <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
+                <div class="flex items-center space-x-3">
+                    <div id="memberPageAvatar" class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-lg shadow">M</div>
+                    <div>
+                        <h3 id="memberPageName" class="text-base font-black text-theme-main">Member Name</h3>
+                        <p id="memberPageFather" class="text-xs text-indigo-400">Father Name</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="printPassbook()" id="adminPrintPassbookBtn" class="hidden px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow flex items-center gap-1.5">
+                        <i class="fa-solid fa-print"></i> 1-Page PDF / Print
+                    </button>
+                    <button onclick="goHome()" class="px-3 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow">← Back</button>
+                </div>
+            </div>
+
+            <div id="passbookSinglePage" class="glass-card p-4 sm:p-5 rounded-3xl space-y-3 border border-indigo-500/30 text-slate-900 bg-white shadow-xl">
+                
+                <!-- HEADER -->
+                <div class="border-b-2 border-indigo-900 pb-2 flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-900 text-white flex items-center justify-center font-black text-xl shadow">यु</div>
+                        <div>
+                            <h2 class="text-lg font-black tracking-tight text-indigo-950 uppercase font-hindi">युवा समिति</h2>
+                            <p class="text-[9px] font-black tracking-wider text-indigo-700 uppercase">Official Member Financial Passbook & Ledger</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="inline-block px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-black border border-emerald-300">✓ ACTIVE ACCOUNT</span>
+                        <p class="text-[8.5px] text-slate-500 mt-0.5 font-bold">Date: <span id="pbGenTime">-</span></p>
+                    </div>
+                </div>
+
+                <!-- BIO STRIP -->
+                <div class="bg-slate-100 p-2.5 rounded-xl border border-slate-300 grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                        <span class="text-slate-500 font-bold block text-[9.5px]">सदस्य का नाम (Member Name):</span>
+                        <p id="pbMemberName" class="font-black text-slate-900 text-xs sm:text-sm">-</p>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 font-bold block text-[9.5px]">पिता का नाम (Father's Name):</span>
+                        <p id="pbFatherName" class="font-bold text-slate-900 text-xs">-</p>
+                    </div>
+                </div>
+
+                <!-- 4 METRICS -->
+                <div class="grid grid-cols-4 gap-1.5 text-center text-xs">
+                    <div class="p-1.5 rounded-xl bg-emerald-50 border border-emerald-300">
+                        <span class="text-[8.5px] text-emerald-800 font-bold uppercase block">कुल जमा (Deposit)</span>
+                        <p id="mJamaSum" class="text-xs sm:text-sm font-black text-emerald-700">₹0</p>
+                    </div>
+                    <div class="p-1.5 rounded-xl bg-amber-50 border border-amber-300">
+                        <span class="text-[8.5px] text-amber-800 font-bold uppercase block">सक्रिय ऋण (Loan)</span>
+                        <p id="mLoanSum" class="text-xs sm:text-sm font-black text-amber-700">₹0</p>
+                    </div>
+                    <div class="p-1.5 rounded-xl bg-rose-50 border border-rose-300">
+                        <span class="text-[8.5px] text-rose-800 font-bold uppercase block">विलंब शुल्क (Fine)</span>
+                        <p id="mFineSum" class="text-xs sm:text-sm font-black text-rose-700">₹0</p>
+                    </div>
+                    <div class="p-1.5 rounded-xl bg-purple-50 border border-purple-300">
+                        <span class="text-[8.5px] text-purple-800 font-bold uppercase block">कुल ब्याज (Interest)</span>
+                        <p id="mInterestSum" class="text-xs sm:text-sm font-black text-purple-700">₹0</p>
+                    </div>
+                </div>
+
+                <!-- 12-MONTH JAMA TABLE[cite: 1] -->
+                <div class="space-y-1">
+                    <h4 class="text-[9.5px] font-black uppercase text-indigo-950 flex items-center gap-1 font-hindi">
+                        <i class="fa-solid fa-list-check text-indigo-600"></i> मासिक बचत विवरण (12 Months Annual Ledger)
+                    </h4>
+                    <div class="rounded-lg overflow-hidden border border-slate-300">
+                        <table class="w-full text-left text-[9.5px]">
+                            <thead class="bg-indigo-900 text-white font-bold text-[8.5px] uppercase">
+                                <tr>
+                                    <th class="py-0.5 px-2">Month</th>
+                                    <th class="py-0.5 px-2">Date</th>
+                                    <th class="py-0.5 px-2">Amount (₹)</th>
+                                    <th class="py-0.5 px-2">Late Fine (₹)</th>
+                                    <th class="py-0.5 px-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mJamaTable" class="divide-y divide-slate-200 bg-white"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- LOAN & 2% INTEREST STATEMENT[cite: 1] -->
+                <div class="space-y-1">
+                    <h4 class="text-[9.5px] font-black uppercase text-indigo-950 flex items-center gap-1 font-hindi">
+                        <i class="fa-solid fa-hand-holding-dollar text-amber-600"></i> ऋण एवं ब्याज विवरण (Loan & 2% Interest Ledger)
+                    </h4>
+                    <div class="rounded-lg overflow-hidden border border-slate-300">
+                        <table class="w-full text-left text-[9.5px]">
+                            <thead class="bg-slate-800 text-white font-bold text-[8.5px] uppercase">
+                                <tr>
+                                    <th class="py-0.5 px-2">Month / Date</th>
+                                    <th class="py-0.5 px-2">Loan Taken</th>
+                                    <th class="py-0.5 px-2">Monthly Interest (2%)</th>
+                                    <th class="py-0.5 px-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mLoanTable" class="divide-y divide-slate-200 bg-white"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- FOOTER SIGNATURES -->
+                <div class="pt-3 mt-1 border-t border-slate-300 flex justify-between items-end text-[9.5px] text-slate-600 font-hindi">
+                    <div class="text-center">
+                        <div class="w-24 border-b border-slate-400 mb-0.5"></div>
+                        <p class="font-bold">सदस्य हस्ताक्षर</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-32 border-b border-slate-800 mb-0.5"></div>
+                        <p class="font-black text-slate-900">अधिकृत कोषाध्यक्ष / सचिव मुहर</p>
+                        <p class="text-[7.5px] text-slate-400">युवा समिति प्रबंधन पोर्टल</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- CLIENT SCRIPT -->
+    <script>
+        // 👇 STEP 2 ME COPY KIYA HUA LINK YAHAN PASTE KAREIN
+        const SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbzAAj_BjVcbBa7SFFo9Bdbkdhp1br4UfE0gm_IQOlbVpD1F-k8GYjeXp2Ba4BmuX5kVMA/exec";
+
+        let portalData = null;
+        let isAdmin = false;
+        let samitiChart = null;
+        
+        const monthOrder = [
+            "January", "February", "March", "April",
+            "May", "June", "July", "August",
+            "September", "October", "November", "December"
+        ];[cite: 1]
+
+        let liveSyncTimer = null;
+        let liveSyncBusy = false;
+        let lastDataSignature = "";[cite: 1]
+        const LIVE_SYNC_INTERVAL = 12000;
+
+        async function apiGet(action = "") {
+            const url = action ? `${SCRIPT_API_URL}?action=${action}` : SCRIPT_API_URL;
+            const res = await fetch(url, { method: "GET" });
+            return await res.json();
+        }
+
+        async function apiPost(action, data = {}, extra = {}) {
+            const payload = { action: action, data: data, ...extra };
+            const res = await fetch(SCRIPT_API_URL, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
+            return await res.json();
+        }
+
+        function startLiveClock() {
+            setInterval(() => {
+                let now = new Date();
+                let options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+                document.getElementById('istClock').innerText = now.toLocaleTimeString('en-IN', options) + ' IST';
+            }, 1000);
+        }
+
+        function initPortal() {
+            startLiveClock();
+            populateMonthDropdowns();
+
+            if (localStorage.getItem('theme') === 'light') {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                document.getElementById('themeIcon').className = "fa-solid fa-moon";
+            }
+
+            let savedEmail = localStorage.getItem('samiti_user_email');
+            if (savedEmail) {
+                checkSavedEmailAccess(savedEmail);
+            } else {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        }
+
+        function populateMonthDropdowns() {
+            const dropdowns = ['jMonth', 'jFromMonth', 'jToMonth', 'uSingleMonth', 'uFromMonth', 'uToMonth', 'auditMonthSelect'];
+            dropdowns.forEach(id => {
+                let el = document.getElementById(id);
+                if (!el) return;
+                el.innerHTML = '';
+                monthOrder.forEach((m) => {
+                    let opt = document.createElement('option');
+                    opt.value = m;
+                    opt.innerText = `${m} 2026`;
+                    if (m === "August") opt.selected = true;
+                    el.appendChild(opt);
+                });
+            });
+        }
+
+        async function verifyUserEmail() {
+            let email = document.getElementById('userEmailInput').value.trim();
+            let name = document.getElementById('userNameInput').value.trim();
+
+            if (!email || !email.includes('@')) {
+                alert("Sahi Gmail ID bharein!");
+                return;
+            }
+
+            let btn = document.getElementById('btnVerifyEmail');
+            btn.innerText = "Checking Status...";
+            btn.disabled = true;
+
+            try {
+                const res = await apiPost("CHECK_EMAIL", {}, { email: email });
+                btn.innerText = "Check Access Status";
+                btn.disabled = false;
+
+                if (res.status === "APPROVED") {
+                    localStorage.setItem('samiti_user_email', email);
+                    document.getElementById('emailGateModal').classList.add('hidden');
+                    loadPortalData(true);
+                    startLiveSync();
+                } else if (res.status === "PENDING") {
+                    document.getElementById('emailStep1').classList.add('hidden');
+                    document.getElementById('emailStepPending').classList.remove('hidden');
+                } else {
+                    await apiPost("SUBMIT_ACCESS", {}, { email: email, name: name });
+                    document.getElementById('emailStep1').classList.add('hidden');
+                    document.getElementById('emailStepPending').classList.remove('hidden');
+                }
+            } catch(e) {
+                btn.innerText = "Check Access Status";
+                btn.disabled = false;
+                alert("Error connecting to server!");
+            }
+        }
+
+        async function checkSavedEmailAccess(email) {
+            try {
+                const res = await apiPost("CHECK_EMAIL", {}, { email: email });
+                if (res.status === "APPROVED") {
+                    document.getElementById('emailGateModal').classList.add('hidden');
+                    loadPortalData(true);
+                    startLiveSync();
+                } else {
+                    localStorage.removeItem('samiti_user_email');
+                    document.getElementById('loading').classList.add('hidden');
+                    document.getElementById('emailGateModal').classList.remove('hidden');
+                }
+            } catch(e) {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        }
+
+        function resetEmailCheck() {
+            document.getElementById('emailStepPending').classList.add('hidden');
+            document.getElementById('emailStep1').classList.remove('hidden');
+        }
+
+        function portalSignature(data) {
+            if (!data) return "";
+            return JSON.stringify({
+                summary: data.summary,
+                members: data.members,
+                jamaData: data.jamaData,
+                loanData: data.loanData,
+                monthlySummary: data.monthlySummary,
+                fineRecordsList: data.fineRecordsList,
+                interestRecordsList: data.interestRecordsList,
+                notice: data.notice
+            });[cite: 1]
+        }
+
+        function applyPortalData(data, silent = true) {
+            if (!data || data.status !== "SUCCESS") {[cite: 1]
+                if (!silent) alert("Sync Error: " + (data?.message || "Unknown error"));[cite: 1]
+                return;[cite: 1]
+            }
+
+            const signature = portalSignature(data);[cite: 1]
+            if (signature === lastDataSignature) return;[cite: 1]
+
+            lastDataSignature = signature;[cite: 1]
+            portalData = data;[cite: 1]
+
+            try {
+                localStorage.setItem("samiti_cached_data", JSON.stringify(data));[cite: 1]
+            } catch (e) {}
+
+            const indicator = document.getElementById("cacheIndicator");[cite: 1]
+            if (indicator) {[cite: 1]
+                indicator.innerText = "● Live Sync";[cite: 1]
+                indicator.classList.remove("hidden");[cite: 1]
+            }
+
+            renderSummaryCards(data.summary);[cite: 1]
+            renderDoughnutChart(data.summary.totalDeposit, data.summary.marketLoan);[cite: 1]
+            renderMembersList(data.members);[cite: 1]
+            populateAdminMemberDropdown(data.members);[cite: 1]
+
+            const notice = document.getElementById("noticeText");[cite: 1]
+            if (notice) {[cite: 1]
+                notice.innerText = data.notice || "कोई नई सूचना नहीं है।";[cite: 1]
+            }
+            const noticeInput = document.getElementById("noticeInput");
+            if (noticeInput && data.notice) {
+                noticeInput.value = data.notice;
+            }
+        }
+
+        async function loadPortalData(showLoader = false) {
+            if (liveSyncBusy) return;[cite: 1]
+            liveSyncBusy = true;[cite: 1]
+
+            if (showLoader) {[cite: 1]
+                const loading = document.getElementById("loading");[cite: 1]
+                if (loading) loading.classList.remove("hidden");[cite: 1]
+            }
+
+            try {
+                const data = await apiGet();
+                liveSyncBusy = false;[cite: 1]
+                const loading = document.getElementById("loading");[cite: 1]
+                if (loading) loading.classList.add("hidden");[cite: 1]
+                applyPortalData(data, !showLoader);[cite: 1]
+            } catch(error) {
+                liveSyncBusy = false;[cite: 1]
+                const loading = document.getElementById("loading");[cite: 1]
+                if (loading) loading.classList.add("hidden");[cite: 1]
+            }
+        }
+
+        function startLiveSync() {
+            if (liveSyncTimer) clearInterval(liveSyncTimer);[cite: 1]
+            liveSyncTimer = setInterval(function() {[cite: 1]
+                if (document.hidden) return;[cite: 1]
+                loadPortalData(false);[cite: 1]
+            }, LIVE_SYNC_INTERVAL);
+        }
+
+        async function manualSync() {
+            const icon = document.getElementById("syncIcon");[cite: 1]
+            if (icon) icon.classList.add("animate-spin");[cite: 1]
+
+            liveSyncBusy = false;[cite: 1]
+            try {
+                const data = await apiGet();
+                if (icon) icon.classList.remove("animate-spin");[cite: 1]
+                applyPortalData(data, false);[cite: 1]
+                if (data && data.status === "SUCCESS") {[cite: 1]
+                    alert("✓ Live Data Synced!");[cite: 1]
+                }
+            } catch(e) {
+                if (icon) icon.classList.remove("animate-spin");[cite: 1]
+                alert("Sync Error!");
+            }
+        }
+
+        function renderSummaryCards(summary) {
+            if (!summary) return;
+            document.getElementById('cardTotalDeposit').innerText = '₹' + summary.totalDeposit.toLocaleString('en-IN');
+            document.getElementById('cardMarketLoan').innerText = '₹' + summary.marketLoan.toLocaleString('en-IN');
+            document.getElementById('cardFineAndInterest').innerText = '₹' + summary.totalFineAndInterest.toLocaleString('en-IN');
+
+            let cashVal = summary.cashBalance;
+            let cashCard = document.getElementById('cardCashBalance');
+            let cashSub = document.getElementById('cardCashSubtitle');
+
+            if (cashVal >= 0) {
+                cashCard.className = "text-2xl font-black mt-1 text-emerald-500";
+                cashCard.innerText = '₹' + cashVal.toLocaleString('en-IN');
+                cashSub.className = "text-[11px] mt-2 font-bold text-emerald-500";
+                cashSub.innerText = "✓ Funds Available";
+            } else {
+                cashCard.className = "text-2xl font-black mt-1 text-rose-500";
+                cashCard.innerText = '-₹' + Math.abs(cashVal).toLocaleString('en-IN');
+                cashSub.className = "text-[11px] mt-2 font-bold text-rose-500";
+                cashSub.innerText = "⚠️ Rotated in Loans";
+            }
+        }
+
+        function renderDoughnutChart(deposit, loan) {
+            const ctx = document.getElementById('samitiDoughnutChart').getContext('2d');
+            if (samitiChart) samitiChart.destroy();
+            
+            samitiChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Total Deposit', 'Market Loan'],
+                    datasets: [{
+                        data: [deposit, loan],
+                        backgroundColor: ['#10b981', '#f59e0b'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans', weight: 'bold' } } } }
+                }
+            });
+        }
+
+        function goHome() {
+            document.getElementById('viewHome').classList.remove('hidden');
+            document.getElementById('viewMetricSummary').classList.add('hidden');
+            document.getElementById('viewMonthDetail').classList.add('hidden');
+            document.getElementById('viewMemberDetail').classList.add('hidden');
+        }
+
+        function toggleTheme() {
+            let isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                document.getElementById('themeIcon').className = "fa-solid fa-moon";
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.remove('light');
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').className = "fa-solid fa-sun";
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function renderMembersList(list) {
+            const grid = document.getElementById('membersGrid');
+            grid.innerHTML = '';
+
+            list.forEach(m => {
+                let jamaList = (portalData.jamaData && portalData.jamaData[m.identityKey]) ? portalData.jamaData[m.identityKey] : [];
+                let hasAugustPaid = jamaList.some(j => j.month.toLowerCase().includes("august") && j.amt > 0);
+
+                let futurePaidMonth = "";
+                let maxIdx = -1;
+                jamaList.forEach(j => {
+                    let idx = monthOrder.findIndex(mo => mo.toLowerCase() === j.month.toLowerCase());
+                    if (idx > 7 && j.amt > 0 && idx > maxIdx) {
+                        maxIdx = idx;
+                        futurePaidMonth = monthOrder[idx];
+                    }
+                });
+
+                let statusBadgeHtml = '';
+                if (futurePaidMonth) {
+                    statusBadgeHtml = `<span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">🟣 Adv (${futurePaidMonth})</span>`;
+                } else if (hasAugustPaid) {
+                    statusBadgeHtml = `<span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">✓ Aug Paid</span>`;
+                } else {
+                    statusBadgeHtml = `<span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">● Aug Due</span>`;
+                }
+
+                const card = document.createElement('div');
+                card.className = "glass-card p-4 rounded-2xl cursor-pointer flex items-center justify-between hover:border-indigo-500/40 transition-all";
+                card.onclick = () => openMemberPage(m);
+
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 font-black flex items-center justify-center">${m.name.charAt(0)}</div>
+                        <div>
+                            <h4 class="font-bold text-theme-main text-sm">${m.name}</h4>
+                            <p class="text-xs text-theme-sub">S/O ${m.father}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        ${statusBadgeHtml}
+                        <p class="text-[10px] text-indigo-400 font-bold mt-1">Passbook →</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function getLoansForMember(memberName) {
+            if (!portalData || !portalData.loanData) return [];
+            let mNameClean = memberName.toLowerCase().replace(/\s+/g, ' ').trim();
+            let matched = [];
+
+            Object.keys(portalData.loanData).forEach(bKey => {
+                let bKeyClean = bKey.toLowerCase().replace(/\s+/g, ' ').trim();
+                if (bKeyClean === mNameClean || mNameClean.includes(bKeyClean) || bKeyClean.includes(mNameClean)) {
+                    if (mNameClean.includes("ashish nandan") && !bKeyClean.includes("nandan") && bKeyClean.includes("rana")) return;
+                    if (mNameClean.includes("ashish rana") && !bKeyClean.includes("rana") && bKeyClean.includes("nandan")) return;
+
+                    matched = matched.concat(portalData.loanData[bKey]);
+                }
+            });
+            return matched;
+        }
+
+        // 🔥 OPEN 12-MONTH PASSBOOK STATEMENT[cite: 1]
+        function openMemberPage(m) {
+            document.getElementById('memberPageAvatar').innerText = m.name.charAt(0).toUpperCase();
+            document.getElementById('memberPageName').innerText = m.name;
+            document.getElementById('memberPageFather').innerText = "S/O " + m.father;
+            
+            document.getElementById('pbMemberName').innerText = m.name;
+            document.getElementById('pbFatherName').innerText = m.father;
+            document.getElementById('pbGenTime').innerText = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+            let jamaList = portalData.jamaData[m.identityKey] || [];
+            let totalJama = jamaList.reduce((s, j) => s + j.amt, 0);
+            let totalFine = jamaList.reduce((s, j) => s + j.fine, 0);
+
+            // 12-Month Loop[cite: 1]
+            let jamaRows = "";
+            monthOrder.forEach(month => {
+                const entry = jamaList.find(
+                    j => String(j.month).toLowerCase() === month.toLowerCase()[cite: 1]
+                );
+
+                const paid = entry && Number(entry.amt) > 0;[cite: 1]
+                const amount = paid ? Number(entry.amt) : 0;[cite: 1]
+                const date = paid ? entry.date : "-";[cite: 1]
+                const fine = paid ? Number(entry.fine || 0) : 0;[cite: 1]
+
+                jamaRows += `
+                    <tr class="hover:bg-slate-50">
+                        <td class="py-0.5 px-2 font-bold text-slate-900">${month}</td>
+                        <td class="py-0.5 px-2 text-slate-600">${date}</td>
+                        <td class="py-0.5 px-2 font-black ${paid ? "text-emerald-700" : "text-slate-400"}">
+                            ₹${amount.toLocaleString("en-IN")}
+                        </td>
+                        <td class="py-0.5 px-2 font-bold ${fine > 0 ? "text-rose-600" : "text-slate-500"}">
+                            ₹${fine.toLocaleString("en-IN")}
+                        </td>
+                        <td class="py-0.5 px-2">
+                            <span class="px-1.5 py-0.2 rounded text-[8px] font-bold ${paid ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"}">
+                                ${paid ? "✓ Paid" : "● Due"}
+                            </span>
+                        </td>
+                    </tr>
+                `;[cite: 1]
+            });
+            document.getElementById("mJamaTable").innerHTML = jamaRows;[cite: 1]
+
+            // Loan Statement[cite: 1]
+            let loanList = getLoansForMember(m.name);
+            let totalLoan = loanList.filter(l => !l.isClosed).reduce((s, l) => s + l.taken, 0);
+            let totalInterest = loanList.reduce((s, l) => s + l.interest, 0);
+
+            let loanRows = "";
+            loanList.forEach(l => {
+                const currentAmount = Number(l.taken || 0);[cite: 1]
+                const interestPaid = Number(l.interest || 0);[cite: 1]
+                const closed = l.isClosed === true;[cite: 1]
+                const monthlyInterest = currentAmount > 0 ? currentAmount * 0.02 : 0;[cite: 1]
+
+                if (closed) {[cite: 1]
+                    loanRows += `
+                        <tr class="bg-emerald-50">
+                            <td class="py-0.5 px-2 font-bold text-slate-900">
+                                ${l.month} <span class="text-[7.5px] text-slate-500">(${l.date || "-"})</span>
+                            </td>
+                            <td class="py-0.5 px-2 font-black text-amber-700">
+                                ₹${currentAmount.toLocaleString("en-IN")}
+                                <div class="text-[7.5px] text-slate-500">Balance: ₹0</div>
+                            </td>
+                            <td class="py-0.5 px-2 font-bold text-purple-700">
+                                Paid: ₹${interestPaid.toLocaleString("en-IN")}
+                            </td>
+                            <td class="py-0.5 px-2">
+                                <span class="px-1.5 py-0.2 rounded text-[8px] font-bold bg-emerald-100 text-emerald-800">✓ CLOSED</span>
+                                <div class="text-[7.5px] text-slate-600">Settled: ₹${l.settlement || "-"}</div>
+                            </td>
+                        </tr>
+                    `;[cite: 1]
+                } else {
+                    loanRows += `
+                        <tr>
+                            <td class="py-0.5 px-2 font-bold text-slate-900">
+                                ${l.month} <span class="text-[7.5px] text-slate-500">(${l.date || "-"})</span>
+                            </td>
+                            <td class="py-0.5 px-2 font-black text-amber-700">
+                                ₹${currentAmount.toLocaleString("en-IN")}
+                            </td>
+                            <td class="py-0.5 px-2 font-bold text-purple-700">
+                                ₹${monthlyInterest.toLocaleString("en-IN")}/mo
+                                <span class="text-[7.5px] text-slate-500 block">Paid: ₹${interestPaid.toLocaleString("en-IN")}</span>
+                            </td>
+                            <td class="py-0.5 px-2">
+                                <span class="px-1.5 py-0.2 rounded text-[8px] font-bold bg-amber-100 text-amber-800">Pending</span>
+                            </td>
+                        </tr>
+                    `;[cite: 1]
+                }
+            });
+
+            document.getElementById("mLoanTable").innerHTML = loanRows || `<tr><td colspan="4" class="p-2 text-center italic text-slate-400">No loan records found.</td></tr>`;[cite: 1]
+
+            document.getElementById('mJamaSum').innerText = '₹' + totalJama.toLocaleString('en-IN');
+            document.getElementById('mLoanSum').innerText = '₹' + totalLoan.toLocaleString('en-IN');
+            document.getElementById('mFineSum').innerText = '₹' + totalFine.toLocaleString('en-IN');
+            document.getElementById('mInterestSum').innerText = '₹' + totalInterest.toLocaleString('en-IN');
+
+            if (isAdmin) {
+                document.getElementById('adminPrintPassbookBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('adminPrintPassbookBtn').classList.add('hidden');
+            }
+
+            document.getElementById('viewHome').classList.add('hidden');
+            document.getElementById('viewMemberDetail').classList.remove('hidden');
+        }
+
+        function printPassbook() {
+            window.print();
+        }
+
+        function filterMembers() {
+            let q = document.getElementById('searchInput').value.toLowerCase();
+            let filtered = portalData.members.filter(m => m.name.toLowerCase().includes(q) || m.father.toLowerCase().includes(q));
+            renderMembersList(filtered);
+        }
+
+        function openCalcModal() { document.getElementById('calcModal').classList.remove('hidden'); }
+        function closeCalcModal() { document.getElementById('calcModal').classList.add('hidden'); }
+
+        function runInterestCalc() {
+            let p = parseFloat(document.getElementById('calcPrincipal').value) || 0;
+            let m = parseInt(document.getElementById('calcMonths').value, 10) || 1;
+            let monthly = (p * 0.02);
+            let totalInt = (monthly * m);
+            let totalPay = p + totalInt;
+
+            document.getElementById('resMonthlyInt').innerText = '₹' + monthly.toLocaleString('en-IN');
+            document.getElementById('resTotalInt').innerText = '₹' + totalInt.toLocaleString('en-IN');
+            document.getElementById('resTotalPayable').innerText = '₹' + totalPay.toLocaleString('en-IN');
+        }
+
+        function openUtrModal() {
+            document.getElementById('utrModal').classList.remove('hidden');
+            let select = document.getElementById('uMemberSelect');
+            select.innerHTML = '<option value="">-- Apna Naam Chunein --</option>';
+            if (portalData && portalData.members) {
+                portalData.members.forEach(m => {
+                    let opt = document.createElement('option');
+                    opt.value = m.name + "|||" + m.father;
+                    opt.innerText = `${m.name} (S/O ${m.father})`;
+                    select.appendChild(opt);
+                });
+            }
+        }
+        function closeUtrModal() { document.getElementById('utrModal').classList.add('hidden'); }
+
+        function toggleUtrAdvance() {
+            let isAdv = document.getElementById('uAdvanceCheck').checked;
+            if (isAdv) {
+                document.getElementById('uSingleMonthBox').classList.add('hidden');
+                document.getElementById('uMultiMonthBox').classList.remove('hidden');
+            } else {
+                document.getElementById('uSingleMonthBox').classList.remove('hidden');
+                document.getElementById('uMultiMonthBox').classList.add('hidden');
+            }
+            calculateUtrAmount();
+        }
+
+        function calculateUtrAmount() {
+            let isAdv = document.getElementById('uAdvanceCheck').checked;
+            if (!isAdv) {
+                document.getElementById('uTotalAmt').value = 200;
+            } else {
+                let from = document.getElementById('uFromMonth').value;
+                let to = document.getElementById('uToMonth').value;
+                let idx1 = monthOrder.indexOf(from);
+                let idx2 = monthOrder.indexOf(to);
+                let count = (idx2 >= idx1) ? (idx2 - idx1 + 1) : 1;
+                document.getElementById('uTotalAmt').value = count * 200;
+            }
+        }
+
+        async function handleUtrSubmit(e) {
+            e.preventDefault();
+            let val = document.getElementById('uMemberSelect').value;
+            if (!val) { alert("Kripya apna naam select karein!"); return; }
+            let parts = val.split('|||');
+
+            let isAdv = document.getElementById('uAdvanceCheck').checked;
+            let data = {
+                name: parts[0],
+                father: parts[1],
+                fromMonth: isAdv ? document.getElementById('uFromMonth').value : document.getElementById('uSingleMonth').value,
+                toMonth: isAdv ? document.getElementById('uToMonth').value : document.getElementById('uSingleMonth').value,
+                totalAmt: document.getElementById('uTotalAmt').value,
+                utr: document.getElementById('uUtrNumber').value.trim()
+            };
+
+            let btn = document.getElementById('btnSubmitUtr');
+            btn.innerText = "Submitting to Samiti Logs...";
+            btn.disabled = true;
+
+            try {
+                const res = await apiPost("SUBMIT_UTR", data);
+                btn.innerText = "Submit Payment for Verification";
+                btn.disabled = false;
+                if (res.status === "SUCCESS") {
+                    alert("✓ Aapka UTR submission record ho gaya! Admin verify karke approve karenge.");
+                    closeUtrModal();
+                    document.getElementById('uUtrNumber').value = '';
+                } else if (res.status === "DUPLICATE") {
+                    alert("⚠️ " + res.message);
+                } else {
+                    alert("Error: " + res.message);
+                }
+            } catch(err) {
+                btn.innerText = "Submit Payment for Verification";
+                btn.disabled = false;
+                alert("Network Error!");
+            }
+        }
+
+        async function toggleAdminMode() {
+            if (!isAdmin) {
+                let pin = prompt("Enter Admin Security PIN:");
+                if (!pin) return;
+
+                const res = await apiPost("VERIFY_PIN", {}, { pin: pin });
+                if (res.success) {
+                    isAdmin = true;
+                    document.getElementById('adminToggleBtn').innerText = "Admin ON";
+                    document.getElementById('adminAddBtn').classList.remove('hidden');
+                    let printBtn = document.getElementById('adminPrintPassbookBtn');
+                    if (printBtn) printBtn.classList.remove('hidden');
+                    alert("Admin Access Granted!");
+                } else {
+                    alert("Wrong PIN!");
+                }
+            } else {
+                isAdmin = false;
+                document.getElementById('adminToggleBtn').innerText = "Admin Login";
+                document.getElementById('adminAddBtn').classList.add('hidden');
+                let printBtn = document.getElementById('adminPrintPassbookBtn');
+                if (printBtn) printBtn.classList.add('hidden');
+            }
+        }
+
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            autoFillAdminDate();
+        }
+        function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
+
+        function autoFillAdminDate() {
+            let today = new Date();
+            let day = String(today.getDate()).padStart(2, '0');
+            let monthNum = String(today.getMonth() + 1).padStart(2, '0');
+            let year = today.getFullYear();
+            let formattedDate = `${day}/${monthNum}/${year}`;
+
+            document.getElementById('lDate').value = formattedDate;
+            document.getElementById('lMonth').value = monthOrder[today.getMonth()];
+            document.getElementById('jDate').value = formattedDate;
+        }
+
+        function switchAdminTab(type) {
+            ['formJama', 'formLoan', 'formUtrVerify', 'formAudit', 'formRequests', 'formPin'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            ['adminTabJama', 'adminTabLoan', 'adminTabUtr', 'adminTabAudit', 'adminTabReq', 'adminTabPin'].forEach(id => {
+                document.getElementById(id).className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0";
+            });
+
+            if (type === 'jama') {
+                document.getElementById('formJama').classList.remove('hidden');
+                document.getElementById('adminTabJama').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0";
+            } else if (type === 'loan') {
+                document.getElementById('formLoan').classList.remove('hidden');
+                document.getElementById('adminTabLoan').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-600 text-white shrink-0";
+                autoFillAdminDate();
+            } else if (type === 'utr') {
+                document.getElementById('formUtrVerify').classList.remove('hidden');
+                document.getElementById('adminTabUtr').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0";
+                loadPendingUtrList();
+            } else if (type === 'audit') {
+                document.getElementById('formAudit').classList.remove('hidden');
+                document.getElementById('adminTabAudit').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white shrink-0";
+            } else if (type === 'requests') {
+                document.getElementById('formRequests').classList.remove('hidden');
+                document.getElementById('adminTabReq').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0";
+                loadEmailAccessAdminData();
+            } else if (type === 'pin') {
+                document.getElementById('formPin').classList.remove('hidden');
+                document.getElementById('adminTabPin').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white shrink-0";
+            }
+        }
+
+        function populateAdminMemberDropdown(members) {
+            let select = document.getElementById('jMemberSelect');
+            select.innerHTML = '<option value="">-- Member Choose Karein --</option>';
+            members.forEach(m => {
+                let opt = document.createElement('option');
+                opt.value = m.name + "|||" + m.father;
+                opt.innerText = m.name + " (S/O " + m.father + ")";
+                select.appendChild(opt);
+            });
+        }
+
+        function onAdminMemberSelect() {
+            let val = document.getElementById('jMemberSelect').value;
+            if (val) {
+                let parts = val.split("|||");
+                document.getElementById('jName').value = parts[0];
+                document.getElementById('jFather').value = parts[1];
+            } else {
+                document.getElementById('jName').value = '';
+                document.getElementById('jFather').value = '';
+            }
+        }
+
+        function toggleAdminJamaAdvance() {
+            let isAdv = document.getElementById('jAdvanceCheck').checked;
+            if (isAdv) {
+                document.getElementById('jSingleMonthBox').classList.add('hidden');
+                document.getElementById('jMultiMonthBox').classList.remove('hidden');
+            } else {
+                document.getElementById('jSingleMonthBox').classList.remove('hidden');
+                document.getElementById('jMultiMonthBox').classList.add('hidden');
+            }
+            calcAdminJamaTotal();
+        }
+
+        function calcAdminJamaTotal() {
+            let isAdv = document.getElementById('jAdvanceCheck').checked;
+            if (!isAdv) {
+                document.getElementById('jAmt').value = 200;
+            } else {
+                let from = document.getElementById('jFromMonth').value;
+                let to = document.getElementById('jToMonth').value;
+                let idx1 = monthOrder.indexOf(from);
+                let idx2 = monthOrder.indexOf(to);
+                let count = (idx2 >= idx1) ? (idx2 - idx1 + 1) : 1;
+                document.getElementById('jAmt').value = count * 200;
+            }
+        }
+
+        async function handleAdminJamaSubmit(e) {
+            e.preventDefault();
+            let btn = document.getElementById('btnSaveJama');
+            btn.innerText = "Saving to Google Sheet...";
+            btn.disabled = true;
+
+            let isAdv = document.getElementById('jAdvanceCheck').checked;
+            let data = {
+                name: document.getElementById('jName').value.trim(),
+                father: document.getElementById('jFather').value.trim(),
+                date: document.getElementById('jDate').value.trim(),
+                isAdvance: isAdv,
+                month: document.getElementById('jMonth').value,
+                fromMonth: document.getElementById('jFromMonth').value,
+                toMonth: document.getElementById('jToMonth').value,
+                amt: document.getElementById('jAmt').value,
+                fine: document.getElementById('jFine').value
+            };
+
+            const res = await apiPost("ADD_JAMA", data);
+            btn.innerText = "Save Jama Entry to Sheet";
+            btn.disabled = false;
+            if (res.status === "SUCCESS") {
+                alert(res.message);
+                closeAdminModal();
+                loadPortalData(true);
+            } else {
+                alert("Error: " + res.message);
+            }
+        }
+
+        async function handleAdminLoanSubmit(e) {
+            e.preventDefault();
+            let btn = document.getElementById('btnSaveLoan');
+            btn.innerText = "Saving Loan...";
+            btn.disabled = true;
+
+            let data = {
+                month: document.getElementById('lMonth').value.trim(),
+                date: document.getElementById('lDate').value.trim(),
+                borrower: document.getElementById('lBorrower').value.trim(),
+                taken: document.getElementById('lTaken').value,
+                interest: document.getElementById('lInterest').value,
+                payDate: document.getElementById('lPayDate').value.trim() || "-",
+                settlement: document.getElementById('lSettlement').value.trim() || "-"
+            };
+
+            const res = await apiPost("ADD_LOAN", data);
+            btn.innerText = "Save Loan Entry to Sheet";
+            btn.disabled = false;
+            if (res.status === "SUCCESS") {
+                alert("✓ Loan Entry successfully saved in Creditors Sheet!");
+                closeAdminModal();
+                loadPortalData(true);
+            } else {
+                alert("Error: " + res.message);
+            }
+        }
+
+        async function loadPendingUtrList() {
+            let container = document.getElementById('pendingUtrContainer');
+            container.innerHTML = '<p class="text-slate-500 italic text-[11px]">Loading UTR list...</p>';
+
+            const res = await apiGet("GET_PENDING_UTR");
+            if (!res.list || res.list.length === 0) {
+                container.innerHTML = '<p class="text-slate-400 text-[11px] bg-box p-3 rounded-xl border">✓ Abhi koi pending UTR request nahi hai.</p>';
+                return;
+            }
+            let html = '';
+            res.list.forEach(u => {
+                html += `<div class="bg-box p-3 rounded-xl border border-slate-700 flex justify-between items-center text-xs">
+                    <div>
+                        <p class="font-bold text-theme-main">${u.name} <span class="text-theme-sub text-[10px]">(S/O ${u.father})</span></p>
+                        <p class="text-[10px] text-indigo-400 font-bold">UTR: ${u.utr} • ₹${u.totalAmt} (${u.fromMonth}${u.fromMonth !== u.toMonth ? ' to ' + u.toMonth : ''})</p>
+                        <p class="text-[9px] text-slate-500">${u.submitTime}</p>
+                    </div>
+                    <div class="flex space-x-1.5">
+                        <button onclick="actionUtr(${u.rowIdx}, 'APPROVE')" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px]">Approve</button>
+                        <button onclick="actionUtr(${u.rowIdx}, 'REJECT')" class="px-2.5 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-[10px]">Reject</button>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        async function actionUtr(rowIdx, act) {
+            let reason = act === "REJECT" ? prompt("Rejection Reason (e.g. Payment not received / Fake UTR):") : "";
+            if (act === "REJECT" && reason === null) return;
+
+            const res = await apiPost("ACTION_UTR", {}, { rowIdx: rowIdx, act: act, reason: reason });
+            if (res.status === "SUCCESS") {
+                alert(`✓ Payment ${act === 'APPROVE' ? 'Approved & Distributed to Monthly Sheets' : 'Rejected'}!`);
+                loadPendingUtrList();
+                loadPortalData(false);
+            } else {
+                alert("Error: " + res.message);
+            }
+        }
+
+        async function saveNoticeBoard() {
+            let notice = document.getElementById('noticeInput').value.trim();
+            let btn = document.getElementById('btnSaveNotice');
+            btn.innerText = "Saving Notice...";
+            btn.disabled = true;
+
+            const res = await apiPost("UPDATE_NOTICE", {}, { notice: notice });
+            btn.innerText = "Save Notice to Sheet";
+            btn.disabled = false;
+            alert(res.message);
+            if (res.status === "SUCCESS") {
+                document.getElementById('noticeText').innerText = notice;
+                loadPortalData(false);
+            }
+        }
+
+        function generateAuditReport() {
+            let m = document.getElementById('auditMonthSelect').value;
+            let container = document.getElementById('auditReportArea');
+            container.classList.remove('hidden');
+
+            let depositors = portalData.monthlyDepositorsList[m] || [];
+            let totalColl = portalData.monthlySummary[m] || 0;
+
+            container.innerHTML = `
+                <div class="border-b-2 border-indigo-900 pb-2 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-lg font-black text-indigo-950 font-hindi uppercase">युवा समिति - मासिक बैठक विवरण</h2>
+                        <p class="text-[10px] font-bold text-indigo-700">Official Monthly Audit & Meeting Report: ${m} 2026</p>
+                    </div>
+                    <button onclick="window.print()" class="px-3 py-1 rounded bg-indigo-900 text-white font-bold text-[10px]">Print Report</button>
+                </div>
+                <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                    <div class="p-2 rounded bg-slate-100 border"><p class="text-[9px] text-slate-500 font-bold">कुल जमा संग्रह</p><p class="font-black text-emerald-700 text-sm">₹${totalColl.toLocaleString('en-IN')}</p></div>
+                    <div class="p-2 rounded bg-slate-100 border"><p class="text-[9px] text-slate-500 font-bold">जमाकर्ता सदस्य</p><p class="font-black text-indigo-700 text-sm">${depositors.length} Members</p></div>
+                    <div class="p-2 rounded bg-slate-100 border"><p class="text-[9px] text-slate-500 font-bold">तारीख</p><p class="font-black text-slate-800 text-xs">${new Date().toLocaleDateString('en-IN')}</p></div>
+                </div>
+                <div class="pt-4 border-t flex justify-between text-[10px] text-slate-600 font-hindi">
+                    <p>कोषाध्यक्ष हस्ताक्षर: ______________</p>
+                    <p>अध्यक्ष हस्ताक्षर: ______________</p>
+                </div>
+            `;
+        }
+
+        async function loadEmailAccessAdminData() {
+            let pendingBox = document.getElementById('pendingRequestsContainer');
+            let approvedBox = document.getElementById('approvedMembersContainer');
+
+            pendingBox.innerHTML = '<p class="text-slate-500 italic text-[11px]">Loading pending requests...</p>';
+            approvedBox.innerHTML = '<p class="text-slate-500 italic text-[11px]">Loading approved members...</p>';
+
+            const res = await apiPost("GET_EMAIL_ADMIN");
+            if (!res.pending || res.pending.length === 0) {
+                pendingBox.innerHTML = '<p class="text-slate-400 text-[11px] bg-box p-2.5 rounded-xl border">✓ Koi pending request nahi hai.</p>';
+            } else {
+                let pHtml = '';
+                res.pending.forEach(r => {
+                    pHtml += `<div class="bg-box p-2.5 rounded-xl border border-slate-700/50 flex justify-between items-center text-xs">
+                        <div>
+                            <p class="font-bold text-theme-main">${r.email}</p>
+                            <p class="text-[10px] text-theme-sub">${r.name} • ${r.date}</p>
+                        </div>
+                        <button onclick="approveEmail('${r.email}', ${r.rowIdx})" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px]">Approve</button>
+                    </div>`;
+                });
+                pendingBox.innerHTML = pHtml;
+            }
+
+            if (!res.approved || res.approved.length === 0) {
+                approvedBox.innerHTML = '<p class="text-slate-400 text-[11px] bg-box p-2.5 rounded-xl border">Abhi koi email approved nahi hai.</p>';
+            } else {
+                let aHtml = '';
+                res.approved.forEach(a => {
+                    aHtml += `<div class="bg-box p-2.5 rounded-xl border border-emerald-500/20 flex justify-between items-center text-xs">
+                        <div>
+                            <p class="font-bold text-theme-main">${a.email}</p>
+                            <p class="text-[10px] text-theme-sub">Approved: ${a.date}</p>
+                        </div>
+                        <button onclick="blockEmailAccess('${a.email}')" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-[11px]">Block / Revoke</button>
+                    </div>`;
+                });
+                approvedBox.innerHTML = aHtml;
+            }
+        }
+
+        async function approveEmail(email, rowIdx) {
+            const res = await apiPost("APPROVE_EMAIL", {}, { email: email, rowIdx: rowIdx });
+            if (res.status === "SUCCESS") {
+                alert("Access Approved: " + email);
+                loadEmailAccessAdminData();
+            }
+        }
+
+        async function blockEmailAccess(email) {
+            if (confirm("Kya aap " + email + " ka access BAND karna chahte hain?")) {
+                const res = await apiPost("REVOKE_EMAIL", {}, { email: email });
+                if (res.status === "SUCCESS") {
+                    alert("Access Blocked: " + email);
+                    loadEmailAccessAdminData();
+                }
+            }
+        }
+
+        async function handlePinChange(e) {
+            e.preventDefault();
+            let oldPin = document.getElementById('pOldPin').value.trim();
+            let newPin = document.getElementById('pNewPin').value.trim();
+            let confirmPin = document.getElementById('pConfirmPin').value.trim();
+
+            if (newPin !== confirmPin) { alert("Naya PIN aur Confirm PIN match nahi ho rahe!"); return; }
+
+            const res = await apiPost("CHANGE_PIN", {}, { oldPin: oldPin, newPin: newPin });
+            alert(res.message);
+            if (res.status === "SUCCESS") closeAdminModal();
+        }
+
+        function openMetricSummary(type) {
+            let title = document.getElementById('summaryPageTitle');
+            let content = document.getElementById('summaryPageContent');
+
+            if (type === 'deposit') {
+                title.innerText = "Total Deposit Summary";
+                let sortedMonthKeys = Object.keys(portalData.monthlySummary).sort((a, b) => {
+                    let cleanA = a.replace(/[^a-zA-Z]/g, '').trim();
+                    let cleanB = b.replace(/[^a-zA-Z]/g, '').trim();
+                    let idxA = monthOrder.findIndex(m => m.toLowerCase() === cleanA.toLowerCase());
+                    let idxB = monthOrder.findIndex(m => m.toLowerCase() === cleanB.toLowerCase());
+                    return (idxA === -1 ? 99 : idxA) - (idxB === -1 ? 99 : idxB);
+                });
+
+                let monthRows = '';
+                sortedMonthKeys.forEach(m => {
+                    monthRows += `<div onclick="openMonthDepositorsDetail('${m}')" class="bg-box p-4 rounded-2xl border flex justify-between items-center text-xs font-bold cursor-pointer hover:border-indigo-500/50 transition-all shadow-sm">
+                        <span class="text-theme-main text-sm"><i class="fa-regular fa-calendar-check text-indigo-400 mr-2"></i>${m} Collection:</span>
+                        <span class="text-emerald-500 font-black text-sm">₹${portalData.monthlySummary[m].toLocaleString('en-IN')} <span class="text-[10px] text-indigo-400 font-bold ml-1">(View List →)</span></span>
+                    </div>`;
+                });
+
+                content.innerHTML = `<div class="space-y-3">${monthRows}</div>`;
+            } else if (type === 'loan') {
+                title.innerText = "Market Loan Summary";
+                let activeHtml = portalData.activeLoans.map(l => `
+                    <div class="bg-box p-3.5 rounded-2xl border border-amber-500/40 flex justify-between items-center text-xs">
+                        <div>
+                            <p class="font-bold text-theme-main">${l.borrower} <span class="bg-amber-500/20 text-amber-500 text-[10px] px-2 py-0.5 rounded font-black">Pending Loan</span></p>
+                            <p class="text-[10px] text-theme-sub">${l.month} ${l.date} • Monthly Int: ₹${(l.taken * 0.02).toLocaleString('en-IN')}/mo</p>
+                        </div>
+                        <div class="text-right"><p class="font-black text-amber-500">₹${l.taken.toLocaleString('en-IN')}</p><p class="text-[10px] text-purple-400 font-bold">Paid: ₹${l.interest.toLocaleString('en-IN')}</p></div>
+                    </div>
+                `).join('');
+                content.innerHTML = `<div class="space-y-2">${activeHtml || '<p class="text-xs text-theme-sub italic">No pending loans.</p>'}</div>`;
+            } else if (type === 'fine_interest') {
+                title.innerText = "Total Fine & Interest Summary";
+                let fineHtml = portalData.fineRecordsList.map(f => `
+                    <div class="bg-box p-3.5 rounded-2xl border border-rose-500/30 flex justify-between items-center text-xs">
+                        <p class="font-bold text-theme-main">${f.name} (${f.month})</p>
+                        <span class="font-black text-rose-500">Fine: ₹${f.fine.toLocaleString('en-IN')}</span>
+                    </div>
+                `).join('');
+                content.innerHTML = `<div class="space-y-2">${fineHtml || '<p class="text-xs text-theme-sub italic">No fine records.</p>'}</div>`;
+            }
+
+            document.getElementById('viewHome').classList.add('hidden');
+            document.getElementById('viewMetricSummary').classList.remove('hidden');
+        }
+
+        function openMonthDepositorsDetail(monthName) {
+            document.getElementById('monthDetailTitle').innerText = monthName + " - Member Deposits List";
+            let depositors = portalData.monthlyDepositorsList[monthName] || [];
+            let rows = depositors.map(d => `
+                <tr>
+                    <td class="py-2.5 px-4 font-bold text-theme-main">${d.name}</td>
+                    <td class="py-2.5 px-4 text-theme-sub">${d.father}</td>
+                    <td class="py-2.5 px-4 text-theme-sub">${d.date || '-'}</td>
+                    <td class="py-2.5 px-4 font-black text-emerald-500">₹${d.amt.toLocaleString('en-IN')}</td>
+                    <td class="py-2.5 px-4 font-bold ${d.fine > 0 ? 'text-amber-500' : 'text-theme-sub'}">₹${d.fine.toLocaleString('en-IN')}</td>
+                </tr>
+            `).join('');
+            document.getElementById('monthDepositorsTable').innerHTML = rows || `<tr><td colspan="5" class="p-4 text-center italic text-theme-sub">No deposits for this month.</td></tr>`;
+            document.getElementById('viewMetricSummary').classList.add('hidden');
+            document.getElementById('viewMonthDetail').classList.remove('hidden');
+        }
+
+        window.onload = initPortal;
+    </script>
+</body>
+</html>
