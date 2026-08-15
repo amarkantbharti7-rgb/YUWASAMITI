@@ -124,16 +124,13 @@
         </div>
     </header>
 
-    <!-- 📢 NOTICE STRIP -->
-    <div id="noticeBoardStrip" class="bg-gradient-to-r from-indigo-950 via-purple-950 to-slate-900 border-b border-indigo-500/30 py-2 px-3 sm:px-4">
-        <div class="max-w-7xl mx-auto flex items-center justify-between text-xs">
-            <div class="flex items-center space-x-2 overflow-hidden">
-                <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-black text-[9px] uppercase shrink-0 border border-amber-500/30 animate-pulse">📢 सूचना</span>
-                <p id="noticeText" class="text-slate-200 font-semibold text-[11px] truncate">मासिक बैठक: हर माह की १० तारीख को अनिवार्य। समय पर मासिक अंशदान जमा करें।</p>
-            </div>
-            <span id="cacheIndicator" class="text-[9px] text-emerald-400 font-bold hidden shrink-0 ml-2">● Live</span>
-        </div>
-    </div>
+    <div id="noticeBoardStrip" class="bg-gradient-to-r from-amber-600 via-purple-700 to-indigo-900 border-y-2 border-amber-400 py-3.5 px-4 flex items-center gap-3 shadow-lg">
+  <span class="px-3 py-1.5 rounded-xl bg-slate-950 text-amber-400 border border-amber-400/50 font-black text-xs sm:text-sm uppercase shrink-0 shadow animate-pulse">📢 आवश्यक सूचना</span>
+  <div class="marquee-wrapper overflow-hidden w-full">
+    <p id="noticeText" class="marquee-content text-white font-extrabold text-sm sm:text-base tracking-wide drop-shadow">मासिक बैठक: हर माह की १० तारीख को अनिवार्य। समय पर मासिक अंशदान जमा करें।</p>
+  </div>
+  <span id="cacheIndicator" class="text-[11px] bg-emerald-950 text-emerald-400 border border-emerald-500/40 px-2.5 py-1 rounded-full font-bold hidden shrink-0">● Live</span>
+</div>
 
     <!-- Spinner -->
     <div id="loading" class="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center space-y-3">
