@@ -88,50 +88,50 @@
         </div>
     </div>
 
-    <!-- 🚩 HEADER -->
+    <!-- 🚩 MOBILE-FIRST RESPONSIVE HEADER -->
     <header class="border-b border-slate-800 bg-slate-900/95 sticky top-0 z-40 backdrop-blur-xl shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-            <div onclick="goHome()" class="flex items-center space-x-3.5 cursor-pointer group">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center font-black text-2xl text-white shadow-xl group-hover:scale-105 transition-transform">यु</div>
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2">
+            <div onclick="goHome()" class="flex items-center space-x-2 cursor-pointer group shrink-0">
+                <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center font-black text-lg sm:text-xl text-white shadow">यु</div>
                 <div>
-                    <h1 class="text-2xl font-black text-white tracking-tight group-hover:text-indigo-400 transition-colors">युवा समिति</h1>
-                    <p class="text-[11px] text-slate-400 font-bold flex items-center gap-1.5">
+                    <h1 class="text-base sm:text-xl font-black text-white tracking-tight group-hover:text-indigo-400 transition-colors leading-tight">युवा समिति</h1>
+                    <p class="text-[9px] sm:text-[11px] text-slate-400 font-bold flex items-center gap-1">
                         <i class="fa-solid fa-clock text-amber-400"></i>
-                        <span id="istClock">Loading IST...</span>
+                        <span id="istClock">IST...</span>
                     </p>
                 </div>
             </div>
-            <div class="flex items-center space-x-2">
-                <button onclick="openCalcModal()" title="2% Byaj Calculator" class="w-10 h-10 rounded-xl bg-purple-600/20 border border-purple-500/40 text-purple-400 flex items-center justify-center text-sm hover:bg-purple-600 hover:text-white transition-all shadow">
+            <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
+                <button onclick="openCalcModal()" title="2% Byaj Calculator" class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-purple-600/20 border border-purple-500/40 text-purple-400 flex items-center justify-center text-xs hover:bg-purple-600 hover:text-white transition-all shadow shrink-0">
                     <i class="fa-solid fa-calculator"></i>
                 </button>
-                <button onclick="openUtrModal()" title="Online Payment Submit (UTR)" class="px-3 py-2 rounded-xl text-xs font-black bg-indigo-600/30 border border-indigo-500/50 text-indigo-300 hover:bg-indigo-600 hover:text-white transition-all shadow">
+                <button onclick="openUtrModal()" title="Online Payment Submit (UTR)" class="px-2.5 py-1.5 rounded-lg text-[11px] font-black bg-indigo-600 text-white hover:bg-indigo-500 transition-all shadow shrink-0">
                     <i class="fa-solid fa-receipt mr-1"></i> Pay UTR
                 </button>
-                <button onclick="manualSync()" title="Live Sync Data" class="w-10 h-10 rounded-xl bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-sm hover:bg-emerald-600 hover:text-white transition-all shadow">
+                <button onclick="manualSync()" title="Live Sync Data" class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-xs hover:bg-emerald-600 hover:text-white transition-all shadow shrink-0">
                     <i id="syncIcon" class="fa-solid fa-rotate"></i>
                 </button>
-                <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 text-amber-400 flex items-center justify-center text-base shadow">
+                <button onclick="toggleTheme()" class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-slate-800 border border-slate-700 text-amber-400 flex items-center justify-center text-xs shadow shrink-0">
                     <i id="themeIcon" class="fa-solid fa-sun"></i>
                 </button>
-                <button onclick="openAdminModal()" id="adminAddBtn" class="hidden px-3.5 py-2 rounded-xl text-xs font-black bg-emerald-600 text-white hover:bg-emerald-500 shadow-lg">
-                    <i class="fa-solid fa-sliders mr-1"></i> Admin Panel
+                <button onclick="openAdminModal()" id="adminAddBtn" class="hidden px-2.5 py-1.5 rounded-lg text-[11px] font-black bg-emerald-600 text-white hover:bg-emerald-500 shadow shrink-0">
+                    <i class="fa-solid fa-sliders mr-1"></i> Admin
                 </button>
-                <button onclick="toggleAdminMode()" id="adminToggleBtn" class="px-3.5 py-2 rounded-xl text-xs font-bold border bg-slate-800 border-slate-700 text-slate-300 hover:text-white shadow">
-                    <i class="fa-solid fa-user-gear text-indigo-400 mr-1"></i> Admin Login
+                <button onclick="toggleAdminMode()" id="adminToggleBtn" class="px-2.5 py-1.5 rounded-lg text-[11px] font-bold border bg-slate-800 border-slate-700 text-slate-300 hover:text-white shadow shrink-0">
+                    <i class="fa-solid fa-user-gear text-indigo-400 mr-1"></i> Login
                 </button>
             </div>
         </div>
     </header>
 
     <!-- 📢 NOTICE STRIP -->
-    <div id="noticeBoardStrip" class="bg-gradient-to-r from-indigo-950 via-purple-950 to-slate-900 border-b border-indigo-500/30 py-2.5 px-4">
+    <div id="noticeBoardStrip" class="bg-gradient-to-r from-indigo-950 via-purple-950 to-slate-900 border-b border-indigo-500/30 py-2 px-3 sm:px-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between text-xs">
-            <div class="flex items-center space-x-2.5 overflow-hidden">
-                <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-black text-[10px] uppercase shrink-0 border border-amber-500/30 animate-pulse">📢 सूचना</span>
-                <p id="noticeText" class="text-slate-200 font-semibold truncate">मासिक बैठक: हर माह की १० तारीख को अनिवार्य। समय पर मासिक अंशदान जमा करें।</p>
+            <div class="flex items-center space-x-2 overflow-hidden">
+                <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-black text-[9px] uppercase shrink-0 border border-amber-500/30 animate-pulse">📢 सूचना</span>
+                <p id="noticeText" class="text-slate-200 font-semibold text-[11px] truncate">मासिक बैठक: हर माह की १० तारीख को अनिवार्य। समय पर मासिक अंशदान जमा करें।</p>
             </div>
-            <span id="cacheIndicator" class="text-[10px] text-emerald-400 font-bold hidden shrink-0 ml-2">● Live Sync</span>
+            <span id="cacheIndicator" class="text-[9px] text-emerald-400 font-bold hidden shrink-0 ml-2">● Live</span>
         </div>
     </div>
 
@@ -145,7 +145,7 @@
     <div id="calcModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
         <div class="glass-card w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl border border-purple-500/40">
             <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
-                <h3 class="text-base font-black text-theme-main"><i class="fa-solid fa-calculator text-purple-400 mr-2"></i>2% ब्याज कैलकुलेटर (Interest Tool)</h3>
+                <h3 class="text-base font-black text-theme-main"><i class="fa-solid fa-calculator text-purple-400 mr-2"></i>2% ब्याज कैलकुलेटर</h3>
                 <button onclick="closeCalcModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="space-y-3 text-xs">
@@ -166,88 +166,121 @@
         </div>
     </div>
 
-    <!-- 📲 UTR MODAL -->
+    <!-- 📲 MULTI-OPTION MEMBER UTR PAYMENT MODAL (FULL / HALF / BYAJ / JAMA) -->
     <div id="utrModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-card w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl border border-indigo-500/40">
-            <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
-                <h3 class="text-base font-black text-theme-main"><i class="fa-solid fa-receipt text-indigo-400 mr-2"></i>Online Payment (UTR) Darj Karein</h3>
+        <div class="glass-card w-full max-w-md rounded-3xl p-5 space-y-3.5 shadow-2xl border border-indigo-500/40 max-h-[92vh] overflow-y-auto custom-scrollbar">
+            <div class="flex items-center justify-between border-b border-slate-700/50 pb-2.5">
+                <h3 class="text-sm font-black text-theme-main"><i class="fa-solid fa-receipt text-indigo-400 mr-2"></i>Online Payment (UTR) Submit</h3>
                 <button onclick="closeUtrModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <form onsubmit="handleUtrSubmit(event)" class="space-y-3 text-xs">
                 <div>
-                    <label class="block font-bold text-theme-sub mb-1">Select Member:</label>
-                    <select id="uMemberSelect" required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                    <label class="block font-bold text-theme-sub mb-1">Select Member Name:</label>
+                    <select id="uMemberSelect" onchange="onUtrMemberSelect()" required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
                         <option value="">-- Apna Naam Chunein --</option>
                     </select>
                 </div>
-                <div class="flex items-center space-x-2 py-1">
-                    <input type="checkbox" id="uAdvanceCheck" onchange="toggleUtrAdvance()" class="w-4 h-4 rounded text-indigo-600">
-                    <label for="uAdvanceCheck" class="font-bold text-amber-400 cursor-pointer">Advance / Multi-Month Payment?</label>
+
+                <!-- Active Loan Alert Banner -->
+                <div id="uActiveLoanInfo" class="hidden p-2.5 bg-amber-500/10 border border-amber-500/30 rounded-xl text-[11px] text-amber-400 font-bold space-y-1">
+                    <p><i class="fa-solid fa-circle-exclamation mr-1"></i> Aapka Active Loan: <span id="uActiveLoanAmt" class="font-black">₹0</span></p>
                 </div>
-                <div id="uSingleMonthBox">
-                    <label class="block font-bold text-theme-sub mb-1">Month:</label>
-                    <select id="uSingleMonth" onchange="calculateUtrAmount()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
-                </div>
-                <div id="uMultiMonthBox" class="grid grid-cols-2 gap-2 hidden">
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">From Month:</label>
-                        <select id="uFromMonth" onchange="calculateUtrAmount()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
+
+                <!-- PAYMENT BREAKDOWN CHECKBOXES -->
+                <div class="p-3 bg-indigo-950/20 border border-indigo-500/30 rounded-2xl space-y-2.5">
+                    <p class="font-black text-indigo-400 text-[10.5px] uppercase"><i class="fa-solid fa-layer-group mr-1"></i> Payment Options (Kaunsa Paisa De Rahe Hain?)</p>
+                    
+                    <!-- 1. Monthly Jama -->
+                    <div class="border-b border-slate-700/40 pb-2">
+                        <div class="flex items-center justify-between">
+                            <label for="uPayJamaCheck" class="font-bold text-slate-200 cursor-pointer">1. मासिक अंशदान (Monthly Jama ₹200):</label>
+                            <input type="checkbox" id="uPayJamaCheck" checked onchange="toggleUtrJamaFields()" class="w-4 h-4 rounded text-indigo-600">
+                        </div>
+                        <div id="uJamaFieldsBox" class="mt-2 space-y-2">
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="uAdvanceCheck" onchange="toggleUtrAdvance()" class="w-3.5 h-3.5 rounded text-indigo-600">
+                                <label for="uAdvanceCheck" class="font-bold text-amber-400 cursor-pointer text-[10.5px]">Advance / Multi-Month?</label>
+                            </div>
+                            <div id="uSingleMonthBox">
+                                <select id="uSingleMonth" onchange="calculateUtrTotal()" class="w-full bg-box border border-slate-700 rounded-lg p-2 text-theme-main font-bold"></select>
+                            </div>
+                            <div id="uMultiMonthBox" class="grid grid-cols-2 gap-2 hidden">
+                                <select id="uFromMonth" onchange="calculateUtrTotal()" class="w-full bg-box border border-slate-700 rounded-lg p-2 text-theme-main font-bold"></select>
+                                <select id="uToMonth" onchange="calculateUtrTotal()" class="w-full bg-box border border-slate-700 rounded-lg p-2 text-theme-main font-bold"></select>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">To Month:</label>
-                        <select id="uToMonth" onchange="calculateUtrAmount()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
+
+                    <!-- 2. Late Fine -->
+                    <div class="flex items-center justify-between border-b border-slate-700/40 pb-2">
+                        <label class="font-bold text-slate-300">2. विलंब शुल्क (Late Fine ₹):</label>
+                        <input type="number" id="uFineAmt" value="0" min="0" oninput="calculateUtrTotal()" placeholder="₹0" class="w-28 bg-box border border-slate-700 rounded-lg p-1.5 text-right font-bold text-rose-400">
+                    </div>
+
+                    <!-- 3. Loan Monthly Interest (2%) -->
+                    <div class="flex items-center justify-between border-b border-slate-700/40 pb-2">
+                        <label class="font-bold text-purple-300">3. ऋण का 2% ब्याज (Interest ₹):</label>
+                        <input type="number" id="uLoanInterest" value="0" min="0" oninput="calculateUtrTotal()" placeholder="₹0" class="w-28 bg-box border border-purple-500/40 rounded-lg p-1.5 text-right font-bold text-purple-400">
+                    </div>
+
+                    <!-- 4. Half / Partial Loan Repayment -->
+                    <div class="flex items-center justify-between border-b border-slate-700/40 pb-2">
+                        <label class="font-bold text-amber-300">4. आंशिक/आधी ऋण वापसी (Part Repay ₹):</label>
+                        <input type="number" id="uLoanPartRepay" value="0" min="0" oninput="calculateUtrTotal()" placeholder="₹0" class="w-28 bg-box border border-amber-500/40 rounded-lg p-1.5 text-right font-bold text-amber-400">
+                    </div>
+
+                    <!-- 5. Full Loan Settlement -->
+                    <div class="flex items-center justify-between">
+                        <label class="font-bold text-emerald-300">5. पूरा ऋण क्लीयर (Full Settlement ₹):</label>
+                        <input type="number" id="uLoanSettlement" value="0" min="0" oninput="calculateUtrTotal()" placeholder="₹0" class="w-28 bg-box border border-emerald-500/40 rounded-lg p-1.5 text-right font-bold text-emerald-400">
                     </div>
                 </div>
+
                 <div>
-                    <label class="block font-bold text-theme-sub mb-1">Total Amount (₹200/Month):</label>
+                    <label class="block font-bold text-theme-sub mb-1">Total Payable Amount (कुल देय राशि):</label>
                     <input type="number" id="uTotalAmt" readonly value="200" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-emerald-400 font-black text-sm">
                 </div>
                 <div>
-                    <label class="block font-bold text-theme-sub mb-1">Bank Ref / 12-Digit UTR Number:</label>
-                    <input type="text" id="uUtrNumber" required placeholder="e.g. 623489123456" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                    <label class="block font-bold text-theme-sub mb-1">12-Digit UTR / Bank Ref Number:</label>
+                    <input type="text" id="uUtrNumber" required placeholder="e.g. 622751284910" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
                 </div>
                 <button type="submit" id="btnSubmitUtr" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-lg">Submit Payment for Verification</button>
             </form>
         </div>
     </div>
 
-    <!-- 🔑 ADMIN MODAL -->
+    <!-- 🔑 ADMIN MODAL (WITH 1-CLICK ROLLBACK TOOL) -->
     <div id="adminModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-card w-full max-w-2xl rounded-3xl p-6 space-y-4 shadow-2xl border border-emerald-500/40">
+        <div class="glass-card w-full max-w-2xl rounded-3xl p-5 sm:p-6 space-y-4 shadow-2xl border border-emerald-500/40 max-h-[92vh] overflow-y-auto custom-scrollbar">
             <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
-                <h3 class="text-base font-black text-theme-main"><i class="fa-solid fa-sliders text-emerald-400 mr-2"></i>Admin Master Control Panel</h3>
+                <h3 class="text-sm sm:text-base font-black text-theme-main"><i class="fa-solid fa-sliders text-emerald-400 mr-2"></i>Admin Master Control Panel</h3>
                 <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
             <!-- TABS -->
             <div class="flex space-x-2 border-b border-slate-700/40 pb-3 overflow-x-auto custom-scrollbar">
-                <button onclick="switchAdminTab('jama')" id="adminTabJama" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0"><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Jama Entry</button>
-                <button onclick="switchAdminTab('loan')" id="adminTabLoan" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-file-invoice-dollar mr-1"></i> Loan Entry</button>
-                <button onclick="switchAdminTab('utr')" id="adminTabUtr" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-receipt mr-1"></i> Verify UTR</button>
-                <button onclick="switchAdminTab('audit')" id="adminTabAudit" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-file-lines mr-1"></i> Monthly Audit</button>
-                <button onclick="switchAdminTab('requests')" id="adminTabReq" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-user-lock mr-1"></i> Email Access</button>
-                <button onclick="switchAdminTab('pin')" id="adminTabPin" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-gear mr-1"></i> Settings & Notice</button>
+                <button onclick="switchAdminTab('jama')" id="adminTabJama" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0"><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Jama Entry</button>
+                <button onclick="switchAdminTab('loan')" id="adminTabLoan" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-file-invoice-dollar mr-1"></i> Loan Entry</button>
+                <button onclick="switchAdminTab('utr')" id="adminTabUtr" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-receipt mr-1"></i> Verify UTR</button>
+                <button onclick="switchAdminTab('rollback')" id="adminTabRollback" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-rose-400 shrink-0"><i class="fa-solid fa-rotate-left mr-1"></i> Rollback / Undo</button>
+                <button onclick="switchAdminTab('audit')" id="adminTabAudit" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-file-lines mr-1"></i> Audit</button>
+                <button onclick="switchAdminTab('requests')" id="adminTabReq" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-user-lock mr-1"></i> Access</button>
+                <button onclick="switchAdminTab('pin')" id="adminTabPin" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0"><i class="fa-solid fa-gear mr-1"></i> Settings</button>
             </div>
 
             <!-- 1. SMART JAMA FORM -->
             <form id="formJama" onsubmit="handleAdminJamaSubmit(event)" class="space-y-3 text-xs">
                 <div class="flex items-center space-x-2 bg-indigo-950/30 p-2.5 rounded-xl border border-indigo-500/30">
                     <input type="checkbox" id="jAdvanceCheck" onchange="toggleAdminJamaAdvance()" class="w-4 h-4 rounded text-indigo-600">
-                    <label for="jAdvanceCheck" class="font-bold text-amber-400 cursor-pointer">Advance / Multi-Month Jama (Auto Sheet Distribution)?</label>
+                    <label for="jAdvanceCheck" class="font-bold text-amber-400 cursor-pointer">Advance / Multi-Month Jama?</label>
                 </div>
                 <div id="jSingleMonthBox">
                     <label class="block font-bold text-theme-sub mb-1">Select Month:</label>
                     <select id="jMonth" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
                 </div>
                 <div id="jMultiMonthBox" class="grid grid-cols-2 gap-2 hidden">
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">From Month:</label>
-                        <select id="jFromMonth" onchange="calcAdminJamaTotal()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
-                    </div>
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">To Month:</label>
-                        <select id="jToMonth" onchange="calcAdminJamaTotal()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
-                    </div>
+                    <select id="jFromMonth" onchange="calcAdminJamaTotal()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
+                    <select id="jToMonth" onchange="calcAdminJamaTotal()" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
                 </div>
                 <div>
                     <label class="block font-bold text-theme-sub mb-1">Select Member:</label>
@@ -256,181 +289,132 @@
                     </select>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Member Name:</label>
-                        <input type="text" id="jName" readonly required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold bg-slate-800/40">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Father's Name (Auto):</label>
-                        <input type="text" id="jFather" readonly required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold bg-slate-800/40">
-                    </div>
+                    <input type="text" id="jName" readonly required placeholder="Member Name" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold bg-slate-800/40">
+                    <input type="text" id="jFather" readonly required placeholder="Father Name" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold bg-slate-800/40">
                 </div>
                 <div class="grid grid-cols-3 gap-2">
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Date:</label>
-                        <input type="text" id="jDate" placeholder="15/08/2026" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Total Amount (₹):</label>
-                        <input type="number" id="jAmt" value="200" required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Fine (₹):</label>
-                        <input type="number" id="jFine" value="0" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
-                    </div>
+                    <input type="text" id="jDate" placeholder="15/08/2026" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
+                    <input type="number" id="jAmt" value="200" required placeholder="Amount ₹" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                    <input type="number" id="jFine" value="0" placeholder="Fine ₹" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
                 </div>
-                <button type="submit" id="btnSaveJama" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow-lg">Save Jama Entry to Sheet</button>
+                <button type="submit" id="btnSaveJama" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow-lg">Save Jama Entry</button>
             </form>
 
             <!-- 2. LOAN FORM -->
             <form id="formLoan" onsubmit="handleAdminLoanSubmit(event)" class="space-y-3 text-xs hidden">
                 <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Month:</label>
-                        <input type="text" id="lMonth" placeholder="August" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Date:</label>
-                        <input type="text" id="lDate" placeholder="15/08/2026" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
-                    </div>
+                    <input type="text" id="lMonth" placeholder="August" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                    <input type="text" id="lDate" placeholder="15/08/2026" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
                 </div>
                 <div>
-                    <label class="block font-bold text-theme-sub mb-1">Borrower Full Name:</label>
-                    <input type="text" id="lBorrower" required placeholder="e.g. Ashish Rana" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
+                    <input type="text" id="lBorrower" required placeholder="Borrower Full Name" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Loan Taken (₹):</label>
-                        <input type="number" id="lTaken" required class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Interest Paid (₹):</label>
-                        <input type="number" id="lInterest" value="0" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
-                    </div>
+                    <input type="number" id="lTaken" required placeholder="Loan Taken ₹" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
+                    <input type="number" id="lInterest" value="0" placeholder="Interest Paid ₹" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Repay Date:</label>
-                        <input type="text" id="lPayDate" value="-" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Settlement (₹):</label>
-                        <input type="text" id="lSettlement" value="-" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
-                    </div>
+                    <input type="text" id="lPayDate" value="-" placeholder="Repay Date" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
+                    <input type="text" id="lSettlement" value="-" placeholder="Settlement ₹" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main">
                 </div>
-                <button type="submit" id="btnSaveLoan" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold shadow-lg">Save Loan Entry to Sheet</button>
+                <button type="submit" id="btnSaveLoan" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold shadow-lg">Save Loan Entry</button>
             </form>
 
             <!-- 3. VERIFY UTR -->
             <div id="formUtrVerify" class="space-y-3 text-xs hidden max-h-[380px] overflow-y-auto custom-scrollbar">
-                <h4 class="font-black text-indigo-400 uppercase text-[11px]"><i class="fa-solid fa-receipt mr-1"></i> Pending Online UTR Submissions</h4>
-                <div id="pendingUtrContainer" class="space-y-2">
-                    <p class="text-slate-500 italic">Checking pending UTR logs...</p>
-                </div>
+                <h4 class="font-black text-indigo-400 uppercase text-[11px]"><i class="fa-solid fa-receipt mr-1"></i> Pending UTR Submissions</h4>
+                <div id="pendingUtrContainer" class="space-y-2"></div>
             </div>
 
-            <!-- 4. MONTHLY AUDIT -->
+            <!-- 4. ↩️ 1-CLICK ROLLBACK / UNDO TAB -->
+            <div id="formRollback" class="space-y-3 text-xs hidden max-h-[380px] overflow-y-auto custom-scrollbar">
+                <div class="p-3 bg-rose-950/20 border border-rose-500/30 rounded-2xl">
+                    <h4 class="font-black text-rose-400 uppercase text-[11px]"><i class="fa-solid fa-rotate-left mr-1"></i> Mistaken Entry Rollback (Undo Engine)</h4>
+                    <p class="text-slate-400 text-[10px] mt-0.5">Yahan se galat approve hua UTR 1-click me cancel ho jayega aur uski row dono sheets se delete ho jayegi.</p>
+                </div>
+                <div id="rollbackLogsContainer" class="space-y-2"></div>
+            </div>
+
+            <!-- 5. MONTHLY AUDIT -->
             <div id="formAudit" class="space-y-4 text-xs hidden">
-                <div class="flex items-center space-x-3">
-                    <div class="w-full">
-                        <label class="block font-bold text-theme-sub mb-1">Select Audit Month:</label>
-                        <select id="auditMonthSelect" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
-                    </div>
-                    <button onclick="generateAuditReport()" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold shrink-0 mt-5 shadow">Generate 1-Page Report</button>
+                <div class="flex items-center space-x-2">
+                    <select id="auditMonthSelect" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold"></select>
+                    <button onclick="generateAuditReport()" class="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold shrink-0 shadow">Generate</button>
                 </div>
-                <div id="auditReportArea" class="hidden glass-card p-5 rounded-2xl border border-slate-700/50 space-y-4 bg-white text-slate-900"></div>
+                <div id="auditReportArea" class="hidden glass-card p-4 rounded-2xl border border-slate-700/50 space-y-4 bg-white text-slate-900"></div>
             </div>
 
-            <!-- 5. EMAIL ACCESS -->
+            <!-- 6. EMAIL ACCESS -->
             <div id="formRequests" class="space-y-4 text-xs hidden max-h-[380px] overflow-y-auto custom-scrollbar pr-1">
-                <div class="space-y-2">
-                    <h4 class="font-black text-amber-400 uppercase text-[11px]"><i class="fa-solid fa-clock-rotate-left mr-1"></i> Pending Requests</h4>
-                    <div id="pendingRequestsContainer" class="space-y-2"><p class="text-slate-500 italic">Checking pending requests...</p></div>
-                </div>
-                <div class="space-y-2 pt-3 border-t border-slate-700/50">
-                    <h4 class="font-black text-emerald-400 uppercase text-[11px]"><i class="fa-solid fa-circle-check mr-1"></i> Approved Members</h4>
-                    <div id="approvedMembersContainer" class="space-y-2"><p class="text-slate-500 italic">Loading approved list...</p></div>
-                </div>
+                <div id="pendingRequestsContainer" class="space-y-2"></div>
+                <div id="approvedMembersContainer" class="space-y-2 pt-3 border-t border-slate-700/50"></div>
             </div>
 
-            <!-- 6. SETTINGS & NOTICE -->
+            <!-- 7. SETTINGS & NOTICE -->
             <div id="formPin" class="space-y-4 text-xs hidden">
-                <div class="p-3.5 bg-indigo-950/30 rounded-2xl border border-indigo-500/30 space-y-2">
-                    <h4 class="font-black text-indigo-400 uppercase text-[11px]"><i class="fa-solid fa-bullhorn mr-1"></i> Update Notice Board Text</h4>
-                    <textarea id="noticeInput" rows="2" placeholder="Naya notice ailan yahan likhein..." class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold text-xs"></textarea>
-                    <button onclick="saveNoticeBoard()" id="btnSaveNotice" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold">Save Notice to Sheet</button>
+                <div class="p-3 bg-indigo-950/30 rounded-2xl border border-indigo-500/30 space-y-2">
+                    <h4 class="font-black text-indigo-400 uppercase text-[11px]">Notice Board</h4>
+                    <textarea id="noticeInput" rows="2" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold text-xs"></textarea>
+                    <button onclick="saveNoticeBoard()" id="btnSaveNotice" class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold">Save Notice</button>
                 </div>
-
-                <form onsubmit="handlePinChange(event)" class="space-y-3 pt-2 border-t border-slate-700/40">
-                    <h4 class="font-black text-purple-400 uppercase text-[11px]"><i class="fa-solid fa-key mr-1"></i> Change Admin Security PIN</h4>
-                    <div>
-                        <label class="block font-bold text-theme-sub mb-1">Purana PIN:</label>
-                        <input type="password" id="pOldPin" required placeholder="Enter current PIN" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
-                    </div>
+                <form onsubmit="handlePinChange(event)" class="space-y-2 pt-2 border-t border-slate-700/40">
+                    <input type="password" id="pOldPin" required placeholder="Purana PIN" class="w-full bg-box border border-slate-700 rounded-xl p-2 text-theme-main font-bold">
                     <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="block font-bold text-theme-sub mb-1">Naya PIN:</label>
-                            <input type="password" id="pNewPin" required placeholder="New PIN" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
-                        </div>
-                        <div>
-                            <label class="block font-bold text-theme-sub mb-1">Confirm Naya PIN:</label>
-                            <input type="password" id="pConfirmPin" required placeholder="Confirm PIN" class="w-full bg-box border border-slate-700 rounded-xl p-2.5 text-theme-main font-bold">
-                        </div>
+                        <input type="password" id="pNewPin" required placeholder="Naya PIN" class="w-full bg-box border border-slate-700 rounded-xl p-2 text-theme-main font-bold">
+                        <input type="password" id="pConfirmPin" required placeholder="Confirm PIN" class="w-full bg-box border border-slate-700 rounded-xl p-2 text-theme-main font-bold">
                     </div>
-                    <button type="submit" id="btnSavePin" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold shadow-lg">Update Admin PIN</button>
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-purple-600 text-white font-bold shadow">Change PIN</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- MAIN CONTAINER -->
-    <main class="max-w-7xl w-full mx-auto px-4 py-6 space-y-6 flex-grow">
+    <!-- MAIN APP CONTAINER -->
+    <main class="max-w-7xl w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-6 flex-grow">
 
         <!-- HOME VIEW -->
         <div id="viewHome" class="space-y-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div onclick="openMetricSummary('deposit')" class="glass-card p-5 rounded-3xl cursor-pointer hover:border-indigo-500/50 transition-all">
-                    <p class="text-xs font-extrabold text-theme-sub uppercase">Total Deposit</p>
-                    <h2 id="cardTotalDeposit" class="text-2xl font-black text-theme-main mt-1">₹45,920</h2>
-                    <p class="text-[11px] text-emerald-500 mt-2 font-bold">✓ Touch to view Month Summary →</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                <div onclick="openMetricSummary('deposit')" class="glass-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl cursor-pointer hover:border-indigo-500/50 transition-all">
+                    <p class="text-[10px] sm:text-xs font-extrabold text-theme-sub uppercase">Total Deposit</p>
+                    <h2 id="cardTotalDeposit" class="text-xl sm:text-2xl font-black text-theme-main mt-1">₹45,920</h2>
+                    <p class="text-[10px] text-emerald-500 mt-1.5 font-bold">✓ Touch for Months →</p>
                 </div>
 
-                <div onclick="openMetricSummary('loan')" class="glass-card p-5 rounded-3xl cursor-pointer hover:border-amber-500/50 transition-all">
-                    <p class="text-xs font-extrabold text-theme-sub uppercase">Market Loan</p>
-                    <h2 id="cardMarketLoan" class="text-2xl font-black text-amber-500 mt-1">₹46,000</h2>
-                    <p class="text-[11px] text-amber-500 mt-2 font-bold">⚡ Touch for Active/Closed Loans →</p>
+                <div onclick="openMetricSummary('loan')" class="glass-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl cursor-pointer hover:border-amber-500/50 transition-all">
+                    <p class="text-[10px] sm:text-xs font-extrabold text-theme-sub uppercase">Market Loan</p>
+                    <h2 id="cardMarketLoan" class="text-xl sm:text-2xl font-black text-amber-500 mt-1">₹46,000</h2>
+                    <p class="text-[10px] text-amber-500 mt-1.5 font-bold">⚡ Touch for Loans →</p>
                 </div>
 
-                <!-- 🟢 DYNAMIC CASH CARD -->
-                <div class="glass-card p-5 rounded-3xl">
-                    <p class="text-xs font-extrabold text-theme-sub uppercase">Available Cash</p>
-                    <h2 id="cardCashBalance" class="text-2xl font-black mt-1">₹0</h2>
-                    <p id="cardCashSubtitle" class="text-[11px] mt-2 font-bold">-</p>
+                <div class="glass-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl">
+                    <p class="text-[10px] sm:text-xs font-extrabold text-theme-sub uppercase">Available Cash</p>
+                    <h2 id="cardCashBalance" class="text-xl sm:text-2xl font-black mt-1">₹0</h2>
+                    <p id="cardCashSubtitle" class="text-[10px] mt-1.5 font-bold">-</p>
                 </div>
 
-                <div onclick="openMetricSummary('fine_interest')" class="glass-card p-5 rounded-3xl cursor-pointer hover:border-purple-500/50 transition-all">
-                    <p class="text-xs font-extrabold text-theme-sub uppercase">Total Fine & Interest</p>
-                    <h2 id="cardFineAndInterest" class="text-2xl font-black text-purple-500 mt-1">₹2,880</h2>
-                    <p class="text-[11px] text-purple-400 mt-2 font-bold">📈 Touch for Breakdown →</p>
+                <div onclick="openMetricSummary('fine_interest')" class="glass-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl cursor-pointer hover:border-purple-500/50 transition-all">
+                    <p class="text-[10px] sm:text-xs font-extrabold text-theme-sub uppercase">Fine & Interest</p>
+                    <h2 id="cardFineAndInterest" class="text-xl sm:text-2xl font-black text-purple-500 mt-1">₹2,880</h2>
+                    <p class="text-[10px] text-purple-400 mt-1.5 font-bold">📈 Touch for Details →</p>
                 </div>
             </div>
 
-            <!-- DOUGHNUT CHART -->
-            <div class="glass-card p-5 rounded-3xl space-y-3">
+            <!-- OVERVIEW CHART -->
+            <div class="glass-card p-4 rounded-2xl sm:rounded-3xl space-y-2">
                 <h3 class="text-xs font-black uppercase text-indigo-400 flex items-center gap-2">
-                    <i class="fa-solid fa-chart-pie"></i> Financial Overview Chart (Deposit vs Market Loan)
+                    <i class="fa-solid fa-chart-pie"></i> Overview Chart
                 </h3>
-                <div class="h-48 flex justify-center">
+                <div class="h-44 flex justify-center">
                     <canvas id="samitiDoughnutChart"></canvas>
                 </div>
             </div>
 
             <!-- MEMBERS LIST -->
-            <div class="space-y-4">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="space-y-3">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                     <div>
-                        <h3 class="text-base font-black text-theme-main font-hindi">सदस्य सूची (Touch Name for Passbook Statement)</h3>
-                        <p class="text-xs text-theme-sub">Kisi bhi member par touch karein - unka official passbook khul jayega.</p>
+                        <h3 class="text-sm sm:text-base font-black text-theme-main font-hindi">सदस्य सूची (Touch Name for Passbook)</h3>
                     </div>
                     <div class="relative w-full sm:w-72">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
@@ -438,116 +422,116 @@
                     </div>
                 </div>
 
-                <div id="membersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                <div id="membersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
             </div>
         </div>
 
         <!-- METRIC SUMMARY VIEW -->
-        <div id="viewMetricSummary" class="space-y-6 hidden">
-            <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
-                <h3 id="summaryPageTitle" class="text-lg font-black text-theme-main">Metric Summary</h3>
-                <button onclick="goHome()" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow">← Back to Home</button>
+        <div id="viewMetricSummary" class="space-y-4 hidden">
+            <div class="flex items-center justify-between border-b border-slate-700/50 pb-2.5">
+                <h3 id="summaryPageTitle" class="text-base font-black text-theme-main">Summary</h3>
+                <button onclick="goHome()" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow">← Back</button>
             </div>
-            <div id="summaryPageContent" class="space-y-4"></div>
+            <div id="summaryPageContent" class="space-y-3"></div>
         </div>
 
         <!-- MONTH DEPOSITORS VIEW -->
-        <div id="viewMonthDetail" class="space-y-6 hidden">
-            <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
-                <h3 id="monthDetailTitle" class="text-lg font-black text-theme-main">Month Depositors List</h3>
-                <button onclick="openMetricSummary('deposit')" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow">← Back to Deposit Summary</button>
+        <div id="viewMonthDetail" class="space-y-4 hidden">
+            <div class="flex items-center justify-between border-b border-slate-700/50 pb-2.5">
+                <h3 id="monthDetailTitle" class="text-base font-black text-theme-main">Depositors List</h3>
+                <button onclick="openMetricSummary('deposit')" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow">← Back</button>
             </div>
-            <div class="glass-card rounded-2xl overflow-hidden text-xs">
+            <div class="glass-card rounded-2xl overflow-x-auto text-xs">
                 <table class="w-full text-left text-theme-main">
                     <thead class="bg-box text-theme-sub text-[10px] font-bold uppercase border-b border-slate-700/50">
-                        <tr><th class="py-3 px-4">Member Name</th><th class="py-3 px-4">Father Name</th><th class="py-3 px-4">Date</th><th class="py-3 px-4">Amount</th><th class="py-3 px-4">Fine</th></tr>
+                        <tr><th class="py-2.5 px-3">Name</th><th class="py-2.5 px-3">Father</th><th class="py-2.5 px-3">Date</th><th class="py-2.5 px-3">Amount</th><th class="py-2.5 px-3">Fine</th></tr>
                     </thead>
                     <tbody id="monthDepositorsTable" class="divide-y divide-slate-700/40"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 🔥 1-PAGE OFFICIAL PASSBOOK VIEW 🔥 -->
-        <div id="viewMemberDetail" class="space-y-6 hidden">
-            <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
-                <div class="flex items-center space-x-3">
-                    <div id="memberPageAvatar" class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-lg shadow">M</div>
-                    <div>
-                        <h3 id="memberPageName" class="text-base font-black text-theme-main">Member Name</h3>
-                        <p id="memberPageFather" class="text-xs text-indigo-400">Father Name</p>
+        <!-- 🔥 FIXED 1-PAGE OFFICIAL PASSBOOK VIEW (NO OVERLAPPING) 🔥 -->
+        <div id="viewMemberDetail" class="space-y-4 hidden">
+            <div class="flex items-center justify-between bg-slate-900/80 p-3 rounded-2xl border border-slate-700/60 shadow">
+                <div class="flex items-center space-x-2.5 overflow-hidden">
+                    <div id="memberPageAvatar" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center font-black text-white text-base shadow shrink-0">M</div>
+                    <div class="truncate">
+                        <h3 id="memberPageName" class="text-sm font-black text-theme-main truncate leading-tight">Member Name</h3>
+                        <p id="memberPageFather" class="text-[10px] text-indigo-400 font-bold truncate">Father Name</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <button onclick="printPassbook()" id="adminPrintPassbookBtn" class="hidden px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow flex items-center gap-1.5">
-                        <i class="fa-solid fa-print"></i> 1-Page PDF / Print
+                <div class="flex items-center space-x-1.5 shrink-0">
+                    <button onclick="printPassbook()" id="adminPrintPassbookBtn" class="hidden px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] shadow flex items-center gap-1">
+                        <i class="fa-solid fa-print"></i> Print
                     </button>
-                    <button onclick="goHome()" class="px-3 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow">← Back</button>
+                    <button onclick="goHome()" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px] shadow">← Back</button>
                 </div>
             </div>
 
-            <div id="passbookSinglePage" class="glass-card p-4 sm:p-5 rounded-3xl space-y-3 border border-indigo-500/30 text-slate-900 bg-white shadow-xl">
+            <div id="passbookSinglePage" class="glass-card p-3 sm:p-5 rounded-2xl sm:rounded-3xl space-y-3 border border-indigo-500/30 text-slate-900 bg-white shadow-xl">
                 
                 <!-- HEADER -->
                 <div class="border-b-2 border-indigo-900 pb-2 flex items-center justify-between">
-                    <div class="flex items-center space-x-2.5">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-900 text-white flex items-center justify-center font-black text-xl shadow">यु</div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-900 text-white flex items-center justify-center font-black text-base shadow">यु</div>
                         <div>
-                            <h2 class="text-lg font-black tracking-tight text-indigo-950 uppercase font-hindi">युवा समिति</h2>
-                            <p class="text-[9px] font-black tracking-wider text-indigo-700 uppercase">Official Member Financial Passbook & Ledger</p>
+                            <h2 class="text-sm sm:text-base font-black tracking-tight text-indigo-950 uppercase font-hindi leading-tight">युवा समिति</h2>
+                            <p class="text-[8px] sm:text-[9px] font-black tracking-wider text-indigo-700 uppercase">Financial Passbook & Ledger</p>
                         </div>
                     </div>
                     <div class="text-right">
-                        <span class="inline-block px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-black border border-emerald-300">✓ ACTIVE ACCOUNT</span>
-                        <p class="text-[8.5px] text-slate-500 mt-0.5 font-bold">Date: <span id="pbGenTime">-</span></p>
+                        <span class="inline-block px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[8px] font-black border border-emerald-300">✓ ACTIVE</span>
+                        <p class="text-[7.5px] text-slate-500 mt-0.5 font-bold"><span id="pbGenTime">-</span></p>
                     </div>
                 </div>
 
                 <!-- BIO STRIP -->
-                <div class="bg-slate-100 p-2.5 rounded-xl border border-slate-300 grid grid-cols-2 gap-2 text-xs">
+                <div class="bg-slate-100 p-2 sm:p-2.5 rounded-xl border border-slate-300 grid grid-cols-2 gap-2 text-xs">
                     <div>
-                        <span class="text-slate-500 font-bold block text-[9.5px]">सदस्य का नाम (Member Name):</span>
-                        <p id="pbMemberName" class="font-black text-slate-900 text-xs sm:text-sm">-</p>
+                        <span class="text-slate-500 font-bold block text-[8.5px]">सदस्य का नाम (Member Name):</span>
+                        <p id="pbMemberName" class="font-black text-slate-900 text-xs leading-tight">-</p>
                     </div>
                     <div>
-                        <span class="text-slate-500 font-bold block text-[9.5px]">पिता का नाम (Father's Name):</span>
-                        <p id="pbFatherName" class="font-bold text-slate-900 text-xs">-</p>
+                        <span class="text-slate-500 font-bold block text-[8.5px]">पिता का नाम (Father's Name):</span>
+                        <p id="pbFatherName" class="font-bold text-slate-900 text-xs leading-tight">-</p>
                     </div>
                 </div>
 
                 <!-- 4 METRICS -->
-                <div class="grid grid-cols-4 gap-1.5 text-center text-xs">
-                    <div class="p-1.5 rounded-xl bg-emerald-50 border border-emerald-300">
-                        <span class="text-[8.5px] text-emerald-800 font-bold uppercase block">कुल जमा (Deposit)</span>
-                        <p id="mJamaSum" class="text-xs sm:text-sm font-black text-emerald-700">₹0</p>
+                <div class="grid grid-cols-4 gap-1 sm:gap-1.5 text-center text-xs">
+                    <div class="p-1.5 rounded-lg bg-emerald-50 border border-emerald-300">
+                        <span class="text-[7.5px] sm:text-[8.5px] text-emerald-800 font-bold uppercase block">जमा (Deposit)</span>
+                        <p id="mJamaSum" class="text-[11px] sm:text-xs font-black text-emerald-700">₹0</p>
                     </div>
-                    <div class="p-1.5 rounded-xl bg-amber-50 border border-amber-300">
-                        <span class="text-[8.5px] text-amber-800 font-bold uppercase block">सक्रिय ऋण (Loan)</span>
-                        <p id="mLoanSum" class="text-xs sm:text-sm font-black text-amber-700">₹0</p>
+                    <div class="p-1.5 rounded-lg bg-amber-50 border border-amber-300">
+                        <span class="text-[7.5px] sm:text-[8.5px] text-amber-800 font-bold uppercase block">ऋण (Loan)</span>
+                        <p id="mLoanSum" class="text-[11px] sm:text-xs font-black text-amber-700">₹0</p>
                     </div>
-                    <div class="p-1.5 rounded-xl bg-rose-50 border border-rose-300">
-                        <span class="text-[8.5px] text-rose-800 font-bold uppercase block">विलंब शुल्क (Fine)</span>
-                        <p id="mFineSum" class="text-xs sm:text-sm font-black text-rose-700">₹0</p>
+                    <div class="p-1.5 rounded-lg bg-rose-50 border border-rose-300">
+                        <span class="text-[7.5px] sm:text-[8.5px] text-rose-800 font-bold uppercase block">शुल्क (Fine)</span>
+                        <p id="mFineSum" class="text-[11px] sm:text-xs font-black text-rose-700">₹0</p>
                     </div>
-                    <div class="p-1.5 rounded-xl bg-purple-50 border border-purple-300">
-                        <span class="text-[8.5px] text-purple-800 font-bold uppercase block">कुल ब्याज (Interest)</span>
-                        <p id="mInterestSum" class="text-xs sm:text-sm font-black text-purple-700">₹0</p>
+                    <div class="p-1.5 rounded-lg bg-purple-50 border border-purple-300">
+                        <span class="text-[7.5px] sm:text-[8.5px] text-purple-800 font-bold uppercase block">ब्याज (Interest)</span>
+                        <p id="mInterestSum" class="text-[11px] sm:text-xs font-black text-purple-700">₹0</p>
                     </div>
                 </div>
 
                 <!-- 12-MONTH JAMA TABLE -->
                 <div class="space-y-1">
-                    <h4 class="text-[9.5px] font-black uppercase text-indigo-950 flex items-center gap-1 font-hindi">
+                    <h4 class="text-[9px] font-black uppercase text-indigo-950 flex items-center gap-1 font-hindi">
                         <i class="fa-solid fa-list-check text-indigo-600"></i> मासिक बचत विवरण (12 Months Annual Ledger)
                     </h4>
-                    <div class="rounded-lg overflow-hidden border border-slate-300">
-                        <table class="w-full text-left text-[9.5px]">
-                            <thead class="bg-indigo-900 text-white font-bold text-[8.5px] uppercase">
+                    <div class="rounded-lg overflow-x-auto border border-slate-300">
+                        <table class="w-full text-left text-[9px] sm:text-[9.5px]">
+                            <thead class="bg-indigo-900 text-white font-bold text-[8px] sm:text-[8.5px] uppercase">
                                 <tr>
-                                    <th class="py-0.5 px-2">Month</th>
-                                    <th class="py-0.5 px-2">Date</th>
-                                    <th class="py-0.5 px-2">Amount (₹)</th>
-                                    <th class="py-0.5 px-2">Late Fine (₹)</th>
-                                    <th class="py-0.5 px-2">Status</th>
+                                    <th class="py-1 px-2">Month</th>
+                                    <th class="py-1 px-2">Date</th>
+                                    <th class="py-1 px-2">Amount (₹)</th>
+                                    <th class="py-1 px-2">Late Fine</th>
+                                    <th class="py-1 px-2">Status</th>
                                 </tr>
                             </thead>
                             <tbody id="mJamaTable" class="divide-y divide-slate-200 bg-white"></tbody>
@@ -557,17 +541,17 @@
 
                 <!-- LOAN & 2% INTEREST STATEMENT -->
                 <div class="space-y-1">
-                    <h4 class="text-[9.5px] font-black uppercase text-indigo-950 flex items-center gap-1 font-hindi">
-                        <i class="fa-solid fa-hand-holding-dollar text-amber-600"></i> ऋण एवं ब्याज विवरण (Loan & 2% Interest Ledger)
+                    <h4 class="text-[9px] font-black uppercase text-indigo-950 flex items-center gap-1 font-hindi">
+                        <i class="fa-solid fa-hand-holding-dollar text-amber-600"></i> ऋण एवं ब्याज विवरण (Loan Ledger)
                     </h4>
-                    <div class="rounded-lg overflow-hidden border border-slate-300">
-                        <table class="w-full text-left text-[9.5px]">
-                            <thead class="bg-slate-800 text-white font-bold text-[8.5px] uppercase">
+                    <div class="rounded-lg overflow-x-auto border border-slate-300">
+                        <table class="w-full text-left text-[9px] sm:text-[9.5px]">
+                            <thead class="bg-slate-800 text-white font-bold text-[8px] sm:text-[8.5px] uppercase">
                                 <tr>
-                                    <th class="py-0.5 px-2">Month / Date</th>
-                                    <th class="py-0.5 px-2">Loan Taken</th>
-                                    <th class="py-0.5 px-2">Monthly Interest (2%)</th>
-                                    <th class="py-0.5 px-2">Status</th>
+                                    <th class="py-1 px-2">Month / Date</th>
+                                    <th class="py-1 px-2">Loan Taken</th>
+                                    <th class="py-1 px-2">Interest (2%)</th>
+                                    <th class="py-1 px-2">Status</th>
                                 </tr>
                             </thead>
                             <tbody id="mLoanTable" class="divide-y divide-slate-200 bg-white"></tbody>
@@ -576,15 +560,14 @@
                 </div>
 
                 <!-- FOOTER SIGNATURES -->
-                <div class="pt-3 mt-1 border-t border-slate-300 flex justify-between items-end text-[9.5px] text-slate-600 font-hindi">
+                <div class="pt-2 mt-1 border-t border-slate-300 flex justify-between items-end text-[8.5px] text-slate-600 font-hindi">
                     <div class="text-center">
-                        <div class="w-24 border-b border-slate-400 mb-0.5"></div>
+                        <div class="w-20 border-b border-slate-400 mb-0.5"></div>
                         <p class="font-bold">सदस्य हस्ताक्षर</p>
                     </div>
                     <div class="text-center">
-                        <div class="w-32 border-b border-slate-800 mb-0.5"></div>
+                        <div class="w-28 border-b border-slate-800 mb-0.5"></div>
                         <p class="font-black text-slate-900">अधिकृत कोषाध्यक्ष / सचिव मुहर</p>
-                        <p class="text-[7.5px] text-slate-400">युवा समिति प्रबंधन पोर्टल</p>
                     </div>
                 </div>
 
@@ -595,12 +578,13 @@
 
     <!-- CLIENT SCRIPT -->
     <script>
-        // 👇 STEP 1 ME COPY KIYA HUA APPS SCRIPT URL YAHAN PASTE KAREIN
-        const SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbzAAj_BjVcbBa7SFFo9Bdbkdhp1br4UfE0gm_IQOlbVpD1F-k8GYjeXp2Ba4BmuX5kVMA/exec";
+        // 👇 APPS SCRIPT WEB APP URL (Step 1 me copy kiya hua link)
+        const SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbzQJZt8KcwQZwPFYXHchMac/exec";
 
         let portalData = null;
         let isAdmin = false;
         let samitiChart = null;
+        let currentOpenMember = null;
         
         const monthOrder = [
             "January", "February", "March", "April",
@@ -613,8 +597,14 @@
         let lastDataSignature = "";
         const LIVE_SYNC_INTERVAL = 12000;
 
+        function getCleanKey(name, father) {
+            let n = String(name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            let f = String(father || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            return n + "_" + f;
+        }
+
         async function apiGet(action = "") {
-            const url = action ? `${SCRIPT_API_URL}?action=${action}` : SCRIPT_API_URL;
+            const url = action ? `${SCRIPT_API_URL}?action=${action}&_t=${Date.now()}` : `${SCRIPT_API_URL}?_t=${Date.now()}`;
             const res = await fetch(url, { method: "GET" });
             return await res.json();
         }
@@ -632,7 +622,7 @@
             setInterval(() => {
                 let now = new Date();
                 let options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-                document.getElementById('istClock').innerText = now.toLocaleTimeString('en-IN', options) + ' IST';
+                document.getElementById('istClock').innerText = now.toLocaleTimeString('en-IN', options);
             }, 1000);
         }
 
@@ -763,7 +753,7 @@
 
             const indicator = document.getElementById("cacheIndicator");
             if (indicator) {
-                indicator.innerText = "● Live Sync";
+                indicator.innerText = "● Live";
                 indicator.classList.remove("hidden");
             }
 
@@ -779,6 +769,10 @@
             const noticeInput = document.getElementById("noticeInput");
             if (noticeInput && data.notice) {
                 noticeInput.value = data.notice;
+            }
+
+            if (currentOpenMember && !document.getElementById('viewMemberDetail').classList.contains('hidden')) {
+                openMemberPage(currentOpenMember);
             }
         }
 
@@ -841,15 +835,15 @@
             let cashSub = document.getElementById('cardCashSubtitle');
 
             if (cashVal >= 0) {
-                cashCard.className = "text-2xl font-black mt-1 text-emerald-500";
+                cashCard.className = "text-xl sm:text-2xl font-black mt-1 text-emerald-500";
                 cashCard.innerText = '₹' + cashVal.toLocaleString('en-IN');
-                cashSub.className = "text-[11px] mt-2 font-bold text-emerald-500";
+                cashSub.className = "text-[10px] mt-1.5 font-bold text-emerald-500";
                 cashSub.innerText = "✓ Funds Available";
             } else {
-                cashCard.className = "text-2xl font-black mt-1 text-rose-500";
+                cashCard.className = "text-xl sm:text-2xl font-black mt-1 text-rose-500";
                 cashCard.innerText = '-₹' + Math.abs(cashVal).toLocaleString('en-IN');
-                cashSub.className = "text-[11px] mt-2 font-bold text-rose-500";
-                cashSub.innerText = "⚠️ Rotated in Loans";
+                cashSub.className = "text-[10px] mt-1.5 font-bold text-rose-500";
+                cashSub.innerText = "⚠️ In Loans";
             }
         }
 
@@ -876,6 +870,7 @@
         }
 
         function goHome() {
+            currentOpenMember = null;
             document.getElementById('viewHome').classList.remove('hidden');
             document.getElementById('viewMetricSummary').classList.add('hidden');
             document.getElementById('viewMonthDetail').classList.add('hidden');
@@ -902,7 +897,8 @@
             grid.innerHTML = '';
 
             list.forEach(m => {
-                let jamaList = (portalData.jamaData && portalData.jamaData[m.identityKey]) ? portalData.jamaData[m.identityKey] : [];
+                let mKey = getCleanKey(m.name, m.father);
+                let jamaList = (portalData.jamaData && (portalData.jamaData[mKey] || portalData.jamaData[m.identityKey])) ? (portalData.jamaData[mKey] || portalData.jamaData[m.identityKey]) : [];
                 let hasAugustPaid = jamaList.some(j => j.month.toLowerCase().includes("august") && j.amt > 0);
 
                 let futurePaidMonth = "";
@@ -917,28 +913,28 @@
 
                 let statusBadgeHtml = '';
                 if (futurePaidMonth) {
-                    statusBadgeHtml = `<span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">🟣 Adv (${futurePaidMonth})</span>`;
+                    statusBadgeHtml = `<span class="text-[9.5px] font-black px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">🟣 Adv (${futurePaidMonth})</span>`;
                 } else if (hasAugustPaid) {
-                    statusBadgeHtml = `<span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">✓ Aug Paid</span>`;
+                    statusBadgeHtml = `<span class="text-[9.5px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">✓ Aug Paid</span>`;
                 } else {
-                    statusBadgeHtml = `<span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">● Aug Due</span>`;
+                    statusBadgeHtml = `<span class="text-[9.5px] font-black px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">● Aug Due</span>`;
                 }
 
                 const card = document.createElement('div');
-                card.className = "glass-card p-4 rounded-2xl cursor-pointer flex items-center justify-between hover:border-indigo-500/40 transition-all";
+                card.className = "glass-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between hover:border-indigo-500/40 transition-all";
                 card.onclick = () => openMemberPage(m);
 
                 card.innerHTML = `
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 font-black flex items-center justify-center">${m.name.charAt(0)}</div>
-                        <div>
-                            <h4 class="font-bold text-theme-main text-sm">${m.name}</h4>
-                            <p class="text-xs text-theme-sub">S/O ${m.father}</p>
+                    <div class="flex items-center space-x-2.5 overflow-hidden">
+                        <div class="w-9 h-9 rounded-xl bg-indigo-500/20 text-indigo-400 font-black flex items-center justify-center shrink-0">${m.name.charAt(0)}</div>
+                        <div class="truncate">
+                            <h4 class="font-bold text-theme-main text-xs sm:text-sm truncate">${m.name}</h4>
+                            <p class="text-[10px] text-theme-sub truncate">S/O ${m.father}</p>
                         </div>
                     </div>
-                    <div class="text-right">
+                    <div class="text-right shrink-0">
                         ${statusBadgeHtml}
-                        <p class="text-[10px] text-indigo-400 font-bold mt-1">Passbook →</p>
+                        <p class="text-[9.5px] text-indigo-400 font-bold mt-0.5">Passbook →</p>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -947,15 +943,12 @@
 
         function getLoansForMember(memberName) {
             if (!portalData || !portalData.loanData) return [];
-            let mNameClean = memberName.toLowerCase().replace(/\s+/g, ' ').trim();
+            let mNameClean = memberName.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
             let matched = [];
 
             Object.keys(portalData.loanData).forEach(bKey => {
-                let bKeyClean = bKey.toLowerCase().replace(/\s+/g, ' ').trim();
+                let bKeyClean = bKey.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
                 if (bKeyClean === mNameClean || mNameClean.includes(bKeyClean) || bKeyClean.includes(mNameClean)) {
-                    if (mNameClean.includes("ashish nandan") && !bKeyClean.includes("nandan") && bKeyClean.includes("rana")) return;
-                    if (mNameClean.includes("ashish rana") && !bKeyClean.includes("rana") && bKeyClean.includes("nandan")) return;
-
                     matched = matched.concat(portalData.loanData[bKey]);
                 }
             });
@@ -963,15 +956,18 @@
         }
 
         function openMemberPage(m) {
+            currentOpenMember = m;
+            let mKey = getCleanKey(m.name, m.father);
+
             document.getElementById('memberPageAvatar').innerText = m.name.charAt(0).toUpperCase();
             document.getElementById('memberPageName').innerText = m.name;
             document.getElementById('memberPageFather').innerText = "S/O " + m.father;
             
             document.getElementById('pbMemberName').innerText = m.name;
             document.getElementById('pbFatherName').innerText = m.father;
-            document.getElementById('pbGenTime').innerText = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+            document.getElementById('pbGenTime').innerText = new Date().toLocaleDateString('en-IN');
 
-            let jamaList = portalData.jamaData[m.identityKey] || [];
+            let jamaList = (portalData.jamaData && (portalData.jamaData[mKey] || portalData.jamaData[m.identityKey])) ? (portalData.jamaData[mKey] || portalData.jamaData[m.identityKey]) : [];
             let totalJama = jamaList.reduce((s, j) => s + j.amt, 0);
             let totalFine = jamaList.reduce((s, j) => s + j.fine, 0);
 
@@ -988,15 +984,15 @@
 
                 jamaRows += `
                     <tr class="hover:bg-slate-50">
-                        <td class="py-0.5 px-2 font-bold text-slate-900">${month}</td>
-                        <td class="py-0.5 px-2 text-slate-600">${date}</td>
-                        <td class="py-0.5 px-2 font-black ${paid ? "text-emerald-700" : "text-slate-400"}">
+                        <td class="py-1 px-2 font-bold text-slate-900">${month}</td>
+                        <td class="py-1 px-2 text-slate-600">${date}</td>
+                        <td class="py-1 px-2 font-black ${paid ? "text-emerald-700" : "text-slate-400"}">
                             ₹${amount.toLocaleString("en-IN")}
                         </td>
-                        <td class="py-0.5 px-2 font-bold ${fine > 0 ? "text-rose-600" : "text-slate-500"}">
+                        <td class="py-1 px-2 font-bold ${fine > 0 ? "text-rose-600" : "text-slate-500"}">
                             ₹${fine.toLocaleString("en-IN")}
                         </td>
-                        <td class="py-0.5 px-2">
+                        <td class="py-1 px-2">
                             <span class="px-1.5 py-0.2 rounded text-[8px] font-bold ${paid ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"}">
                                 ${paid ? "✓ Paid" : "● Due"}
                             </span>
@@ -1020,17 +1016,17 @@
                 if (closed) {
                     loanRows += `
                         <tr class="bg-emerald-50">
-                            <td class="py-0.5 px-2 font-bold text-slate-900">
+                            <td class="py-1 px-2 font-bold text-slate-900">
                                 ${l.month} <span class="text-[7.5px] text-slate-500">(${l.date || "-"})</span>
                             </td>
-                            <td class="py-0.5 px-2 font-black text-amber-700">
+                            <td class="py-1 px-2 font-black text-amber-700">
                                 ₹${currentAmount.toLocaleString("en-IN")}
                                 <div class="text-[7.5px] text-slate-500">Balance: ₹0</div>
                             </td>
-                            <td class="py-0.5 px-2 font-bold text-purple-700">
+                            <td class="py-1 px-2 font-bold text-purple-700">
                                 Paid: ₹${interestPaid.toLocaleString("en-IN")}
                             </td>
-                            <td class="py-0.5 px-2">
+                            <td class="py-1 px-2">
                                 <span class="px-1.5 py-0.2 rounded text-[8px] font-bold bg-emerald-100 text-emerald-800">✓ CLOSED</span>
                                 <div class="text-[7.5px] text-slate-600">Settled: ₹${l.settlement || "-"}</div>
                             </td>
@@ -1039,17 +1035,17 @@
                 } else {
                     loanRows += `
                         <tr>
-                            <td class="py-0.5 px-2 font-bold text-slate-900">
+                            <td class="py-1 px-2 font-bold text-slate-900">
                                 ${l.month} <span class="text-[7.5px] text-slate-500">(${l.date || "-"})</span>
                             </td>
-                            <td class="py-0.5 px-2 font-black text-amber-700">
+                            <td class="py-1 px-2 font-black text-amber-700">
                                 ₹${currentAmount.toLocaleString("en-IN")}
                             </td>
-                            <td class="py-0.5 px-2 font-bold text-purple-700">
+                            <td class="py-1 px-2 font-bold text-purple-700">
                                 ₹${monthlyInterest.toLocaleString("en-IN")}/mo
                                 <span class="text-[7.5px] text-slate-500 block">Paid: ₹${interestPaid.toLocaleString("en-IN")}</span>
                             </td>
-                            <td class="py-0.5 px-2">
+                            <td class="py-1 px-2">
                                 <span class="px-1.5 py-0.2 rounded text-[8px] font-bold bg-amber-100 text-amber-800">Pending</span>
                             </td>
                         </tr>
@@ -1072,6 +1068,7 @@
 
             document.getElementById('viewHome').classList.add('hidden');
             document.getElementById('viewMemberDetail').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function printPassbook() {
@@ -1099,6 +1096,7 @@
             document.getElementById('resTotalPayable').innerText = '₹' + totalPay.toLocaleString('en-IN');
         }
 
+        // 📲 UTR MODAL MULTI-OPTION LOGIC
         function openUtrModal() {
             document.getElementById('utrModal').classList.remove('hidden');
             let select = document.getElementById('uMemberSelect');
@@ -1114,6 +1112,33 @@
         }
         function closeUtrModal() { document.getElementById('utrModal').classList.add('hidden'); }
 
+        function onUtrMemberSelect() {
+            let val = document.getElementById('uMemberSelect').value;
+            let banner = document.getElementById('uActiveLoanInfo');
+            if (!val) {
+                banner.classList.add('hidden');
+                return;
+            }
+            let name = val.split('|||')[0];
+            let loans = getLoansForMember(name);
+            let active = loans.filter(l => !l.isClosed);
+            let totalActive = active.reduce((s, l) => s + l.taken, 0);
+
+            if (totalActive > 0) {
+                banner.classList.remove('hidden');
+                document.getElementById('uActiveLoanAmt').innerText = '₹' + totalActive.toLocaleString('en-IN');
+            } else {
+                banner.classList.add('hidden');
+            }
+            calculateUtrTotal();
+        }
+
+        function toggleUtrJamaFields() {
+            let checked = document.getElementById('uPayJamaCheck').checked;
+            document.getElementById('uJamaFieldsBox').style.display = checked ? 'block' : 'none';
+            calculateUtrTotal();
+        }
+
         function toggleUtrAdvance() {
             let isAdv = document.getElementById('uAdvanceCheck').checked;
             if (isAdv) {
@@ -1123,21 +1148,34 @@
                 document.getElementById('uSingleMonthBox').classList.remove('hidden');
                 document.getElementById('uMultiMonthBox').classList.add('hidden');
             }
-            calculateUtrAmount();
+            calculateUtrTotal();
         }
 
-        function calculateUtrAmount() {
-            let isAdv = document.getElementById('uAdvanceCheck').checked;
-            if (!isAdv) {
-                document.getElementById('uTotalAmt').value = 200;
-            } else {
-                let from = document.getElementById('uFromMonth').value;
-                let to = document.getElementById('uToMonth').value;
-                let idx1 = monthOrder.indexOf(from);
-                let idx2 = monthOrder.indexOf(to);
-                let count = (idx2 >= idx1) ? (idx2 - idx1 + 1) : 1;
-                document.getElementById('uTotalAmt').value = count * 200;
+        function calculateUtrTotal() {
+            let total = 0;
+            let payJama = document.getElementById('uPayJamaCheck').checked;
+
+            if (payJama) {
+                let isAdv = document.getElementById('uAdvanceCheck').checked;
+                if (!isAdv) {
+                    total += 200;
+                } else {
+                    let from = document.getElementById('uFromMonth').value;
+                    let to = document.getElementById('uToMonth').value;
+                    let idx1 = monthOrder.indexOf(from);
+                    let idx2 = monthOrder.indexOf(to);
+                    let count = (idx2 >= idx1) ? (idx2 - idx1 + 1) : 1;
+                    total += (count * 200);
+                }
             }
+
+            let fine = parseFloat(document.getElementById('uFineAmt').value) || 0;
+            let interest = parseFloat(document.getElementById('uLoanInterest').value) || 0;
+            let loanPartRepay = parseFloat(document.getElementById('uLoanPartRepay').value) || 0;
+            let loanSettlement = parseFloat(document.getElementById('uLoanSettlement').value) || 0;
+
+            total += (fine + interest + loanPartRepay + loanSettlement);
+            document.getElementById('uTotalAmt').value = total;
         }
 
         async function handleUtrSubmit(e) {
@@ -1146,13 +1184,45 @@
             if (!val) { alert("Kripya apna naam select karein!"); return; }
             let parts = val.split('|||');
 
+            let payJama = document.getElementById('uPayJamaCheck').checked;
             let isAdv = document.getElementById('uAdvanceCheck').checked;
+
+            let fromM = payJama ? (isAdv ? document.getElementById('uFromMonth').value : document.getElementById('uSingleMonth').value) : "-";
+            let toM = payJama ? (isAdv ? document.getElementById('uToMonth').value : document.getElementById('uSingleMonth').value) : "-";
+
+            let depositAmt = 0;
+            if (payJama) {
+                if (!isAdv) depositAmt = 200;
+                else {
+                    let idx1 = monthOrder.indexOf(fromM);
+                    let idx2 = monthOrder.indexOf(toM);
+                    let count = (idx2 >= idx1) ? (idx2 - idx1 + 1) : 1;
+                    depositAmt = count * 200;
+                }
+            }
+
+            let fineAmt = parseFloat(document.getElementById('uFineAmt').value) || 0;
+            let loanInterest = parseFloat(document.getElementById('uLoanInterest').value) || 0;
+            let loanPartRepay = parseFloat(document.getElementById('uLoanPartRepay').value) || 0;
+            let loanSettlement = parseFloat(document.getElementById('uLoanSettlement').value) || 0;
+            let totalAmt = parseFloat(document.getElementById('uTotalAmt').value) || 0;
+
+            if (totalAmt <= 0) {
+                alert("Kripya payment amount bharein!");
+                return;
+            }
+
             let data = {
                 name: parts[0],
                 father: parts[1],
-                fromMonth: isAdv ? document.getElementById('uFromMonth').value : document.getElementById('uSingleMonth').value,
-                toMonth: isAdv ? document.getElementById('uToMonth').value : document.getElementById('uSingleMonth').value,
-                totalAmt: document.getElementById('uTotalAmt').value,
+                fromMonth: fromM,
+                toMonth: toM,
+                depositAmt: depositAmt,
+                fineAmt: fineAmt,
+                loanInterest: loanInterest,
+                loanPartRepay: loanPartRepay,
+                loanSettlement: loanSettlement,
+                totalAmt: totalAmt,
                 utr: document.getElementById('uUtrNumber').value.trim()
             };
 
@@ -1165,9 +1235,10 @@
                 btn.innerText = "Submit Payment for Verification";
                 btn.disabled = false;
                 if (res.status === "SUCCESS") {
-                    alert("✓ Aapka UTR submission record ho gaya! Admin verify karke approve karenge.");
+                    alert("✓ Aapka UTR payment submit ho gaya! Admin verify karke approve karenge.");
                     closeUtrModal();
                     document.getElementById('uUtrNumber').value = '';
+                    loadPortalData(false);
                 } else if (res.status === "DUPLICATE") {
                     alert("⚠️ " + res.message);
                 } else {
@@ -1198,7 +1269,7 @@
                 }
             } else {
                 isAdmin = false;
-                document.getElementById('adminToggleBtn').innerText = "Admin Login";
+                document.getElementById('adminToggleBtn').innerText = "Login";
                 document.getElementById('adminAddBtn').classList.add('hidden');
                 let printBtn = document.getElementById('adminPrintPassbookBtn');
                 if (printBtn) printBtn.classList.add('hidden');
@@ -1224,34 +1295,38 @@
         }
 
         function switchAdminTab(type) {
-            ['formJama', 'formLoan', 'formUtrVerify', 'formAudit', 'formRequests', 'formPin'].forEach(id => {
+            ['formJama', 'formLoan', 'formUtrVerify', 'formRollback', 'formAudit', 'formRequests', 'formPin'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
-            ['adminTabJama', 'adminTabLoan', 'adminTabUtr', 'adminTabAudit', 'adminTabReq', 'adminTabPin'].forEach(id => {
-                document.getElementById(id).className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0";
+            ['adminTabJama', 'adminTabLoan', 'adminTabUtr', 'adminTabRollback', 'adminTabAudit', 'adminTabReq', 'adminTabPin'].forEach(id => {
+                document.getElementById(id).className = "px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 shrink-0";
             });
 
             if (type === 'jama') {
                 document.getElementById('formJama').classList.remove('hidden');
-                document.getElementById('adminTabJama').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0";
+                document.getElementById('adminTabJama').className = "px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0";
             } else if (type === 'loan') {
                 document.getElementById('formLoan').classList.remove('hidden');
-                document.getElementById('adminTabLoan').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-600 text-white shrink-0";
+                document.getElementById('adminTabLoan').className = "px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-600 text-white shrink-0";
                 autoFillAdminDate();
             } else if (type === 'utr') {
                 document.getElementById('formUtrVerify').classList.remove('hidden');
-                document.getElementById('adminTabUtr').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0";
+                document.getElementById('adminTabUtr').className = "px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0";
                 loadPendingUtrList();
+            } else if (type === 'rollback') {
+                document.getElementById('formRollback').classList.remove('hidden');
+                document.getElementById('adminTabRollback').className = "px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-600 text-white shrink-0";
+                loadRollbackLogs();
             } else if (type === 'audit') {
                 document.getElementById('formAudit').classList.remove('hidden');
-                document.getElementById('adminTabAudit').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white shrink-0";
+                document.getElementById('adminTabAudit').className = "px-3 py-1.5 rounded-xl text-xs font-bold bg-purple-600 text-white shrink-0";
             } else if (type === 'requests') {
                 document.getElementById('formRequests').classList.remove('hidden');
-                document.getElementById('adminTabReq').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0";
+                document.getElementById('adminTabReq').className = "px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shrink-0";
                 loadEmailAccessAdminData();
             } else if (type === 'pin') {
                 document.getElementById('formPin').classList.remove('hidden');
-                document.getElementById('adminTabPin').className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white shrink-0";
+                document.getElementById('adminTabPin').className = "px-3 py-1.5 rounded-xl text-xs font-bold bg-purple-600 text-white shrink-0";
             }
         }
 
@@ -1307,7 +1382,7 @@
         async function handleAdminJamaSubmit(e) {
             e.preventDefault();
             let btn = document.getElementById('btnSaveJama');
-            btn.innerText = "Saving to Google Sheet...";
+            btn.innerText = "Saving...";
             btn.disabled = true;
 
             let isAdv = document.getElementById('jAdvanceCheck').checked;
@@ -1324,7 +1399,7 @@
             };
 
             const res = await apiPost("ADD_JAMA", data);
-            btn.innerText = "Save Jama Entry to Sheet";
+            btn.innerText = "Save Jama Entry";
             btn.disabled = false;
             if (res.status === "SUCCESS") {
                 alert(res.message);
@@ -1352,10 +1427,10 @@
             };
 
             const res = await apiPost("ADD_LOAN", data);
-            btn.innerText = "Save Loan Entry to Sheet";
+            btn.innerText = "Save Loan Entry";
             btn.disabled = false;
             if (res.status === "SUCCESS") {
-                alert("✓ Loan Entry successfully saved in Creditors Sheet!");
+                alert("✓ Loan Entry saved!");
                 closeAdminModal();
                 loadPortalData(true);
             } else {
@@ -1369,18 +1444,26 @@
 
             const res = await apiGet("GET_PENDING_UTR");
             if (!res.list || res.list.length === 0) {
-                container.innerHTML = '<p class="text-slate-400 text-[11px] bg-box p-3 rounded-xl border">✓ Abhi koi pending UTR request nahi hai.</p>';
+                container.innerHTML = '<p class="text-slate-400 text-[11px] bg-box p-3 rounded-xl border">✓ Koi pending UTR nahi hai.</p>';
                 return;
             }
             let html = '';
             res.list.forEach(u => {
+                let purposeText = [];
+                if (u.depositAmt > 0) purposeText.push(`Jama ₹${u.depositAmt} (${u.fromMonth}${u.fromMonth !== u.toMonth ? ' to ' + u.toMonth : ''})`);
+                if (u.fineAmt > 0) purposeText.push(`Fine ₹${u.fineAmt}`);
+                if (u.loanInterest > 0) purposeText.push(`Byaj ₹${u.loanInterest}`);
+                if (u.loanPartRepay > 0) purposeText.push(`Half Loan ₹${u.loanPartRepay}`);
+                if (u.loanSettlement > 0) purposeText.push(`Full Clear ₹${u.loanSettlement}`);
+
                 html += `<div class="bg-box p-3 rounded-xl border border-slate-700 flex justify-between items-center text-xs">
                     <div>
                         <p class="font-bold text-theme-main">${u.name} <span class="text-theme-sub text-[10px]">(S/O ${u.father})</span></p>
-                        <p class="text-[10px] text-indigo-400 font-bold">UTR: ${u.utr} • ₹${u.totalAmt} (${u.fromMonth}${u.fromMonth !== u.toMonth ? ' to ' + u.toMonth : ''})</p>
-                        <p class="text-[9px] text-slate-500">${u.submitTime}</p>
+                        <p class="text-[10px] text-indigo-400 font-bold">UTR: ${u.utr} • Total: ₹${u.totalAmt}</p>
+                        <p class="text-[9px] text-emerald-400 font-semibold">${purposeText.join(" + ")}</p>
+                        <p class="text-[8.5px] text-slate-500">${u.submitTime}</p>
                     </div>
-                    <div class="flex space-x-1.5">
+                    <div class="flex space-x-1.5 shrink-0">
                         <button onclick="actionUtr(${u.rowIdx}, 'APPROVE')" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px]">Approve</button>
                         <button onclick="actionUtr(${u.rowIdx}, 'REJECT')" class="px-2.5 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-[10px]">Reject</button>
                     </div>
@@ -1390,12 +1473,12 @@
         }
 
         async function actionUtr(rowIdx, act) {
-            let reason = act === "REJECT" ? prompt("Rejection Reason (e.g. Payment not received / Fake UTR):") : "";
+            let reason = act === "REJECT" ? prompt("Rejection Reason:") : "";
             if (act === "REJECT" && reason === null) return;
 
             const res = await apiPost("ACTION_UTR", {}, { rowIdx: rowIdx, act: act, reason: reason });
             if (res.status === "SUCCESS") {
-                alert(`✓ Payment ${act === 'APPROVE' ? 'Approved & Distributed to Monthly Sheets' : 'Rejected'}!`);
+                alert(`✓ Payment ${act === 'APPROVE' ? 'Approved & Sheets Updated' : 'Rejected'}!`);
                 loadPendingUtrList();
                 loadPortalData(false);
             } else {
@@ -1403,14 +1486,53 @@
             }
         }
 
+        // ↩️ LOAD ROLLBACK TRANSACTIONS
+        async function loadRollbackLogs() {
+            let container = document.getElementById('rollbackLogsContainer');
+            container.innerHTML = '<p class="text-slate-500 italic text-[11px]">Loading approved UTRs...</p>';
+
+            const res = await apiGet("GET_ALL_UTR_LOGS");
+            if (!res.list || res.list.length === 0) {
+                container.innerHTML = '<p class="text-slate-400 text-[11px] bg-box p-3 rounded-xl border">Koi logs uplabdh nahi hain.</p>';
+                return;
+            }
+
+            let html = '';
+            res.list.forEach(u => {
+                let isApproved = u.status.toLowerCase() === "approved";
+                html += `<div class="bg-box p-3 rounded-xl border border-slate-700/60 flex justify-between items-center text-xs">
+                    <div>
+                        <p class="font-bold text-theme-main">${u.name} <span class="text-theme-sub text-[10px]">(S/O ${u.father})</span></p>
+                        <p class="text-[10px] text-indigo-400 font-bold">UTR: ${u.utr} • ₹${u.totalAmt} • <span class="${isApproved ? 'text-emerald-400' : 'text-slate-400'} font-bold">[${u.status}]</span></p>
+                        <p class="text-[8.5px] text-slate-500">${u.submitTime}</p>
+                    </div>
+                    <div>
+                        ${isApproved ? `<button onclick="rollbackUtr(${u.rowIdx}, '${u.name}', ${u.totalAmt})" class="px-2.5 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-[10px] shadow">↩️ Undo / Delete</button>` : `<span class="text-[9px] text-slate-500 font-bold italic">-</span>`}
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        async function rollbackUtr(rowIdx, name, amt) {
+            if (!confirm(`Kya aap ${name} ke ₹${amt} wale payment ko DELETE aur REVERSE karna chahte hain?\n\nIsse Google Sheet ki rows automatic delete ho jayengi.`)) return;
+
+            const res = await apiPost("ROLLBACK_UTR", {}, { rowIdx: rowIdx });
+            alert(res.message);
+            if (res.status === "SUCCESS") {
+                loadRollbackLogs();
+                loadPortalData(false);
+            }
+        }
+
         async function saveNoticeBoard() {
             let notice = document.getElementById('noticeInput').value.trim();
             let btn = document.getElementById('btnSaveNotice');
-            btn.innerText = "Saving Notice...";
+            btn.innerText = "Saving...";
             btn.disabled = true;
 
             const res = await apiPost("UPDATE_NOTICE", {}, { notice: notice });
-            btn.innerText = "Save Notice to Sheet";
+            btn.innerText = "Save Notice";
             btn.disabled = false;
             alert(res.message);
             if (res.status === "SUCCESS") {
@@ -1430,19 +1552,15 @@
             container.innerHTML = `
                 <div class="border-b-2 border-indigo-900 pb-2 flex justify-between items-center">
                     <div>
-                        <h2 class="text-lg font-black text-indigo-950 font-hindi uppercase">युवा समिति - मासिक बैठक विवरण</h2>
-                        <p class="text-[10px] font-bold text-indigo-700">Official Monthly Audit & Meeting Report: ${m} 2026</p>
+                        <h2 class="text-sm font-black text-indigo-950 font-hindi uppercase">युवा समिति - मासिक बैठक विवरण</h2>
+                        <p class="text-[9px] font-bold text-indigo-700">Audit Report: ${m} 2026</p>
                     </div>
-                    <button onclick="window.print()" class="px-3 py-1 rounded bg-indigo-900 text-white font-bold text-[10px]">Print Report</button>
+                    <button onclick="window.print()" class="px-2.5 py-1 rounded bg-indigo-900 text-white font-bold text-[9px]">Print</button>
                 </div>
                 <div class="grid grid-cols-3 gap-2 text-center text-xs">
-                    <div class="p-2 rounded bg-slate-100 border"><p class="text-[9px] text-slate-500 font-bold">कुल जमा संग्रह</p><p class="font-black text-emerald-700 text-sm">₹${totalColl.toLocaleString('en-IN')}</p></div>
-                    <div class="p-2 rounded bg-slate-100 border"><p class="text-[9px] text-slate-500 font-bold">जमाकर्ता सदस्य</p><p class="font-black text-indigo-700 text-sm">${depositors.length} Members</p></div>
-                    <div class="p-2 rounded bg-slate-100 border"><p class="text-[9px] text-slate-500 font-bold">तारीख</p><p class="font-black text-slate-800 text-xs">${new Date().toLocaleDateString('en-IN')}</p></div>
-                </div>
-                <div class="pt-4 border-t flex justify-between text-[10px] text-slate-600 font-hindi">
-                    <p>कोषाध्यक्ष हस्ताक्षर: ______________</p>
-                    <p>अध्यक्ष हस्ताक्षर: ______________</p>
+                    <div class="p-2 rounded bg-slate-100 border"><p class="text-[8px] text-slate-500 font-bold">कुल जमा संग्रह</p><p class="font-black text-emerald-700 text-xs">₹${totalColl.toLocaleString('en-IN')}</p></div>
+                    <div class="p-2 rounded bg-slate-100 border"><p class="text-[8px] text-slate-500 font-bold">जमाकर्ता</p><p class="font-black text-indigo-700 text-xs">${depositors.length} Members</p></div>
+                    <div class="p-2 rounded bg-slate-100 border"><p class="text-[8px] text-slate-500 font-bold">तारीख</p><p class="font-black text-slate-800 text-[10px]">${new Date().toLocaleDateString('en-IN')}</p></div>
                 </div>
             `;
         }
@@ -1451,37 +1569,34 @@
             let pendingBox = document.getElementById('pendingRequestsContainer');
             let approvedBox = document.getElementById('approvedMembersContainer');
 
-            pendingBox.innerHTML = '<p class="text-slate-500 italic text-[11px]">Loading pending requests...</p>';
-            approvedBox.innerHTML = '<p class="text-slate-500 italic text-[11px]">Loading approved members...</p>';
+            pendingBox.innerHTML = '<p class="text-slate-500 italic text-[11px]">Loading...</p>';
+            approvedBox.innerHTML = '<p class="text-slate-500 italic text-[11px]">Loading...</p>';
 
             const res = await apiPost("GET_EMAIL_ADMIN");
             if (!res.pending || res.pending.length === 0) {
-                pendingBox.innerHTML = '<p class="text-slate-400 text-[11px] bg-box p-2.5 rounded-xl border">✓ Koi pending request nahi hai.</p>';
+                pendingBox.innerHTML = '<p class="text-slate-400 text-[11px] bg-box p-2 rounded-xl border">✓ No pending requests.</p>';
             } else {
                 let pHtml = '';
                 res.pending.forEach(r => {
-                    pHtml += `<div class="bg-box p-2.5 rounded-xl border border-slate-700/50 flex justify-between items-center text-xs">
+                    pHtml += `<div class="bg-box p-2 rounded-xl border border-slate-700/50 flex justify-between items-center text-xs">
                         <div>
                             <p class="font-bold text-theme-main">${r.email}</p>
-                            <p class="text-[10px] text-theme-sub">${r.name} • ${r.date}</p>
+                            <p class="text-[9px] text-theme-sub">${r.name}</p>
                         </div>
-                        <button onclick="approveEmail('${r.email}', ${r.rowIdx})" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px]">Approve</button>
+                        <button onclick="approveEmail('${r.email}', ${r.rowIdx})" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold text-[10px]">Approve</button>
                     </div>`;
                 });
                 pendingBox.innerHTML = pHtml;
             }
 
             if (!res.approved || res.approved.length === 0) {
-                approvedBox.innerHTML = '<p class="text-slate-400 text-[11px] bg-box p-2.5 rounded-xl border">Abhi koi email approved nahi hai.</p>';
+                approvedBox.innerHTML = '<p class="text-slate-400 text-[11px] bg-box p-2 rounded-xl border">No approved emails.</p>';
             } else {
                 let aHtml = '';
                 res.approved.forEach(a => {
-                    aHtml += `<div class="bg-box p-2.5 rounded-xl border border-emerald-500/20 flex justify-between items-center text-xs">
-                        <div>
-                            <p class="font-bold text-theme-main">${a.email}</p>
-                            <p class="text-[10px] text-theme-sub">Approved: ${a.date}</p>
-                        </div>
-                        <button onclick="blockEmailAccess('${a.email}')" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-[11px]">Block / Revoke</button>
+                    aHtml += `<div class="bg-box p-2 rounded-xl border border-emerald-500/20 flex justify-between items-center text-xs">
+                        <p class="font-bold text-theme-main">${a.email}</p>
+                        <button onclick="blockEmailAccess('${a.email}')" class="px-2.5 py-1 rounded-lg bg-rose-600 text-white font-bold text-[10px]">Revoke</button>
                     </div>`;
                 });
                 approvedBox.innerHTML = aHtml;
@@ -1497,10 +1612,10 @@
         }
 
         async function blockEmailAccess(email) {
-            if (confirm("Kya aap " + email + " ka access BAND karna chahte hain?")) {
+            if (confirm("Access Revoke karna chahte hain?")) {
                 const res = await apiPost("REVOKE_EMAIL", {}, { email: email });
                 if (res.status === "SUCCESS") {
-                    alert("Access Blocked: " + email);
+                    alert("Access Revoked: " + email);
                     loadEmailAccessAdminData();
                 }
             }
@@ -1512,7 +1627,7 @@
             let newPin = document.getElementById('pNewPin').value.trim();
             let confirmPin = document.getElementById('pConfirmPin').value.trim();
 
-            if (newPin !== confirmPin) { alert("Naya PIN aur Confirm PIN match nahi ho rahe!"); return; }
+            if (newPin !== confirmPin) { alert("PIN match nahi ho rahe!"); return; }
 
             const res = await apiPost("CHANGE_PIN", {}, { oldPin: oldPin, newPin: newPin });
             alert(res.message);
@@ -1535,29 +1650,29 @@
 
                 let monthRows = '';
                 sortedMonthKeys.forEach(m => {
-                    monthRows += `<div onclick="openMonthDepositorsDetail('${m}')" class="bg-box p-4 rounded-2xl border flex justify-between items-center text-xs font-bold cursor-pointer hover:border-indigo-500/50 transition-all shadow-sm">
-                        <span class="text-theme-main text-sm"><i class="fa-regular fa-calendar-check text-indigo-400 mr-2"></i>${m} Collection:</span>
-                        <span class="text-emerald-500 font-black text-sm">₹${portalData.monthlySummary[m].toLocaleString('en-IN')} <span class="text-[10px] text-indigo-400 font-bold ml-1">(View List →)</span></span>
+                    monthRows += `<div onclick="openMonthDepositorsDetail('${m}')" class="bg-box p-3.5 rounded-2xl border flex justify-between items-center text-xs font-bold cursor-pointer hover:border-indigo-500/50 transition-all shadow-sm">
+                        <span class="text-theme-main text-xs"><i class="fa-regular fa-calendar-check text-indigo-400 mr-1.5"></i>${m} Collection:</span>
+                        <span class="text-emerald-500 font-black text-xs">₹${portalData.monthlySummary[m].toLocaleString('en-IN')} <span class="text-[9.5px] text-indigo-400 font-bold ml-1">(View →)</span></span>
                     </div>`;
                 });
 
-                content.innerHTML = `<div class="space-y-3">${monthRows}</div>`;
+                content.innerHTML = `<div class="space-y-2.5">${monthRows}</div>`;
             } else if (type === 'loan') {
                 title.innerText = "Market Loan Summary";
                 let activeHtml = portalData.activeLoans.map(l => `
-                    <div class="bg-box p-3.5 rounded-2xl border border-amber-500/40 flex justify-between items-center text-xs">
+                    <div class="bg-box p-3 rounded-2xl border border-amber-500/40 flex justify-between items-center text-xs">
                         <div>
-                            <p class="font-bold text-theme-main">${l.borrower} <span class="bg-amber-500/20 text-amber-500 text-[10px] px-2 py-0.5 rounded font-black">Pending Loan</span></p>
-                            <p class="text-[10px] text-theme-sub">${l.month} ${l.date} • Monthly Int: ₹${(l.taken * 0.02).toLocaleString('en-IN')}/mo</p>
+                            <p class="font-bold text-theme-main">${l.borrower} <span class="bg-amber-500/20 text-amber-500 text-[9px] px-1.5 py-0.5 rounded font-black">Loan</span></p>
+                            <p class="text-[9.5px] text-theme-sub">${l.month} • Byaj: ₹${(l.taken * 0.02).toLocaleString('en-IN')}/mo</p>
                         </div>
-                        <div class="text-right"><p class="font-black text-amber-500">₹${l.taken.toLocaleString('en-IN')}</p><p class="text-[10px] text-purple-400 font-bold">Paid: ₹${l.interest.toLocaleString('en-IN')}</p></div>
+                        <div class="text-right"><p class="font-black text-amber-500">₹${l.taken.toLocaleString('en-IN')}</p><p class="text-[9px] text-purple-400 font-bold">Paid: ₹${l.interest.toLocaleString('en-IN')}</p></div>
                     </div>
                 `).join('');
                 content.innerHTML = `<div class="space-y-2">${activeHtml || '<p class="text-xs text-theme-sub italic">No pending loans.</p>'}</div>`;
             } else if (type === 'fine_interest') {
-                title.innerText = "Total Fine & Interest Summary";
+                title.innerText = "Fine & Interest Summary";
                 let fineHtml = portalData.fineRecordsList.map(f => `
-                    <div class="bg-box p-3.5 rounded-2xl border border-rose-500/30 flex justify-between items-center text-xs">
+                    <div class="bg-box p-3 rounded-2xl border border-rose-500/30 flex justify-between items-center text-xs">
                         <p class="font-bold text-theme-main">${f.name} (${f.month})</p>
                         <span class="font-black text-rose-500">Fine: ₹${f.fine.toLocaleString('en-IN')}</span>
                     </div>
@@ -1570,18 +1685,18 @@
         }
 
         function openMonthDepositorsDetail(monthName) {
-            document.getElementById('monthDetailTitle').innerText = monthName + " - Member Deposits List";
+            document.getElementById('monthDetailTitle').innerText = monthName + " - Depositors";
             let depositors = portalData.monthlyDepositorsList[monthName] || [];
             let rows = depositors.map(d => `
                 <tr>
-                    <td class="py-2.5 px-4 font-bold text-theme-main">${d.name}</td>
-                    <td class="py-2.5 px-4 text-theme-sub">${d.father}</td>
-                    <td class="py-2.5 px-4 text-theme-sub">${d.date || '-'}</td>
-                    <td class="py-2.5 px-4 font-black text-emerald-500">₹${d.amt.toLocaleString('en-IN')}</td>
-                    <td class="py-2.5 px-4 font-bold ${d.fine > 0 ? 'text-amber-500' : 'text-theme-sub'}">₹${d.fine.toLocaleString('en-IN')}</td>
+                    <td class="py-2 px-3 font-bold text-theme-main">${d.name}</td>
+                    <td class="py-2 px-3 text-theme-sub">${d.father}</td>
+                    <td class="py-2 px-3 text-theme-sub">${d.date || '-'}</td>
+                    <td class="py-2 px-3 font-black text-emerald-500">₹${d.amt.toLocaleString('en-IN')}</td>
+                    <td class="py-2 px-3 font-bold ${d.fine > 0 ? 'text-amber-500' : 'text-theme-sub'}">₹${d.fine.toLocaleString('en-IN')}</td>
                 </tr>
             `).join('');
-            document.getElementById('monthDepositorsTable').innerHTML = rows || `<tr><td colspan="5" class="p-4 text-center italic text-theme-sub">No deposits for this month.</td></tr>`;
+            document.getElementById('monthDepositorsTable').innerHTML = rows || `<tr><td colspan="5" class="p-3 text-center italic text-theme-sub">No deposits.</td></tr>`;
             document.getElementById('viewMetricSummary').classList.add('hidden');
             document.getElementById('viewMonthDetail').classList.remove('hidden');
         }
