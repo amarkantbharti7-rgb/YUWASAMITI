@@ -247,11 +247,18 @@
     </div>
 
     <!-- 🔑 ADMIN MODAL (WITH 1-CLICK ROLLBACK TOOL) -->
-    <div id="adminModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-card w-full max-w-2xl rounded-3xl p-5 sm:p-6 space-y-4 shadow-2xl border border-emerald-500/40 max-h-[92vh] overflow-y-auto custom-scrollbar">
-            <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
-                <h3 class="text-sm sm:text-base font-black text-theme-main"><i class="fa-solid fa-sliders text-emerald-400 mr-2"></i>Admin Master Control Panel</h3>
-                <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+    <div id="viewAdmin" class="space-y-6 w-full max-w-7xl mx-auto px-3 sm:px-4 py-4 hidden">
+  <div class="glass-card p-4 sm:p-6 rounded-3xl border border-indigo-500/30 space-y-4">
+    <div class="flex items-center justify-between border-b border-slate-700/50 pb-3">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-xl bg-indigo-600/30 text-indigo-400 flex items-center justify-center font-black">
+          <i class="fa-solid fa-sliders"></i>
+        </div>
+        <h3 class="text-sm sm:text-base font-black text-theme-main">Admin Master Control Panel</h3>
+      </div>
+      <button onclick="goHome()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs shadow border border-slate-600">
+        <i class="fa-solid fa-house mr-1"></i> Back to Home
+      </button>
             </div>
 
             <!-- TABS -->
@@ -361,17 +368,19 @@
                         <input type="password" id="pConfirmPin" required placeholder="Confirm PIN" class="w-full bg-box border border-slate-700 rounded-xl p-2 text-theme-main font-bold">
                     </div>
                     <button type="submit" class="w-full py-2.5 rounded-xl bg-purple-600 text-white font-bold shadow">Change PIN</button>
-                </form> <div class="p-4 bg-rose-950/30 rounded-2xl border border-rose-500/30 space-y-2 mt-4">
-  <h4 class="font-black text-rose-400 text-xs uppercase"><i class="fa-solid fa-trash-can mr-1.5"></i> Quick Sheet Cell Reset</h4>
-  <div class="grid grid-cols-2 gap-2">
-    <input type="text" id="resetMemberName" placeholder="Member Name" class="bg-box border border-slate-700 rounded-xl p-2 text-theme-main text-xs font-bold">
-    <input type="text" id="resetMonthName" placeholder="Month (e.g. September)" class="bg-box border border-slate-700 rounded-xl p-2 text-theme-main text-xs font-bold">
-  </div>
-  <button type="button" onclick="quickResetSheetCell()" class="w-full py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow">Clear Record from Sheet</button>
-</div>
-            </div>
-        </div>
+                </form>
+    
+    <div class="p-4 bg-rose-950/30 rounded-2xl border border-rose-500/30 space-y-2 mt-4">
+      <h4 class="font-black text-rose-400 text-xs uppercase"><i class="fa-solid fa-trash-can mr-1.5"></i> Quick Sheet Cell Reset</h4>
+      <div class="grid grid-cols-2 gap-2">
+        <input type="text" id="resetMemberName" placeholder="Member Name" class="bg-box border border-slate-700 rounded-xl p-2 text-theme-main text-xs font-bold">
+        <input type="text" id="resetMonthName" placeholder="Month (e.g. September)" class="bg-box border border-slate-700 rounded-xl p-2 text-theme-main text-xs font-bold">
+      </div>
+      <button type="button" onclick="quickResetSheetCell()" class="w-full py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow">Clear Record from Sheet</button>
     </div>
+  </div>
+</div>
+</div>
 
     <!-- MAIN APP CONTAINER -->
     <main class="max-w-7xl w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-6 flex-grow">
