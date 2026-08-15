@@ -506,11 +506,21 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function openAdminPage() {
-      const pin = prompt("Enter 4-Digit Admin PIN:");
-      if (pin !== "1234" && pin !== "1020") {
-        return alert("Incorrect Admin PIN!");
-      }
+      async function openAdminPage() {
+  const pin = prompt("Enter 4-Digit Admin PIN:");
+  if (!pin) return;
+  
+  const res = await apiPost("VERIFY_ADMIN_PIN", {}, { pin: pin });
+  if (res && res.status === "SUCCESS") {
+    hideAllViews();
+    document.getElementById('viewAdmin').classList.remove('hidden');
+    document.getElementById('noticeBoardStrip').classList.add('hidden');
+    switchAdminTab('utr');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    alert("Incorrect Admin PIN!");
+  }
+}
       hideAllViews();
       document.getElementById('viewAdmin').classList.remove('hidden');
       document.getElementById('noticeBoardStrip').classList.add('hidden');
