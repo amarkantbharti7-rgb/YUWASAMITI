@@ -361,7 +361,14 @@
                         <input type="password" id="pConfirmPin" required placeholder="Confirm PIN" class="w-full bg-box border border-slate-700 rounded-xl p-2 text-theme-main font-bold">
                     </div>
                     <button type="submit" class="w-full py-2.5 rounded-xl bg-purple-600 text-white font-bold shadow">Change PIN</button>
-                </form>
+                </form> <div class="p-4 bg-rose-950/30 rounded-2xl border border-rose-500/30 space-y-2 mt-4">
+  <h4 class="font-black text-rose-400 text-xs uppercase"><i class="fa-solid fa-trash-can mr-1.5"></i> Quick Sheet Cell Reset</h4>
+  <div class="grid grid-cols-2 gap-2">
+    <input type="text" id="resetMemberName" placeholder="Member Name" class="bg-box border border-slate-700 rounded-xl p-2 text-theme-main text-xs font-bold">
+    <input type="text" id="resetMonthName" placeholder="Month (e.g. September)" class="bg-box border border-slate-700 rounded-xl p-2 text-theme-main text-xs font-bold">
+  </div>
+  <button type="button" onclick="quickResetSheetCell()" class="w-full py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow">Clear Record from Sheet</button>
+</div>
             </div>
         </div>
     </div>
@@ -1704,6 +1711,19 @@ function goHome() {
         }
 
         window.onload = initPortal;
+        async function quickResetSheetCell() {
+  let name = document.getElementById('resetMemberName').value.trim();
+  let month = document.getElementById('resetMonthName').value.trim();
+  if (!name || !month) return alert("Member Name aur Month dono bharein!");
+  if (!confirm(`${name} ka ${month} ka record Sheet se clear karein?`)) return;
+  const res = await apiPost("CLEAR_MEMBER_RECORD", {}, { name: name, month: month });
+  alert(res.message);
+  if (res.status === "SUCCESS") {
+    document.getElementById('resetMemberName').value = '';
+    document.getElementById('resetMonthName').value = '';
+    loadPortalData(false);
+  }
+}
     </script>
 </body>
 </html>
