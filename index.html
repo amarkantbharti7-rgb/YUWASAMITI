@@ -996,50 +996,11 @@
         }
 
         // ACCURATE DUE/PAID CALCULATION
-       function renderMembersList(list) {
+    function renderMembersList(list) {
     const grid = document.getElementById('membersGrid');
     grid.innerHTML = '';
 
     list.forEach(m => {
-        let mKey = getCleanKey(m.name, m.father);
-        let jamaList = (portalData.jamaData && (portalData.jamaData[mKey] || portalData.jamaData[m.identityKey])) ? (portalData.jamaData[mKey] || portalData.jamaData[m.identityKey]) : [];
-        
-        let maxPaidIdx = -1;
-
-        // Strictly check real paid amount (> 0 and valid number)
-        jamaList.forEach(j => {
-            let cleanAmt = String(j.amt || '').replace(/[^0-9.]/g, '');
-            let amt = parseFloat(cleanAmt) || 0;
-            
-            if (amt > 0) {
-                let normM = normalizeMonth(j.month);
-                let idx = monthOrder.indexOf(normM);
-                if (idx > maxPaidIdx) {
-                    maxPaidIdx = idx;
-                }
-            }
-        });
-
-        // Agar jamaList empty ho ya parse na ho, to total jama se verify karein
-        if (maxPaidIdx === -1 && m.totalDeposit) {
-            let total = parseFloat(String(m.totalDeposit).replace(/[^0-9.]/g, '')) || 0;
-            if (total > 0) {
-                maxPaidIdx = Math.min(11, Math.floor(total / 200) - 1);
-            }
-        }
-
-        // Status Badge Logic (7 = August)
-        let statusBadgeHtml = '';
-        if (maxPaidIdx > 7) {
-            statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/40">Adv (${monthOrder[maxPaidIdx]})</span>`;
-        } else if (maxPaidIdx === 7) {
-            statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">✓ Aug Paid</span>`;
-        } else if (maxPaidIdx >= 0) {
-            statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40">${monthOrder[maxPaidIdx]} Paid</span>`;
-        } else {
-            statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/40">● Aug Due</span>`;
-        }
-
         const card = document.createElement('div');
         card.className = "app-card p-4 rounded-3xl cursor-pointer flex items-center justify-between hover:border-indigo-500 transition-all shadow-sm";
         card.onclick = () => openMemberPage(m);
@@ -1053,8 +1014,7 @@
                 </div>
             </div>
             <div class="text-right shrink-0">
-                ${statusBadgeHtml}
-                <p class="text-[10px] text-indigo-500 font-bold mt-1">Passbook →</p>
+                <p class="text-xs text-indigo-500 font-bold">Passbook →</p>
             </div>
         `;
         grid.appendChild(card);
