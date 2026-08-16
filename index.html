@@ -70,16 +70,17 @@
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         @media print {
-            @page { size: A4 portrait; margin: 5mm 6mm; }
+            @page { size: A4 portrait; margin: 8mm 8mm; }
             body { background: #ffffff !important; color: #000000 !important; margin: 0 !important; }
             body * { visibility: hidden !important; }
             #passbookSinglePage, #passbookSinglePage *, #auditReportArea, #auditReportArea * { visibility: visible !important; }
             #passbookSinglePage, #auditReportArea {
                 position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important;
-                border: 2px solid #0f172a !important; border-radius: 8px !important; background: #ffffff !important;
-                color: #000000 !important; padding: 10px !important; box-shadow: none !important;
+                border: 1.5px solid #0f172a !important; border-radius: 8px !important; background: #ffffff !important;
+                color: #000000 !important; padding: 12px !important; box-shadow: none !important;
             }
             .no-print { display: none !important; }
+            .print-full-height { max-height: none !important; overflow: visible !important; }
         }
     </style>
 </head>
@@ -1644,124 +1645,124 @@
             let unpaidList = membersList.filter(mem => !paidMemberKeys.has(getCleanKey(mem.name, mem.father)));
 
             container.innerHTML = `
-                <div class="border-b-2 border-slate-900 pb-3 flex justify-between items-center text-slate-900">
+                <div class="border-b-2 border-slate-900 pb-2.5 flex justify-between items-center text-slate-900">
                     <div>
-                        <h1 class="text-2xl sm:text-3xl font-black text-slate-950 font-hindi uppercase tracking-tight">युवा समिति</h1>
-                        <p class="text-xs font-black uppercase text-indigo-700 mt-0.5">मासिक वित्तीय ऑडिट रिपोर्ट • ${m} 2026</p>
+                        <h1 class="text-xl sm:text-2xl font-black text-slate-950 font-hindi uppercase tracking-tight">युवा समिति</h1>
+                        <p class="text-[11px] font-black uppercase text-indigo-700 mt-0.5">Monthly Financial Audit Report • ${m} 2026</p>
                     </div>
                     <button onclick="window.print()" class="no-print px-4 py-2 bg-slate-900 text-white font-bold text-xs rounded-xl shadow">
-                        <i class="fa-solid fa-download mr-1"></i> Print / PDF
+                        <i class="fa-solid fa-print mr-1"></i> Print / PDF
                     </button>
                 </div>
 
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center text-xs">
-                    <div class="p-2.5 rounded-2xl bg-emerald-50 border border-emerald-300">
-                        <p class="text-[10px] text-emerald-800 font-bold uppercase">मासिक जमा संग्रह (${m})</p>
-                        <p class="font-black text-emerald-700 text-lg">₹${totalColl.toLocaleString('en-IN')}</p>
-                        <p class="text-[9px] text-slate-600 font-bold">${paidList.length} Members Paid</p>
+                <div class="grid grid-cols-4 gap-2 text-center text-xs my-2">
+                    <div class="p-2 rounded-xl bg-emerald-50 border border-emerald-300">
+                        <p class="text-[9px] text-emerald-800 font-bold uppercase">Monthly Collection (${m})</p>
+                        <p class="font-black text-emerald-700 text-base">₹${totalColl.toLocaleString('en-IN')}</p>
+                        <p class="text-[8px] text-slate-600 font-bold">${paidList.length} Members Paid</p>
                     </div>
-                    <div class="p-2.5 rounded-2xl bg-indigo-50 border border-indigo-300">
-                        <p class="text-[10px] text-indigo-800 font-bold uppercase">कुल समिति फंड जमा</p>
-                        <p class="font-black text-indigo-900 text-lg">₹${(portalData?.summary?.totalDeposit || 53280).toLocaleString('en-IN')}</p>
-                        <p class="text-[9px] text-slate-600 font-bold">Total Reserve</p>
+                    <div class="p-2 rounded-xl bg-indigo-50 border border-indigo-300">
+                        <p class="text-[9px] text-indigo-800 font-bold uppercase">Total Reserve Fund</p>
+                        <p class="font-black text-indigo-900 text-base">₹${(portalData?.summary?.totalDeposit || 53280).toLocaleString('en-IN')}</p>
+                        <p class="text-[8px] text-slate-600 font-bold">Total Deposit</p>
                     </div>
-                    <div class="p-2.5 rounded-2xl bg-amber-50 border border-amber-300">
-                        <p class="text-[10px] text-amber-800 font-bold uppercase">सक्रिय ऋण (Loans)</p>
-                        <p class="font-black text-amber-800 text-lg">₹${totalActiveLoanAmt.toLocaleString('en-IN')}</p>
-                        <p class="text-[9px] text-slate-600 font-bold">${activeLoans.length} Loans Running</p>
+                    <div class="p-2 rounded-xl bg-amber-50 border border-amber-300">
+                        <p class="text-[9px] text-amber-800 font-bold uppercase">Active Market Loans</p>
+                        <p class="font-black text-amber-800 text-base">₹${totalActiveLoanAmt.toLocaleString('en-IN')}</p>
+                        <p class="text-[8px] text-slate-600 font-bold">${activeLoans.length} Loans Running</p>
                     </div>
-                    <div class="p-2.5 rounded-2xl bg-purple-50 border border-purple-300">
-                        <p class="text-[10px] text-purple-800 font-bold uppercase">कुल अर्जित ब्याज</p>
-                        <p class="font-black text-purple-800 text-lg">₹${(portalData?.summary?.totalFineAndInterest || 2922).toLocaleString('en-IN')}</p>
-                        <p class="text-[9px] text-slate-600 font-bold">2% Monthly Return</p>
+                    <div class="p-2 rounded-xl bg-purple-50 border border-purple-300">
+                        <p class="text-[9px] text-purple-800 font-bold uppercase">Total Earned Interest</p>
+                        <p class="font-black text-purple-800 text-base">₹${(portalData?.summary?.totalFineAndInterest || 2922).toLocaleString('en-IN')}</p>
+                        <p class="text-[8px] text-slate-600 font-bold">2% Monthly Return</p>
                     </div>
                 </div>
 
-                <!-- 15 Tarikh Tak Jama Kiye Sadasya (PAID LIST) -->
-                <div class="space-y-2 text-slate-900">
-                    <div class="flex justify-between items-center">
-                        <h4 class="text-xs sm:text-sm font-black uppercase text-emerald-800 font-hindi flex items-center gap-1.5">
-                            <i class="fa-solid fa-circle-check text-emerald-600"></i> १५ तारीख तक जमा सदस्य (${m} Paid: ${paidList.length} Members)
+                <!-- 15th Tak Paid List -->
+                <div class="space-y-1.5 text-slate-900">
+                    <div class="flex justify-between items-center border-b border-emerald-300 pb-1">
+                        <h4 class="text-xs font-black uppercase text-emerald-800 flex items-center gap-1">
+                            <i class="fa-solid fa-circle-check text-emerald-600"></i> Paid Members till 15th (${m} Paid: ${paidList.length})
                         </h4>
-                        <span class="text-[10px] font-black text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-300">₹${(paidList.length * 200).toLocaleString('en-IN')} Received</span>
+                        <span class="text-[9px] font-black text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">₹${(paidList.length * 200).toLocaleString('en-IN')} Received</span>
                     </div>
-                    <div class="max-h-40 overflow-y-auto custom-scrollbar border border-emerald-200 rounded-2xl p-2 bg-emerald-50/40">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <div class="print-full-height border border-emerald-200 rounded-xl p-2 bg-emerald-50/30">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[10px]">
                             ${paidList.map(u => `
-                                <div class="p-2 bg-white rounded-xl border border-emerald-200 flex justify-between items-center shadow-xs">
-                                    <div>
-                                        <span class="font-black text-slate-900">${u.name}</span>
-                                        <p class="text-[10px] text-slate-500 font-semibold">S/O ${u.father}</p>
+                                <div class="p-1.5 bg-white rounded-lg border border-emerald-200 flex justify-between items-center">
+                                    <div class="truncate mr-1">
+                                        <span class="font-black text-slate-900 block leading-tight truncate">${u.name}</span>
+                                        <span class="text-[8.5px] text-slate-500 block truncate">S/O ${u.father}</span>
                                     </div>
-                                    <span class="text-emerald-700 font-black text-[10px] bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">₹200 Paid ✓</span>
+                                    <span class="text-emerald-700 font-black text-[9px] bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-300 shrink-0">₹200 Paid ✓</span>
                                 </div>
-                            `).join('') || '<p class="text-slate-500 text-xs italic p-2">Koi jama record nahi mila.</p>'}
+                            `).join('') || '<p class="text-slate-500 text-xs italic p-1">No records.</p>'}
                         </div>
                     </div>
                 </div>
 
-                <!-- 15 Tarikh Tak Bakaya Sadasya (UNPAID LIST) -->
-                <div class="space-y-2 text-slate-900">
-                    <div class="flex justify-between items-center">
-                        <h4 class="text-xs sm:text-sm font-black uppercase text-rose-800 font-hindi flex items-center gap-1.5">
-                            <i class="fa-solid fa-circle-exclamation text-rose-600"></i> १५ तारीख तक बकाया सदस्य (${m} Unpaid: ${unpaidList.length} Members)
+                <!-- 15th Tak Unpaid List -->
+                <div class="space-y-1.5 text-slate-900 mt-2">
+                    <div class="flex justify-between items-center border-b border-rose-300 pb-1">
+                        <h4 class="text-xs font-black uppercase text-rose-800 flex items-center gap-1">
+                            <i class="fa-solid fa-circle-exclamation text-rose-600"></i> Unpaid Members till 15th (${m} Unpaid: ${unpaidList.length})
                         </h4>
-                        <span class="text-[10px] font-black text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full border border-rose-300">₹${(unpaidList.length * 200).toLocaleString('en-IN')} Due</span>
+                        <span class="text-[9px] font-black text-rose-700 bg-rose-100 px-2 py-0.5 rounded border border-rose-300">₹${(unpaidList.length * 200).toLocaleString('en-IN')} Due</span>
                     </div>
-                    <div class="max-h-40 overflow-y-auto custom-scrollbar border border-rose-200 rounded-2xl p-2 bg-rose-50/40">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <div class="print-full-height border border-rose-200 rounded-xl p-2 bg-rose-50/30">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[10px]">
                             ${unpaidList.map(u => {
                                 let waMsg = encodeURIComponent(`नमस्ते ${u.name} जी, युवा समिति का ${m} माह का ₹200 का मासिक अंशदान अभी तक बकाया है। कृपया समय पर जमा करें।`);
                                 return `
-                                <div class="p-2 bg-white rounded-xl border border-rose-200 flex justify-between items-center shadow-xs">
-                                    <div>
-                                        <span class="font-black text-slate-900">${u.name}</span>
-                                        <p class="text-[10px] text-slate-500 font-semibold">S/O ${u.father}</p>
+                                <div class="p-1.5 bg-white rounded-lg border border-rose-200 flex justify-between items-center">
+                                    <div class="truncate mr-1">
+                                        <span class="font-black text-slate-900 block leading-tight truncate">${u.name}</span>
+                                        <span class="text-[8.5px] text-slate-500 block truncate">S/O ${u.father}</span>
                                     </div>
-                                    <div class="flex items-center space-x-2">
-                                        <span class="text-rose-700 font-black text-[10px] bg-rose-100 px-2 py-0.5 rounded border border-rose-300">Due ₹200</span>
-                                        <a href="https://wa.me/?text=${waMsg}" target="_blank" class="no-print px-2 py-1 rounded bg-emerald-600 text-white font-black text-[10px]">
-                                            <i class="fa-brands fa-whatsapp"></i> तकादा
+                                    <div class="flex items-center space-x-1 shrink-0">
+                                        <span class="text-rose-700 font-black text-[9px] bg-rose-100 px-1 py-0.5 rounded border border-rose-300">Due ₹200</span>
+                                        <a href="https://wa.me/?text=${waMsg}" target="_blank" class="no-print px-1.5 py-0.5 rounded bg-emerald-600 text-white font-black text-[9px]">
+                                            <i class="fa-brands fa-whatsapp"></i>
                                         </a>
                                     </div>
                                 </div>`;
-                            }).join('') || '<p class="text-emerald-700 font-bold text-xs p-2">✓ Sabhi sadasyon ka jama poora ho chuka hai!</p>'}
+                            }).join('') || '<p class="text-emerald-700 font-bold text-xs p-1">✓ All members paid!</p>'}
                         </div>
                     </div>
                 </div>
 
-                <!-- Running Loans & 2% Byaj -->
-                <div class="space-y-1.5 text-slate-900">
-                    <h4 class="text-xs sm:text-sm font-black uppercase text-amber-900 font-hindi flex items-center gap-1.5">
-                        <i class="fa-solid fa-hand-holding-dollar text-amber-600"></i> वर्तमान सक्रिय ऋण धारक विवरण (Running Loans & 2% Byaj)
+                <!-- Running Loans -->
+                <div class="space-y-1 text-slate-900 mt-2">
+                    <h4 class="text-xs font-black uppercase text-amber-900 flex items-center gap-1">
+                        <i class="fa-solid fa-hand-holding-dollar text-amber-600"></i> Active Loans & 2% Interest Summary
                     </h4>
-                    <div class="rounded-2xl overflow-x-auto border border-amber-200">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-amber-900 text-white font-bold text-[9px] uppercase">
+                    <div class="rounded-xl overflow-hidden border border-amber-200">
+                        <table class="w-full text-left text-[9.5px]">
+                            <thead class="bg-amber-900 text-white font-bold text-[8.5px] uppercase">
                                 <tr>
-                                    <th class="py-1.5 px-3">Borrower Name</th>
-                                    <th class="py-1.5 px-3">Loan Date</th>
-                                    <th class="py-1.5 px-3">Mool Dhan (₹)</th>
-                                    <th class="py-1.5 px-3">Monthly Byaj (2%)</th>
-                                    <th class="py-1.5 px-3">Paid Interest</th>
+                                    <th class="py-1 px-2">Borrower Name</th>
+                                    <th class="py-1 px-2">Loan Date</th>
+                                    <th class="py-1 px-2">Principal (₹)</th>
+                                    <th class="py-1 px-2">Monthly (2%)</th>
+                                    <th class="py-1 px-2">Paid Interest</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-amber-100 bg-white text-[10px]">
+                            <tbody class="divide-y divide-amber-100 bg-white">
                                 ${activeLoans.map(l => `
                                     <tr>
-                                        <td class="py-1.5 px-3 font-bold text-slate-900">${l.borrower}</td>
-                                        <td class="py-1.5 px-3 text-slate-600">${l.month} ${l.date || ''}</td>
-                                        <td class="py-1.5 px-3 font-black text-amber-700">₹${Number(l.taken || 0).toLocaleString('en-IN')}</td>
-                                        <td class="py-1.5 px-3 font-bold text-purple-700">₹${(Number(l.taken || 0) * 0.02).toLocaleString('en-IN')}/mo</td>
-                                        <td class="py-1.5 px-3 font-bold text-emerald-700">₹${Number(l.interest || 0).toLocaleString('en-IN')}</td>
+                                        <td class="py-1 px-2 font-bold text-slate-900">${l.borrower}</td>
+                                        <td class="py-1 px-2 text-slate-600">${l.month} ${l.date || ''}</td>
+                                        <td class="py-1 px-2 font-black text-amber-700">₹${Number(l.taken || 0).toLocaleString('en-IN')}</td>
+                                        <td class="py-1 px-2 font-bold text-purple-700">₹${(Number(l.taken || 0) * 0.02).toLocaleString('en-IN')}/mo</td>
+                                        <td class="py-1 px-2 font-bold text-emerald-700">₹${Number(l.interest || 0).toLocaleString('en-IN')}</td>
                                     </tr>
-                                `).join('') || '<tr><td colspan="5" class="p-3 text-center text-slate-400 italic">No running active loans.</td></tr>'}
+                                `).join('') || '<tr><td colspan="5" class="p-2 text-center text-slate-400 italic">No running active loans.</td></tr>'}
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="pt-3 border-t border-slate-300 flex justify-between text-[10px] text-slate-600 font-hindi">
+                <div class="pt-3 border-t border-slate-300 flex justify-between text-[9px] text-slate-600 mt-2">
                     <p class="font-bold">कोषाध्यक्ष हस्ताक्षर: ___________________</p>
                     <p class="font-bold">अध्यक्ष / सचिव हस्ताक्षर: ___________________</p>
                 </div>
