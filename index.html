@@ -996,56 +996,58 @@
         }
 
         // ACCURATE DUE/PAID CALCULATION
-        function renderMembersList(list) {
-            const grid = document.getElementById('membersGrid');
-            grid.innerHTML = '';
+       function renderMembersList(list) {
+    const grid = document.getElementById('membersGrid');
+    grid.innerHTML = '';
 
-            list.forEach(m => {
-                let mKey = getCleanKey(m.name, m.father);
-                let jamaList = (portalData.jamaData && (portalData.jamaData[mKey] || portalData.jamaData[m.identityKey])) ? (portalData.jamaData[mKey] || portalData.jamaData[m.identityKey]) : [];
-                
-                let hasAugustPaid = jamaList.some(j => normalizeMonth(j.month) === "August" && Number(j.amt) > 0);
+    list.forEach(m => {
+        let mKey = getCleanKey(m.name, m.father);
+        let jamaList = (portalData.jamaData && (portalData.jamaData[mKey] || portalData.jamaData[m.identityKey])) ? (portalData.jamaData[mKey] || portalData.jamaData[m.identityKey]) : [];
+        
+        let maxPaidIdx = -1;
 
-                let futurePaidMonth = "";
-                let maxIdx = -1;
-                jamaList.forEach(j => {
-                    let normM = normalizeMonth(j.month);
-                    let idx = monthOrder.indexOf(normM);
-                    if (idx > 7 && Number(j.amt) > 0 && idx > maxIdx) {
-                        maxIdx = idx;
-                        futurePaidMonth = monthOrder[idx];
-                    }
-                });
-
-                let statusBadgeHtml = '';
-                if (futurePaidMonth) {
-                    statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/40">Adv (${futurePaidMonth})</span>`;
-                } else if (hasAugustPaid) {
-                    statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">✓ Aug Paid</span>`;
-                } else {
-                    statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/40">● Aug Due</span>`;
+        // Har member ke sirf positive payment wale mahine evaluate honge
+        jamaList.forEach(j => {
+            let amt = Number(j.amt || 0);
+            if (amt > 0) {
+                let normM = normalizeMonth(j.month);
+                let idx = monthOrder.indexOf(normM);
+                if (idx > maxPaidIdx) {
+                    maxPaidIdx = idx;
                 }
+            }
+        });
 
-                const card = document.createElement('div');
-                card.className = "app-card p-4 rounded-3xl cursor-pointer flex items-center justify-between hover:border-indigo-500 transition-all shadow-sm";
-                card.onclick = () => openMemberPage(m);
-
-                card.innerHTML = `
-                    <div class="flex items-center space-x-3 overflow-hidden">
-                        <div class="w-11 h-11 rounded-2xl bg-indigo-600 text-white font-black text-lg flex items-center justify-center shrink-0 shadow">${m.name.charAt(0)}</div>
-                        <div class="truncate">
-                            <h4 class="font-bold text-theme-text text-sm sm:text-base truncate">${m.name}</h4>
-                            <p class="text-xs text-theme-sub truncate font-semibold">S/O ${m.father}</p>
-                        </div>
-                    </div>
-                    <div class="text-right shrink-0">
-                        ${statusBadgeHtml}
-                        <p class="text-[10px] text-indigo-500 font-bold mt-1">Passbook →</p>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
+        // 7 = August (0: Jan, 1: Feb, 2: Mar, 3: Apr, 4: May, 5: Jun, 6: Jul, 7: Aug)
+        let statusBadgeHtml = '';
+        if (maxPaidIdx > 7) {
+            statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/40">Adv (${monthOrder[maxPaidIdx]})</span>`;
+        } else if (maxPaidIdx === 7) {
+            statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">✓ Aug Paid</span>`;
+        } else {
+            statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/40">● Aug Due</span>`;
         }
+
+        const card = document.createElement('div');
+        card.className = "app-card p-4 rounded-3xl cursor-pointer flex items-center justify-between hover:border-indigo-500 transition-all shadow-sm";
+        card.onclick = () => openMemberPage(m);
+
+        card.innerHTML = `
+            <div class="flex items-center space-x-3 overflow-hidden">
+                <div class="w-11 h-11 rounded-2xl bg-indigo-600 text-white font-black text-lg flex items-center justify-center shrink-0 shadow">${(m.name || 'M').charAt(0)}</div>
+                <div class="truncate">
+                    <h4 class="font-bold text-theme-text text-sm sm:text-base truncate">${m.name}</h4>
+                    <p class="text-xs text-theme-sub truncate font-semibold">S/O ${m.father}</p>
+                </div>
+            </div>
+            <div class="text-right shrink-0">
+                ${statusBadgeHtml}
+                <p class="text-[10px] text-indigo-500 font-bold mt-1">Passbook →</p>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
 
         function getLoansForMember(memberName) {
             if (!portalData || !portalData.loanData) return [];
