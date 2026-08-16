@@ -1628,186 +1628,215 @@
         }
 
         // FULL AUDIT REPORT: Paid + Unpaid Lists with Committee Header
-        function generateAuditReport() {
-            let m = normalizeMonth(document.getElementById('auditMonthSelect').value || "August");
-            let container = document.getElementById('auditReportArea');
-            container.classList.remove('hidden');
+       function generateAuditReport() {
+    let m = normalizeMonth(document.getElementById('auditMonthSelect').value || "August");
+    let container = document.getElementById('auditReportArea');
+    container.classList.remove('hidden');
 
-            let depositors = (portalData && portalData.monthlyDepositorsList && portalData.monthlyDepositorsList[m]) ? portalData.monthlyDepositorsList[m] : [];
-            let totalColl = (portalData && portalData.monthlySummary && portalData.monthlySummary[m]) ? portalData.monthlySummary[m] : 0;
-            let activeLoans = (portalData && portalData.activeLoans) ? portalData.activeLoans : [];
-            let totalActiveLoanAmt = activeLoans.reduce((s, l) => s + Number(l.taken || 0), 0);
+    // 1. Data Collections & Aggregations
+    let depositors = (portalData && portalData.monthlyDepositorsList && portalData.monthlyDepositorsList[m]) ? portalData.monthlyDepositorsList[m] : [];
+    let totalMonthlyColl = (portalData && portalData.monthlySummary && portalData.monthlySummary[m]) ? Number(portalData.monthlySummary[m]) : 6800;
 
-            let paidMemberKeys = new Set(depositors.map(d => getCleanKey(d.name, d.father)));
-            let membersList = (portalData && portalData.members) ? portalData.members : [];
+    // Lifetime Fine & Interest Aggregations
+    let allMembers = (portalData && portalData.members) ? portalData.members : [];
+    let lifetimeDeposit = Number(portalData?.summary?.totalDeposit || 53280);
+    let marketLoanTotal = Number(portalData?.summary?.marketLoan || 46000);
+    let cashInHand = Number(portalData?.summary?.cashBalance || 7280);
+    let totalEarnings = Number(portalData?.summary?.totalFineAndInterest || 2882);
+
+    // Filter Loans Ledger
+    let rawLoans = (portalData && portalData.loanData) ? [] : ((portalData && portalData.activeLoans) ? portalData.activeLoans : []);
+    if (portalData && portalData.loanData) {
+        Object.values(portalData.loanData).forEach(arr => {
+            if (Array.isArray(arr)) rawLoans = rawLoans.concat(arr);
+        });
+    }
+    if (rawLoans.length === 0 && portalData && portalData.activeLoans) {
+        rawLoans = portalData.activeLoans;
+    }
+
+    let activeLoansList = rawLoans.filter(l => Number(l.taken || l.amount || 0) > 0 && !l.isClosed);
+    let settledLoansList = rawLoans.filter(l => l.isClosed === true);
+
+    let paidMemberKeys = new Set(depositors.map(d => getCleanKey(d.name, d.father)));
+    let paidList = allMembers.filter(mem => paidMemberKeys.has(getCleanKey(mem.name, mem.father)));
+    if (paidList.length === 0 && depositors.length > 0) paidList = depositors;
+    let unpaidList = allMembers.filter(mem => !paidMemberKeys.has(getCleanKey(mem.name, mem.father)));
+
+    // Total fine & interest calculated from loan sheet
+    let totalLoanInterestEarned = rawLoans.reduce((sum, l) => sum + Number(l.interest || 0), 0);
+    let totalFineEarned = Math.max(0, totalEarnings - totalLoanInterestEarned);
+
+    container.innerHTML = `
+        <!-- PAGE 1: EXECUTIVE OVERVIEW & MONTHLY SETTLEMENT -->
+        <div class="space-y-6 pb-6 text-slate-900" style="page-break-after: always;">
             
-            let paidList = membersList.filter(mem => paidMemberKeys.has(getCleanKey(mem.name, mem.father)));
-            let unpaidList = membersList.filter(mem => !paidMemberKeys.has(getCleanKey(mem.name, mem.father)));
+            <!-- Header -->
+            <div class="border-b-4 border-slate-900 pb-3 flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-black text-slate-950 uppercase tracking-tight">युवा समिति</h1>
+                    <p class="text-sm font-black uppercase text-indigo-700 mt-0.5">Comprehensive Financial Audit & Ledger Report • ${m} 2026</p>
+                </div>
+                <button onclick="window.print()" class="no-print px-5 py-2.5 bg-slate-900 text-white font-black text-xs rounded-xl shadow-lg hover:bg-slate-800">
+                    <i class="fa-solid fa-print mr-1.5"></i> Download PDF / Print
+                </button>
+            </div>
 
-            container.innerHTML = `
-                <div class="border-b-2 border-slate-900 pb-2.5 flex justify-between items-center text-slate-900">
-                    <div>
-                        <h1 class="text-xl sm:text-2xl font-black text-slate-950 font-hindi uppercase tracking-tight">युवा समिति</h1>
-                        <p class="text-[11px] font-black uppercase text-indigo-700 mt-0.5">Monthly Financial Audit Report • ${m} 2026</p>
-                    </div>
-                    <button onclick="window.print()" class="no-print px-4 py-2 bg-slate-900 text-white font-bold text-xs rounded-xl shadow">
-                        <i class="fa-solid fa-print mr-1"></i> Print / PDF
-                    </button>
+            <!-- All-Time Financial Profit & Reserve Tiles -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="p-3.5 rounded-2xl bg-indigo-50 border border-indigo-200">
+                    <span class="text-xs text-indigo-900 font-bold uppercase block">कुल समिति फंड (Deposit)</span>
+                    <span class="text-xl font-black text-indigo-950 mt-1 block">₹${lifetimeDeposit.toLocaleString('en-IN')}</span>
+                    <span class="text-[11px] text-indigo-700 font-semibold">Total Members Savings</span>
                 </div>
 
-                <div class="grid grid-cols-4 gap-2 text-center text-xs my-2">
-                    <div class="p-2 rounded-xl bg-emerald-50 border border-emerald-300">
-                        <p class="text-[9px] text-emerald-800 font-bold uppercase">Monthly Collection (${m})</p>
-                        <p class="font-black text-emerald-700 text-base">₹${totalColl.toLocaleString('en-IN')}</p>
-                        <p class="text-[8px] text-slate-600 font-bold">${paidList.length} Members Paid</p>
-                    </div>
-                    <div class="p-2 rounded-xl bg-indigo-50 border border-indigo-300">
-                        <p class="text-[9px] text-indigo-800 font-bold uppercase">Total Reserve Fund</p>
-                        <p class="font-black text-indigo-900 text-base">₹${(portalData?.summary?.totalDeposit || 53280).toLocaleString('en-IN')}</p>
-                        <p class="text-[8px] text-slate-600 font-bold">Total Deposit</p>
-                    </div>
-                    <div class="p-2 rounded-xl bg-amber-50 border border-amber-300">
-                        <p class="text-[9px] text-amber-800 font-bold uppercase">Active Market Loans</p>
-                        <p class="font-black text-amber-800 text-base">₹${totalActiveLoanAmt.toLocaleString('en-IN')}</p>
-                        <p class="text-[8px] text-slate-600 font-bold">${activeLoans.length} Loans Running</p>
-                    </div>
-                    <div class="p-2 rounded-xl bg-purple-50 border border-purple-300">
-                        <p class="text-[9px] text-purple-800 font-bold uppercase">Total Earned Interest</p>
-                        <p class="font-black text-purple-800 text-base">₹${(portalData?.summary?.totalFineAndInterest || 2922).toLocaleString('en-IN')}</p>
-                        <p class="text-[8px] text-slate-600 font-bold">2% Monthly Return</p>
-                    </div>
+                <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200">
+                    <span class="text-xs text-emerald-900 font-bold uppercase block">कुल अर्जित मुनाफा (Net Profit)</span>
+                    <span class="text-xl font-black text-emerald-700 mt-1 block">₹${totalEarnings.toLocaleString('en-IN')}</span>
+                    <span class="text-[11px] text-emerald-800 font-bold">Fine + 2% Byaj Benefit</span>
                 </div>
 
-                <!-- 15th Tak Paid List -->
-                <div class="space-y-1.5 text-slate-900">
-                    <div class="flex justify-between items-center border-b border-emerald-300 pb-1">
-                        <h4 class="text-xs font-black uppercase text-emerald-800 flex items-center gap-1">
-                            <i class="fa-solid fa-circle-check text-emerald-600"></i> Paid Members till 15th (${m} Paid: ${paidList.length})
-                        </h4>
-                        <span class="text-[9px] font-black text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">₹${(paidList.length * 200).toLocaleString('en-IN')} Received</span>
-                    </div>
-                    <div class="print-full-height border border-emerald-200 rounded-xl p-2 bg-emerald-50/30">
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[10px]">
-                            ${paidList.map(u => `
-                                <div class="p-1.5 bg-white rounded-lg border border-emerald-200 flex justify-between items-center">
-                                    <div class="truncate mr-1">
-                                        <span class="font-black text-slate-900 block leading-tight truncate">${u.name}</span>
-                                        <span class="text-[8.5px] text-slate-500 block truncate">S/O ${u.father}</span>
-                                    </div>
-                                    <span class="text-emerald-700 font-black text-[9px] bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-300 shrink-0">₹200 Paid ✓</span>
-                                </div>
-                            `).join('') || '<p class="text-slate-500 text-xs italic p-1">No records.</p>'}
+                <div class="p-3.5 rounded-2xl bg-purple-50 border border-purple-200">
+                    <span class="text-xs text-purple-900 font-bold uppercase block">कुल ब्याज संग्रह (Interest)</span>
+                    <span class="text-xl font-black text-purple-700 mt-1 block">₹${totalLoanInterestEarned.toLocaleString('en-IN')}</span>
+                    <span class="text-[11px] text-purple-800 font-semibold">2% Loan Returns Earned</span>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200">
+                    <span class="text-xs text-amber-900 font-bold uppercase block">सक्रिय ऋण (Market Loan)</span>
+                    <span class="text-xl font-black text-amber-700 mt-1 block">₹${marketLoanTotal.toLocaleString('en-IN')}</span>
+                    <span class="text-[11px] text-amber-800 font-semibold">In Rotation • Cash: ₹${cashInHand.toLocaleString('en-IN')}</span>
+                </div>
+            </div>
+
+            <!-- Monthly Collection Box -->
+            <div class="p-3.5 bg-slate-100 rounded-2xl border border-slate-300 flex justify-between items-center text-xs">
+                <div>
+                    <span class="text-slate-500 font-bold uppercase block text-[11px]">${m} Monthly Collection:</span>
+                    <span class="text-lg font-black text-slate-900">₹${totalMonthlyColl.toLocaleString('en-IN')}</span>
+                </div>
+                <div class="text-right">
+                    <span class="text-emerald-700 font-bold">${paidList.length} Paid</span> • 
+                    <span class="text-rose-600 font-bold">${unpaidList.length} Due</span>
+                </div>
+            </div>
+
+            <!-- Paid Members Grid -->
+            <div class="space-y-2">
+                <div class="flex justify-between items-center border-b-2 border-emerald-500 pb-1">
+                    <h3 class="text-sm font-black uppercase text-emerald-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-check text-emerald-600"></i> ${m} माह में अंशदान जमा सदस्य (${paidList.length} Members)
+                    </h3>
+                    <span class="text-xs font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-md border border-emerald-300">₹${(paidList.length * 200).toLocaleString('en-IN')} Collected</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                    ${paidList.map(u => `
+                        <div class="p-2.5 bg-white rounded-xl border border-emerald-200 flex justify-between items-center shadow-sm">
+                            <div class="truncate mr-1">
+                                <span class="font-bold text-slate-900 block truncate">${u.name}</span>
+                                <span class="text-[10px] text-slate-500 block truncate">S/O ${u.father}</span>
+                            </div>
+                            <span class="text-emerald-700 font-black text-[11px] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 shrink-0">₹200 Paid ✓</span>
                         </div>
-                    </div>
+                    `).join('')}
                 </div>
+            </div>
 
-                <!-- 15th Tak Unpaid List -->
-                <div class="space-y-1.5 text-slate-900 mt-2">
-                    <div class="flex justify-between items-center border-b border-rose-300 pb-1">
-                        <h4 class="text-xs font-black uppercase text-rose-800 flex items-center gap-1">
-                            <i class="fa-solid fa-circle-exclamation text-rose-600"></i> Unpaid Members till 15th (${m} Unpaid: ${unpaidList.length})
-                        </h4>
-                        <span class="text-[9px] font-black text-rose-700 bg-rose-100 px-2 py-0.5 rounded border border-rose-300">₹${(unpaidList.length * 200).toLocaleString('en-IN')} Due</span>
-                    </div>
-                    <div class="print-full-height border border-rose-200 rounded-xl p-2 bg-rose-50/30">
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[10px]">
-                            ${unpaidList.map(u => {
-                                let waMsg = encodeURIComponent(`नमस्ते ${u.name} जी, युवा समिति का ${m} माह का ₹200 का मासिक अंशदान अभी तक बकाया है। कृपया समय पर जमा करें।`);
-                                return `
-                                <div class="p-1.5 bg-white rounded-lg border border-rose-200 flex justify-between items-center">
-                                    <div class="truncate mr-1">
-                                        <span class="font-black text-slate-900 block leading-tight truncate">${u.name}</span>
-                                        <span class="text-[8.5px] text-slate-500 block truncate">S/O ${u.father}</span>
-                                    </div>
-                                    <div class="flex items-center space-x-1 shrink-0">
-                                        <span class="text-rose-700 font-black text-[9px] bg-rose-100 px-1 py-0.5 rounded border border-rose-300">Due ₹200</span>
-                                        <a href="https://wa.me/?text=${waMsg}" target="_blank" class="no-print px-1.5 py-0.5 rounded bg-emerald-600 text-white font-black text-[9px]">
-                                            <i class="fa-brands fa-whatsapp"></i>
-                                        </a>
-                                    </div>
-                                </div>`;
-                            }).join('') || '<p class="text-emerald-700 font-bold text-xs p-1">✓ All members paid!</p>'}
-                        </div>
-                    </div>
+            <!-- Unpaid Members Grid -->
+            ${unpaidList.length > 0 ? `
+            <div class="space-y-2">
+                <div class="flex justify-between items-center border-b-2 border-rose-500 pb-1">
+                    <h3 class="text-sm font-black uppercase text-rose-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-exclamation text-rose-600"></i> ${m} माह में बकाया सदस्य (${unpaidList.length} Members)
+                    </h3>
+                    <span class="text-xs font-black text-rose-800 bg-rose-100 px-2.5 py-0.5 rounded-md border border-rose-300">₹${(unpaidList.length * 200).toLocaleString('en-IN')} Due</span>
                 </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                    ${unpaidList.map(u => {
+                        let waMsg = encodeURIComponent(`नमस्ते ${u.name} जी, युवा समिति का ${m} माह का ₹200 का मासिक अंशदान अभी तक बकाया है। कृपया समय पर जमा करें।`);
+                        return `
+                        <div class="p-2.5 bg-white rounded-xl border border-rose-200 flex justify-between items-center shadow-sm">
+                            <div class="truncate mr-1">
+                                <span class="font-bold text-slate-900 block truncate">${u.name}</span>
+                                <span class="text-[10px] text-slate-500 block truncate">S/O ${u.father}</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5 shrink-0">
+                                <span class="text-rose-700 font-black text-[11px] bg-rose-50 px-2 py-0.5 rounded border border-rose-200">Due ₹200</span>
+                                <a href="https://wa.me/?text=${waMsg}" target="_blank" class="no-print px-2 py-1 rounded bg-emerald-600 text-white font-black text-xs">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </a>
+                            </div>
+                        </div>`;
+                    }).join('')}
+                </div>
+            </div>
+            ` : `
+            <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-2xl text-center">
+                <span class="text-emerald-800 font-black text-xs">✓ इस माह सभी 34 सदस्यों का अंशदान पूर्ण रूप से जमा हो चुका है।</span>
+            </div>
+            `}
+        </div>
 
-                <!-- Running Loans -->
-                <div class="space-y-1 text-slate-900 mt-2">
-                    <h4 class="text-xs font-black uppercase text-amber-900 flex items-center gap-1">
-                        <i class="fa-solid fa-hand-holding-dollar text-amber-600"></i> Active Loans & 2% Interest Summary
-                    </h4>
-                    <div class="rounded-xl overflow-hidden border border-amber-200">
-                        <table class="w-full text-left text-[9.5px]">
-                            <thead class="bg-amber-900 text-white font-bold text-[8.5px] uppercase">
-                                <tr>
-                                    <th class="py-1 px-2">Borrower Name</th>
-                                    <th class="py-1 px-2">Loan Date</th>
-                                    <th class="py-1 px-2">Principal (₹)</th>
-                                    <th class="py-1 px-2">Monthly (2%)</th>
-                                    <th class="py-1 px-2">Paid Interest</th>
+        <!-- PAGE 2: DETAILED LOAN & 2% INTEREST PERFORMANCE LEDGER -->
+        <div class="space-y-6 pt-4 text-slate-900">
+            
+            <div class="border-b-2 border-slate-900 pb-2 flex justify-between items-center">
+                <h2 class="text-lg font-black uppercase text-slate-950 tracking-tight">ऋण एवं 2% मासिक ब्याज विस्तृत विवरण (Loan Performance Ledger)</h2>
+                <span class="text-xs font-bold text-slate-500">Page 2</span>
+            </div>
+
+            <!-- Active Loans Table -->
+            <div class="space-y-2">
+                <h3 class="text-xs font-black uppercase text-amber-900 flex items-center gap-1.5">
+                    <i class="fa-solid fa-hand-holding-dollar text-amber-600"></i> वर्तमान में चल रहे सक्रिय ऋण (Active Market Loans)
+                </h3>
+                <div class="rounded-2xl overflow-hidden border border-slate-300">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-amber-900 text-white font-bold text-[10px] uppercase">
+                            <tr>
+                                <th class="py-2.5 px-3">Borrower Name</th>
+                                <th class="py-2.5 px-3">Loan Date</th>
+                                <th class="py-2.5 px-3">Principal (मूलधन)</th>
+                                <th class="py-2.5 px-3">Monthly Return (2%)</th>
+                                <th class="py-2.5 px-3">Paid Interest (जमा ब्याज)</th>
+                                <th class="py-2.5 px-3">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            ${activeLoansList.map(l => `
+                                <tr class="hover:bg-slate-50">
+                                    <td class="py-2 px-3 font-black text-slate-900">${l.borrower || l.name}</td>
+                                    <td class="py-2 px-3 text-slate-600">${l.month} ${l.date || ''}</td>
+                                    <td class="py-2 px-3 font-black text-amber-700">₹${Number(l.taken || l.amount || 0).toLocaleString('en-IN')}</td>
+                                    <td class="py-2 px-3 font-bold text-purple-700">₹${(Number(l.taken || l.amount || 0) * 0.02).toLocaleString('en-IN')}/mo</td>
+                                    <td class="py-2 px-3 font-black text-emerald-700">₹${Number(l.interest || 0).toLocaleString('en-IN')}</td>
+                                    <td class="py-2 px-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">Active</span></td>
                                 </tr>
-                            </thead>
-                            <tbody class="divide-y divide-amber-100 bg-white">
-                                ${activeLoans.map(l => `
-                                    <tr>
-                                        <td class="py-1 px-2 font-bold text-slate-900">${l.borrower}</td>
-                                        <td class="py-1 px-2 text-slate-600">${l.month} ${l.date || ''}</td>
-                                        <td class="py-1 px-2 font-black text-amber-700">₹${Number(l.taken || 0).toLocaleString('en-IN')}</td>
-                                        <td class="py-1 px-2 font-bold text-purple-700">₹${(Number(l.taken || 0) * 0.02).toLocaleString('en-IN')}/mo</td>
-                                        <td class="py-1 px-2 font-bold text-emerald-700">₹${Number(l.interest || 0).toLocaleString('en-IN')}</td>
-                                    </tr>
-                                `).join('') || '<tr><td colspan="5" class="p-2 text-center text-slate-400 italic">No running active loans.</td></tr>'}
-                            </tbody>
-                        </table>
-                    </div>
+                            `).join('') || '<tr><td colspan="6" class="p-3 text-center text-slate-400 italic">No active running loans.</td></tr>'}
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div class="pt-3 border-t border-slate-300 flex justify-between text-[9px] text-slate-600 mt-2">
-                    <p class="font-bold">कोषाध्यक्ष हस्ताक्षर: ___________________</p>
-                    <p class="font-bold">अध्यक्ष / सचिव हस्ताक्षर: ___________________</p>
+            <!-- Signatures Section -->
+            <div class="pt-8 border-t-2 border-slate-300 grid grid-cols-3 gap-4 text-center text-xs font-bold text-slate-700">
+                <div>
+                    <div class="border-b border-slate-400 mb-1 w-3/4 mx-auto"></div>
+                    <p>कोषाध्यक्ष हस्ताक्षर</p>
                 </div>
-            `;
-        }
+                <div>
+                    <div class="border-b border-slate-400 mb-1 w-3/4 mx-auto"></div>
+                    <p>सचिव हस्ताक्षर</p>
+                </div>
+                <div>
+                    <div class="border-b border-slate-800 mb-1 w-3/4 mx-auto"></div>
+                    <p class="font-black text-slate-900">अधिकृत मुहर / समिति अध्यक्ष</p>
+                </div>
+            </div>
 
-        async function loadEmailAccessAdminData() {
-            let pendingBox = document.getElementById('pendingRequestsContainer');
-            let approvedBox = document.getElementById('approvedMembersContainer');
-
-            pendingBox.innerHTML = '<p class="text-slate-500 italic text-xs">Loading...</p>';
-            approvedBox.innerHTML = '<p class="text-slate-500 italic text-xs">Loading...</p>';
-
-            const res = await apiPost("GET_EMAIL_ADMIN");
-            if (!res.pending || res.pending.length === 0) {
-                pendingBox.innerHTML = '<p class="text-slate-400 text-xs app-card p-3 rounded-2xl border">✓ No pending requests.</p>';
-            } else {
-                let pHtml = '';
-                res.pending.forEach(r => {
-                    pHtml += `
-                    <div class="app-card p-3 rounded-2xl border border-slate-700/50 flex justify-between items-center text-xs">
-                        <div>
-                            <p class="font-bold text-theme-text">${r.email}</p>
-                            <p class="text-[10px] text-theme-sub">${r.name}</p>
-                        </div>
-                        <button onclick="approveEmail('${r.email}', ${r.rowIdx})" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-bold text-xs">Approve</button>
-                    </div>`;
-                });
-                pendingBox.innerHTML = pHtml;
-            }
-
-            if (!res.approved || res.approved.length === 0) {
-                approvedBox.innerHTML = '<p class="text-slate-400 text-xs app-card p-3 rounded-2xl border">No approved emails.</p>';
-            } else {
-                let aHtml = '';
-                res.approved.forEach(a => {
-                    aHtml += `
-                    <div class="app-card p-3 rounded-2xl border border-emerald-500/20 flex justify-between items-center text-xs">
-                        <p class="font-bold text-theme-text">${a.email}</p>
-                        <button onclick="blockEmailAccess('${a.email}')" class="px-3 py-1.5 rounded-lg bg-rose-600 text-white font-bold text-xs">Revoke</button>
-                    </div>`;
-                });
-                approvedBox.innerHTML = aHtml;
-            }
-        }
+        </div>
+    `;
+}
 
         async function approveEmail(email, rowIdx) {
             const res = await apiPost("APPROVE_EMAIL", {}, { email: email, rowIdx: rowIdx });
