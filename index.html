@@ -1006,9 +1006,11 @@
         
         let maxPaidIdx = -1;
 
-        // Har member ke sirf positive payment wale mahine evaluate honge
+        // Strictly check real paid amount (> 0 and valid number)
         jamaList.forEach(j => {
-            let amt = Number(j.amt || 0);
+            let cleanAmt = String(j.amt || '').replace(/[^0-9.]/g, '');
+            let amt = parseFloat(cleanAmt) || 0;
+            
             if (amt > 0) {
                 let normM = normalizeMonth(j.month);
                 let idx = monthOrder.indexOf(normM);
@@ -1018,12 +1020,22 @@
             }
         });
 
-        // 7 = August (0: Jan, 1: Feb, 2: Mar, 3: Apr, 4: May, 5: Jun, 6: Jul, 7: Aug)
+        // Agar jamaList empty ho ya parse na ho, to total jama se verify karein
+        if (maxPaidIdx === -1 && m.totalDeposit) {
+            let total = parseFloat(String(m.totalDeposit).replace(/[^0-9.]/g, '')) || 0;
+            if (total > 0) {
+                maxPaidIdx = Math.min(11, Math.floor(total / 200) - 1);
+            }
+        }
+
+        // Status Badge Logic (7 = August)
         let statusBadgeHtml = '';
         if (maxPaidIdx > 7) {
             statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/40">Adv (${monthOrder[maxPaidIdx]})</span>`;
         } else if (maxPaidIdx === 7) {
             statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">✓ Aug Paid</span>`;
+        } else if (maxPaidIdx >= 0) {
+            statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40">${monthOrder[maxPaidIdx]} Paid</span>`;
         } else {
             statusBadgeHtml = `<span class="text-[9.5px] font-black px-2.5 py-1 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/40">● Aug Due</span>`;
         }
